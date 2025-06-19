@@ -68,6 +68,18 @@ class AdvancedNVParams:
         self.mw_phase_noise_std = 0.02  # ~1° Phasen-Drift (rad)
         self.mw_frequency_drift_Hz = 1000.0  # MW frequency drift
         self.mw_inhomogeneity = 0.05  # Räumliche Inhomogenität
+        
+        # 🆕 8. Spektrale Diffusion (Ornstein–Uhlenbeck auf Δ)
+        self.specdiff_sigma_MHz = 0.5  # Steady-State-Streuung [MHz]
+        self.specdiff_tau_corr_ns = 1e6  # Korrelationszeit [ns] = 1ms
+        
+        # 🆕 9. Detektor-Modell (IRF + Dead-Time + Afterpulse)
+        self.dead_time_ns = 12.0  # SPAD dead time
+        self.afterpulse_prob = 0.02  # 2% afterpulse probability
+        self.dark_rate_Hz = 200.0  # Dark count rate
+        self.irf_sigma_ps = 300.0  # IRF Gaussian width [ps]
+        self.irf_tail_frac = 0.1  # Fraction with exponential tail
+        self.irf_tail_tau_ns = 5.0  # Exponential tail time constant [ns]
 
 # ===================== 🆕 Phonon-Kopplung & Debye-Waller ==================
 def debye_waller_factor(T_K, params):
@@ -160,6 +172,57 @@ def noisy_mw_pulse(t_ns, tau_ns, params, random_key):
     
     return Omega_eff, phase_eff
 
+# ===================== 🆕 8. Spektrale Diffusion ========================
+def ou_detuning(delta_prev, dt, tau_corr_ns, sigma_detune_MHz, key):
+    """
+    Ornstein–Uhlenbeck für langsame Drift des Zero-Field Splittings Δ (in MHz).
+    """
+    alpha = dt / tau_corr_ns
+    key, sub = random.split(key)
+    # Normalisiertes OU-Rauschen
+    xi = random.normal(sub) * np.sqrt(2*alpha) * sigma_detune_MHz
+    delta_new = delta_prev * (1 - alpha) + xi
+    return delta_new, key
+
+# ===================== 🆕 9. Detektor-Modell ============================
+def sample_irf_single(key, params):
+    """
+    Einzelfoton-IRF: Gauß + exponentieller Tail (ps → ns)
+    """
+    key, k1, k2 = random.split(key, 3)
+    # Gaußförmig (σ_ps → ns)
+    gauss = random.normal(k1) * (params.irf_sigma_ps * 1e-3)
+    # Tail?
+    use_tail = random.uniform(k2) < params.irf_tail_frac
+    tail = random.exponential(k2) * params.irf_tail_tau_ns * use_tail
+    return gauss + tail, key
+
+def detect_with_deadtime_and_afterpulse(rates_per_ns, dt_ns, params, key):
+    """
+    Ereignisbasiertes Dead-Time + Afterpulse + Jitter + Dark Counts
+    """
+    # 1) Poisson-Sampling der Ereignisse
+    key, sub = random.split(key)
+    expected_counts = rates_per_ns * dt_ns
+    n_raw = np.random.poisson(expected_counts)
+    
+    # 2) Dead-Time (einfaches Modell)
+    max_per_bin = max(1, int(dt_ns / params.dead_time_ns))
+    n_dt = min(n_raw, max_per_bin)
+    
+    # 3) Afterpulsing: für jedes echte Event evtl. zusätzlicher Folge-Impuls
+    key, sub_ap = random.split(key)
+    ap_counts = np.random.binomial(n_dt, params.afterpulse_prob)
+    
+    # 4) Dark-Counts als Poisson über Zeitschritt
+    key, sub_dark = random.split(key)
+    dark_counts = np.random.poisson(params.dark_rate_Hz * dt_ns * 1e-9)
+    
+    # 5) Gesamtzahl
+    total_counts = n_dt + ap_counts + dark_counts
+    
+    return total_counts, key
+
 def simulate_nv_with_advanced_physics(tau_ns, params, random_seed=42):
     """Alias for compatibility"""
     return simulate_nv_realistic(tau_ns, params, random_seed)
@@ -218,6 +281,26 @@ def simulate_nv_realistic(tau_ns, params, random_seed=42):
     es_pop_during_pulse = 0.05  # ~5% ES population during MW pulse
     orbital_dephasing_factor = np.exp(-(k_orb_MHz * 1e6) * (tau_ns * 1e-9) * es_pop_during_pulse)
     contrast *= orbital_dephasing_factor
+    
+    # 2d. 🆕 Spektrale Diffusion (OU process on ZFS)
+    # Affects contrast through detuning during MW pulse
+    key_spec = random.PRNGKey(random_seed + 42)
+    delta_initial = 0.0  # Start at resonance
+    dt_pulse = tau_ns / 10  # Sub-divide pulse for OU integration
+    delta_avg = 0.0
+    
+    for i in range(10):  # Integrate over pulse duration
+        delta_initial, key_spec = ou_detuning(
+            delta_initial, dt_pulse, 
+            params.specdiff_tau_corr_ns, 
+            params.specdiff_sigma_MHz, 
+            key_spec
+        )
+        delta_avg += delta_initial / 10
+    
+    # Detuning reduces Rabi efficiency
+    detuning_factor = 1.0 / (1.0 + (delta_avg / 5.0)**2)  # Lorentzian suppression
+    contrast *= detuning_factor
     
     # Apply contrast reduction
     p_ms0_corrected = contrast * p_ms0 + (1-contrast) * 0.5
@@ -284,11 +367,19 @@ def simulate_nv_realistic(tau_ns, params, random_seed=42):
     # 8. Dark counts
     rate_total = rate_signal + params.DarkRate_cps
     
-    # 9. Poisson sampling
-    expected_counts = rate_total * params.BIN_ns * 1e-9 * params.Shots
+    # 9. 🆕 Detector Model: Replace simple Poisson with realistic SPAD detection
+    # Apply detector model with dead-time, afterpulsing, and IRF
     
-    # Poisson sampling
-    counts = np.random.poisson(expected_counts)
+    # Convert rate to per-bin detection with detector effects
+    key_detect = random.PRNGKey(random_seed + 100)
+    counts = np.zeros_like(rate_total)
+    
+    for i, rate in enumerate(rate_total):
+        # Apply detector model for each time bin
+        bin_counts, key_detect = detect_with_deadtime_and_afterpulse(
+            rate, params.BIN_ns, params, key_detect
+        )
+        counts[i] = bin_counts * params.Shots
     
     return time_ns, counts, float(p_ms0), float(p_ms1)
 

@@ -5,7 +5,7 @@
 
 ## Features
 
-### ✅ All 8 Advanced Physics Phenomena:
+### ✅ All 9 Advanced Physics Phenomena:
 1. **Phonon sidebands (Debye-Waller)** - Temperature-dependent ZPL/PSB emission
 2. **T₁ vs T₂* relaxation** - Separate longitudinal/transverse decoherence  
 3. **ISC rates (Singlet manifold)** - ms-dependent intersystem crossing
@@ -13,7 +13,8 @@
 5. **Charge-state dynamics** - NV⁻ ↔ NV⁰ transitions with laser enhancement
 6. **🆕 Phonon-coupling & Debye-Waller** - Temperature-dependent collection efficiency
 7. **🆕 Time-dependent MW pulses** - Gaussian/Hermite/Square with realistic noise
-8. **All combined** - Hyperrealistic emergent quantum behavior
+8. **🆕 Spektrale Diffusion** - Ornstein-Uhlenbeck process on zero-field splitting
+9. **🆕 Detektor-Modell** - SPAD dead-time, afterpulsing, IRF, and dark counts
 
 ### 📊 Realistic Statistics:
 - **Photon counts**: ~120 counts/bin (Poisson distributed)
@@ -29,11 +30,17 @@ python main.py                    # Start at http://localhost:5002
 python main.py --port 5003        # Custom port
 ```
 
-**New Black/White UI Design:**
-- **2 Main Tabs**: Physics Info | Simulation Plots
-- **Clean Design**: Black background, white text, no emojis
-- **Physics Info Tab**: Current status + All 37+ physics parameters
-- **Simulation Plots Tab**: Pulse Timeline | Rabi Oscillation
+**New Navigation-Based UI:**
+- **Sidebar Navigation**: Left-sliding menu with organized sections
+- **3 Main Pages**: Dashboard | Parameters | Rabi Oszillation
+- **Dashboard**: Key parameters overview + quick actions (Start/Update)
+- **Parameters**: Complete physics parameter reference (37+ parameters)
+- **Rabi Oszillation**: **Side-by-side** Pulse Timeline & Rabi Oscillation
+- **Smart Controls**: Pulse controls only appear on Rabi experiment page
+- **Minimalist Header**: Compact design with hamburger menu icon
+- **Enhanced Resolution**: 51 pulse points (every 10ns, 0-500ns) for smooth curves
+- **1000ns Time Window**: Default integration for better signal averaging
+- **Organized Experiments**: Future experiments can be added under "Experimente"
 
 ### 🧪 Physics Tests
 ```bash

@@ -20,26 +20,146 @@
             background: #ffffff;
             display: flex;
             flex-direction: column;
+            position: relative;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background: #000000;
+            color: #ffffff;
+            transition: left 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #333333;
+        }
+        
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+        
+        .sidebar-nav {
+            padding: 0;
+        }
+        
+        .nav-section {
+            margin-bottom: 20px;
+        }
+        
+        .nav-section-title {
+            padding: 15px 20px 10px 20px;
+            font-size: 0.9em;
+            color: #cccccc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px 20px;
+            color: #ffffff;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1em;
+        }
+        
+        .nav-item:hover {
+            background-color: #333333;
+        }
+        
+        .nav-item.active {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+        
+        .sidebar-overlay.show {
+            display: block;
         }
         
         .header {
             background: #000000;
             color: #ffffff;
-            padding: 20px;
-            text-align: center;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             border-bottom: 2px solid #cccccc;
+            height: 50px;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            margin-right: 15px;
+            padding: 2px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .menu-icon:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .menu-icon span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: #ffffff;
+            margin: 3px 0;
+            border-radius: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .header-right {
+            text-align: right;
         }
         
         .header h1 {
             margin: 0;
-            font-size: 2.2em;
+            font-size: 1.4em;
             font-weight: 300;
         }
         
         .header p {
-            margin: 10px 0 0 0;
+            margin: 2px 0 0 0;
             opacity: 0.8;
-            font-size: 1.0em;
+            font-size: 0.8em;
         }
         
         .controls {
@@ -104,43 +224,43 @@
             color: #000000;
         }
         
-        .main-tabs {
-            display: flex;
-            background: #f8f9fa;
-            border-bottom: 2px solid #cccccc;
-        }
-        
-        .main-tab {
-            flex: 1;
-            padding: 15px;
-            background: #f8f9fa;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            color: #000000;
-            font-size: 1.1em;
-            transition: all 0.3s ease;
-            border-right: 1px solid #cccccc;
-        }
-        
-        .main-tab:last-child {
-            border-right: none;
-        }
-        
-        .main-tab.active {
-            background: #000000;
-            color: #ffffff;
-        }
-        
-        .tab-content {
+        .page-content {
             display: none;
             flex: 1;
             padding: 20px;
             overflow-y: auto;
         }
         
-        .tab-content.active {
+        .page-content.active {
             display: block;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-card {
+            background: #f8f9fa;
+            border: 2px solid #cccccc;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .dashboard-card h3 {
+            margin: 0 0 15px 0;
+            color: #000000;
+        }
+        
+        .dashboard-actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .dashboard-actions .btn {
+            margin: 0 10px;
         }
         
         .status {
@@ -203,39 +323,41 @@
             margin-bottom: 20px;
         }
         
-        .plot-tabs {
+        .plot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: 75vh;
+        }
+        
+        .plot-section {
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            padding: 15px;
             display: flex;
-            border-bottom: 2px solid #cccccc;
-            margin-bottom: 20px;
+            flex-direction: column;
         }
         
-        .plot-tab {
-            flex: 1;
-            padding: 12px;
-            background: #f8f9fa;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
+        .plot-section h3 {
+            margin: 0 0 15px 0;
             color: #000000;
-            transition: all 0.3s ease;
-            border-right: 1px solid #cccccc;
+            text-align: center;
+            font-size: 1.1em;
         }
         
-        .plot-tab:last-child {
-            border-right: none;
+        .plot-section .loading {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         
-        .plot-tab.active {
-            background: #000000;
-            color: #ffffff;
-        }
-        
-        .plot-content {
-            display: none;
-        }
-        
-        .plot-content.active {
-            display: block;
+        .plot-section #pulse-plot,
+        .plot-section #rabi-plot {
+            flex: 1;
+            min-height: 0;
         }
         
         .loading {
@@ -261,6 +383,18 @@
         }
         
         @media (max-width: 768px) {
+            .header {
+                padding: 8px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.2em;
+            }
+            
+            .header p {
+                font-size: 0.7em;
+            }
+            
             .control-row {
                 flex-direction: column;
                 align-items: stretch;
@@ -273,14 +407,51 @@
             .status-grid, .physics-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .plot-grid {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .plot-section {
+                height: 50vh;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+    
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+        </div>
+        <div class="sidebar-nav">
+            <div class="nav-section">
+                <button class="nav-item active" onclick="showPage('dashboard')">Dashboard</button>
+                <button class="nav-item" onclick="showPage('parameters')">Parameters</button>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Experimente</div>
+                <button class="nav-item" onclick="showPage('rabi')">Rabi Oszillation</button>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="header">
-            <h1>Interactive NV Simulator</h1>
-            <p>HYPERREALISTIC: Phonon-Coupling + Time-dependent MW Pulses + All Advanced Physics</p>
+            <div class="header-left">
+                <div class="menu-icon" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="header-right">
+                <h1>Interactive NV Simulator</h1>
+                <p>HYPERREALISTIC: Phonon-Coupling + Time-dependent MW Pulses + All Advanced Physics</p>
+            </div>
         </div>
         
         <div class="controls">
@@ -302,7 +473,7 @@
                     <label>Integration Window:</label>
                     <input type="number" id="start-time" value="0" min="0" max="3000">
                     <span>to</span>
-                    <input type="number" id="end-time" value="200" min="0" max="3000">
+                    <input type="number" id="end-time" value="1000" min="0" max="3000">
                     <span>ns</span>
                     <button class="btn" onclick="updatePlots()">Update</button>
                 </div>
@@ -313,67 +484,79 @@
             </div>
         </div>
         
-        <div class="main-tabs">
-            <button class="main-tab active" onclick="showMainTab('info')">
-                Physics Info
-            </button>
-            <button class="main-tab" onclick="showMainTab('plots')">
-                Simulation Plots
-            </button>
-        </div>
-        
-        <div id="info-content" class="tab-content active">
-            <div class="status" id="status-section" style="display: none;">
-                <h3>Current Status</h3>
-                <div class="status-grid">
-                    <div class="status-item">
-                        <strong>ms=0 Population:</strong> <span id="p-ms0">--</span>
+        <!-- Dashboard Page -->
+        <div id="dashboard-content" class="page-content active">
+            <h2>Dashboard</h2>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>Current Status</h3>
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <strong>ms=0 Population:</strong> <span id="p-ms0">--</span>
+                        </div>
+                        <div class="status-item">
+                            <strong>ms=±1 Population:</strong> <span id="p-ms1">--</span>
+                        </div>
+                        <div class="status-item">
+                            <strong>Rabi Angle:</strong> <span id="rabi-angle">--</span>
+                        </div>
+                        <div class="status-item">
+                            <strong>Simulation Points:</strong> <span id="sim-points">--</span>
+                        </div>
                     </div>
-                    <div class="status-item">
-                        <strong>ms=±1 Population:</strong> <span id="p-ms1">--</span>
-                    </div>
-                    <div class="status-item">
-                        <strong>Rabi Angle:</strong> <span id="rabi-angle">--</span>
-                    </div>
-                    <div class="status-item">
-                        <strong>Simulation Points:</strong> <span id="sim-points">--</span>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>Key Parameters</h3>
+                    <div id="key-parameters">
+                        <!-- Will be populated by JavaScript -->
                     </div>
                 </div>
             </div>
             
-            <div class="physics-info" id="physics-section" style="display: none;">
-                <h3>Advanced Physics Parameters</h3>
+            <div class="dashboard-actions">
+                <button class="btn" onclick="simulateAll()" id="simulate-btn">
+                    Start Full Simulation
+                </button>
+                <button class="btn" onclick="updatePlots()">
+                    Update Plots
+                </button>
+            </div>
+        </div>
+        
+        <!-- Parameters Page -->
+        <div id="parameters-content" class="page-content">
+            <h2>Physics Parameters</h2>
+            <div class="physics-info">
                 <div class="physics-grid" id="physics-grid">
                     <!-- Will be populated by JavaScript -->
                 </div>
             </div>
         </div>
         
-        <div id="plots-content" class="tab-content">
+        <!-- Rabi Oscillation Page -->
+        <div id="rabi-content" class="page-content">
+            <h2>Rabi Oszillation</h2>
             <div class="plot-container">
-                <div class="plot-tabs">
-                    <button class="plot-tab active" onclick="showPlotTab('pulse')">
-                        Pulse Timeline
-                    </button>
-                    <button class="plot-tab" onclick="showPlotTab('rabi')">
-                        Rabi Oscillation
-                    </button>
-                </div>
-                
-                <div id="pulse-content" class="plot-content active">
-                    <div class="loading" id="pulse-loading">
-                        <div class="loading-spinner"></div>
-                        <p>Ready for simulation...</p>
+                <div class="plot-grid">
+                    <div class="plot-section">
+                        <h3>Pulse Timeline</h3>
+                        <div class="loading" id="pulse-loading">
+                            <div class="loading-spinner"></div>
+                            <p>Ready for simulation...</p>
+                        </div>
+                        <div id="pulse-plot"></div>
                     </div>
-                    <div id="pulse-plot"></div>
-                </div>
-                
-                <div id="rabi-content" class="plot-content">
-                    <div class="loading" id="rabi-loading">
-                        <div class="loading-spinner"></div>
-                        <p>Ready for simulation...</p>
+                    
+                    <div class="plot-section">
+                        <h3>Rabi Oscillation</h3>
+                        <div class="loading" id="rabi-loading">
+                            <div class="loading-spinner"></div>
+                            <p>Ready for simulation...</p>
+                        </div>
+                        <div id="rabi-plot"></div>
                     </div>
-                    <div id="rabi-plot"></div>
                 </div>
             </div>
         </div>
@@ -386,6 +569,49 @@
         let isSimulated = false;
         let physicsInfo = {};
         
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
+        
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+        }
+        
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(`${pageName}-content`).classList.add('active');
+            
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Show/hide controls based on page
+            const controls = document.querySelector('.controls');
+            if (pageName === 'rabi') {
+                controls.classList.add('show');
+            } else {
+                controls.classList.remove('show');
+            }
+            
+            // Close sidebar
+            closeSidebar();
+        }
+        
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             loadPhysicsInfo();
@@ -395,7 +621,8 @@
         
         function generateTauList() {
             tauList = [];
-            for (let i = 0; i <= 2000; i += 50) {
+            // Much more pulse values with finer resolution
+            for (let i = 0; i <= 500; i += 10) {
                 tauList.push(i);
             }
         }
@@ -405,7 +632,6 @@
                 const response = await fetch('/api/physics_info');
                 physicsInfo = await response.json();
                 displayPhysicsInfo();
-                document.getElementById('physics-section').style.display = 'block';
             } catch (error) {
                 console.error('Error loading physics info:', error);
             }
@@ -413,6 +639,8 @@
         
         function displayPhysicsInfo() {
             const grid = document.getElementById('physics-grid');
+            
+            // Populate main physics grid
             grid.innerHTML = `
                 <div class="physics-item">
                     <strong>DW Factor</strong><br>${physicsInfo.DW_factor}
@@ -532,6 +760,31 @@
                     <strong>MW Inhomogeneity</strong><br>${physicsInfo.mw_inhomogeneity}
                 </div>
             `;
+            
+            // Populate dashboard key parameters
+            const keyParams = document.getElementById('key-parameters');
+            keyParams.innerHTML = `
+                <div class="status-grid">
+                    <div class="status-item">
+                        <strong>Rabi Freq:</strong> ${(physicsInfo.Omega_Rabi_Hz/1e6).toFixed(1)} MHz
+                    </div>
+                    <div class="status-item">
+                        <strong>Temperature:</strong> ${physicsInfo.Temperature_K} K
+                    </div>
+                    <div class="status-item">
+                        <strong>Collection:</strong> ${(physicsInfo.collection_efficiency*100).toFixed(1)}%
+                    </div>
+                    <div class="status-item">
+                        <strong>Shots:</strong> ${physicsInfo.Shots.toLocaleString()}
+                    </div>
+                    <div class="status-item">
+                        <strong>T₁:</strong> ${physicsInfo.T1_ms} ms
+                    </div>
+                    <div class="status-item">
+                        <strong>T₂*:</strong> ${physicsInfo.T2_star_us} μs
+                    </div>
+                </div>
+            `;
         }
         
         async function simulateAll() {
@@ -588,7 +841,7 @@
             const startTime = document.getElementById('start-time').value;
             const endTime = document.getElementById('end-time').value;
             
-            document.getElementById('pulse-loading').style.display = 'block';
+            document.getElementById('pulse-loading').style.display = 'flex';
             document.getElementById('pulse-plot').style.display = 'none';
             
             try {
@@ -607,8 +860,8 @@
                 
                 const layout = {
                     title: {
-                        text: `NV Readout τ=${result.tau_ns}ns`,
-                        font: {color: '#000000'}
+                        text: `Pulse τ=${result.tau_ns}ns`,
+                        font: {color: '#000000', size: 14}
                     },
                     xaxis: {
                         title: 'Time (ns)',
@@ -622,13 +875,15 @@
                     },
                     plot_bgcolor: '#ffffff',
                     paper_bgcolor: '#ffffff',
-                    font: {color: '#000000'}
+                    font: {color: '#000000'},
+                    margin: {l: 50, r: 20, t: 40, b: 50}
                 };
                 
                 Plotly.newPlot('pulse-plot', plotData, layout, {
                     displayModeBar: true,
                     displaylogo: false,
-                    modeBarButtonsToRemove: ['pan2d', 'lasso2d']
+                    modeBarButtonsToRemove: ['pan2d', 'lasso2d'],
+                    responsive: true
                 });
                 
                 document.getElementById('pulse-loading').style.display = 'none';
@@ -645,12 +900,15 @@
         }
         
         async function updateRabiPlot() {
-            document.getElementById('rabi-loading').style.display = 'block';
+            document.getElementById('rabi-loading').style.display = 'flex';
             document.getElementById('rabi-plot').style.display = 'none';
             
             try {
-                // Always get full range from 0 to 400ns for Rabi plot
-                const response = await fetch(`/api/rabi_plot?start=0&end=400&current_tau=${currentTau}`);
+                // Use integration window for Rabi plot averaging
+                const startTime = document.getElementById('start-time').value;
+                const endTime = document.getElementById('end-time').value;
+                
+                const response = await fetch(`/api/rabi_plot?start=${startTime}&end=${endTime}&current_tau=${currentTau}`);
                 const result = await response.json();
                 
                 // Create plot data
@@ -660,7 +918,7 @@
                     type: 'scatter',
                     mode: 'lines+markers',
                     line: {color: '#000000', width: 2},
-                    marker: {color: '#000000', size: 4},
+                    marker: {color: '#000000', size: 3},
                     name: 'ms=0 Population'
                 }, {
                     x: [currentTau, currentTau],
@@ -673,14 +931,14 @@
                 
                 const layout = {
                     title: {
-                        text: 'Rabi Oscillation',
-                        font: {color: '#000000'}
+                        text: `Rabi (${startTime}-${endTime}ns avg)`,
+                        font: {color: '#000000', size: 14}
                     },
                     xaxis: {
                         title: 'MW Pulse Duration τ (ns)',
                         color: '#000000',
                         gridcolor: '#cccccc',
-                        range: [0, 400]
+                        range: [0, 500]
                     },
                     yaxis: {
                         title: 'ms=0 Population',
@@ -690,13 +948,15 @@
                     },
                     plot_bgcolor: '#ffffff',
                     paper_bgcolor: '#ffffff',
-                    font: {color: '#000000'}
+                    font: {color: '#000000'},
+                    margin: {l: 50, r: 20, t: 40, b: 50}
                 };
                 
                 Plotly.newPlot('rabi-plot', plotData, layout, {
                     displayModeBar: true,
                     displaylogo: false,
-                    modeBarButtonsToRemove: ['pan2d', 'lasso2d']
+                    modeBarButtonsToRemove: ['pan2d', 'lasso2d'],
+                    responsive: true
                 });
                 
                 document.getElementById('rabi-loading').style.display = 'none';
@@ -745,33 +1005,7 @@
             if (isSimulated) updatePlots();
         }
         
-        function showMainTab(tabName) {
-            // Update tab buttons
-            document.querySelectorAll('.main-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelector(`[onclick="showMainTab('${tabName}')"]`).classList.add('active');
-            
-            // Update content
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.getElementById(`${tabName}-content`).classList.add('active');
-            
-            // Show controls only on plots tab
-            const controls = document.querySelector('.controls');
-            if (tabName === 'plots') {
-                controls.classList.add('show');
-            } else {
-                controls.classList.remove('show');
-            }
-        }
         
-        function showPlotTab(tabName) {
-            // Update tab buttons
-            document.querySelectorAll('.plot-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelector(`[onclick="showPlotTab('${tabName}')"]`).classList.add('active');
-            
-            // Update content
-            document.querySelectorAll('.plot-content').forEach(content => content.classList.remove('active'));
-            document.getElementById(`${tabName}-content`).classList.add('active');
-        }
     </script>
 </body>
 </html>

@@ -30,7 +30,7 @@ def get_physics_info():
 
 @app.route('/api/simulate_tau_sweep')
 def simulate_tau_sweep():
-    """Simulate a full tau sweep"""
+    """Simulate a full tau sweep with progress tracking"""
     # Default tau range
     tau_list = list(range(0, 401, 50))  # 0 to 400ns in 50ns steps
     
@@ -43,8 +43,17 @@ def simulate_tau_sweep():
         step = step or 50
         tau_list = list(range(start, end + 1, step))
     
-    results = simulator.simulate_tau_sweep(tau_list)
-    return jsonify(results)
+    # Progress callback for tracking
+    def progress_callback(i, total, tau):
+        progress = int((i / total) * 100)
+        print(f"Progress: {progress}% - Simulating tau={tau}ns ({i+1}/{total})")
+    
+    try:
+        results = simulator.simulate_tau_sweep(tau_list, progress_callback=progress_callback)
+        return jsonify(results)
+    except Exception as e:
+        print(f"Simulation error: {e}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/pulse_plot/<int:tau>')
 def get_pulse_plot(tau):
@@ -89,18 +98,28 @@ def get_pulse_data(tau):
 
 @app.route('/api/rabi_plot')
 def get_rabi_plot():
-    """Get Rabi oscillation plot"""
-    start = request.args.get('start', 0, type=int)
-    end = request.args.get('end', 400, type=int)
+    """Get Rabi oscillation plot with time window averaging"""
+    start_time = request.args.get('start', 0, type=int)
+    end_time = request.args.get('end', 1000, type=int)
     current_tau = request.args.get('current_tau', 0, type=int)
     
-    # Generate tau range
-    tau_list = list(range(start, end + 1, 25))  # Every 25ns
+    # Generate tau range with finer resolution (every 10ns up to 500ns)
+    tau_list = list(range(0, 501, 10))
+    
+    # Progress callback for Rabi plot
+    def rabi_progress(i, total, tau):
+        if i % 10 == 0:  # Update every 10th point to avoid spam
+            progress = int((i / total) * 100)
+            print(f"Rabi Progress: {progress}% - tau={tau}ns")
     
     # Simulate
-    results = simulator.simulate_tau_sweep(tau_list)
+    try:
+        results = simulator.simulate_tau_sweep(tau_list, progress_callback=rabi_progress)
+    except Exception as e:
+        print(f"Rabi simulation error: {e}")
+        return jsonify({'error': str(e)}), 500
     
-    # Extract data
+    # Extract data with time window averaging
     tau_values = []
     p_ms0_values = []
     mean_counts = []
@@ -109,8 +128,18 @@ def get_rabi_plot():
         if tau in results:
             tau_values.append(tau)
             p_ms0_values.append(results[tau]['p_ms0'])
+            
+            # Average counts over the specified time window
+            time_ns = np.array(results[tau]['time_ns'])
             counts = np.array(results[tau]['counts'])
-            mean_counts.append(float(np.mean(counts)))
+            
+            # Filter to time window
+            mask = (time_ns >= start_time) & (time_ns <= end_time)
+            if np.any(mask):
+                window_counts = counts[mask]
+                mean_counts.append(float(np.mean(window_counts)))
+            else:
+                mean_counts.append(float(np.mean(counts)))
     
     return jsonify({
         'tau_values': tau_values,
