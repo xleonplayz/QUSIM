@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive NV Simulator</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            color: #000000;
+        }
+        
+        .container {
+            max-width: 100%;
+            height: 100vh;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: #000000;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #cccccc;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.8;
+            font-size: 1.0em;
+        }
+        
+        .controls {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #cccccc;
+            display: none;
+        }
+        
+        .controls.show {
+            display: block;
+        }
+        
+        .control-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .control-group label {
+            font-weight: 600;
+            color: #000000;
+        }
+        
+        .btn {
+            background: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+        
+        .btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        input[type="number"] {
+            padding: 8px;
+            border: 2px solid #cccccc;
+            border-radius: 4px;
+            width: 80px;
+            text-align: center;
+            font-weight: 600;
+            background: #ffffff;
+            color: #000000;
+        }
+        
+        .main-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #cccccc;
+        }
+        
+        .main-tab {
+            flex: 1;
+            padding: 15px;
+            background: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #000000;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            border-right: 1px solid #cccccc;
+        }
+        
+        .main-tab:last-child {
+            border-right: none;
+        }
+        
+        .main-tab.active {
+            background: #000000;
+            color: #ffffff;
+        }
+        
+        .tab-content {
+            display: none;
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .status {
+            background: #f8f9fa;
+            border: 2px solid #cccccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .status h3 {
+            margin: 0 0 15px 0;
+            color: #000000;
+        }
+        
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .status-item {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #cccccc;
+        }
+        
+        .status-item strong {
+            color: #000000;
+        }
+        
+        .physics-info {
+            background: #f8f9fa;
+            border: 2px solid #cccccc;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .physics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .physics-item {
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .plot-container {
+            background: #f8f9fa;
+            border: 2px solid #cccccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .plot-tabs {
+            display: flex;
+            border-bottom: 2px solid #cccccc;
+            margin-bottom: 20px;
+        }
+        
+        .plot-tab {
+            flex: 1;
+            padding: 12px;
+            background: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #000000;
+            transition: all 0.3s ease;
+            border-right: 1px solid #cccccc;
+        }
+        
+        .plot-tab:last-child {
+            border-right: none;
+        }
+        
+        .plot-tab.active {
+            background: #000000;
+            color: #ffffff;
+        }
+        
+        .plot-content {
+            display: none;
+        }
+        
+        .plot-content.active {
+            display: block;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #000000;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #cccccc;
+            border-top: 4px solid #000000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .control-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .control-group {
+                justify-content: center;
+            }
+            
+            .status-grid, .physics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Interactive NV Simulator</h1>
+            <p>HYPERREALISTIC: Phonon-Coupling + Time-dependent MW Pulses + All Advanced Physics</p>
+        </div>
+        
+        <div class="controls">
+            <div class="control-row">
+                <div class="control-group">
+                    <label>MW Pulse Duration:</label>
+                    <span id="current-tau" style="font-weight: bold; font-size: 1.2em;">0 ns</span>
+                </div>
+                
+                <button class="btn" onclick="prevTau()">Previous</button>
+                <button class="btn" onclick="nextTau()">Next</button>
+                <button class="btn" onclick="jumpToAngle(90)">π/2 Pulse</button>
+                <button class="btn" onclick="jumpToAngle(180)">π Pulse</button>
+                <button class="btn" onclick="resetTau()">Reset</button>
+            </div>
+            
+            <div class="control-row">
+                <div class="control-group">
+                    <label>Integration Window:</label>
+                    <input type="number" id="start-time" value="0" min="0" max="3000">
+                    <span>to</span>
+                    <input type="number" id="end-time" value="200" min="0" max="3000">
+                    <span>ns</span>
+                    <button class="btn" onclick="updatePlots()">Update</button>
+                </div>
+                
+                <button class="btn" onclick="simulateAll()" id="simulate-btn">
+                    Start Full Simulation
+                </button>
+            </div>
+        </div>
+        
+        <div class="main-tabs">
+            <button class="main-tab active" onclick="showMainTab('info')">
+                Physics Info
+            </button>
+            <button class="main-tab" onclick="showMainTab('plots')">
+                Simulation Plots
+            </button>
+        </div>
+        
+        <div id="info-content" class="tab-content active">
+            <div class="status" id="status-section" style="display: none;">
+                <h3>Current Status</h3>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <strong>ms=0 Population:</strong> <span id="p-ms0">--</span>
+                    </div>
+                    <div class="status-item">
+                        <strong>ms=±1 Population:</strong> <span id="p-ms1">--</span>
+                    </div>
+                    <div class="status-item">
+                        <strong>Rabi Angle:</strong> <span id="rabi-angle">--</span>
+                    </div>
+                    <div class="status-item">
+                        <strong>Simulation Points:</strong> <span id="sim-points">--</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="physics-info" id="physics-section" style="display: none;">
+                <h3>Advanced Physics Parameters</h3>
+                <div class="physics-grid" id="physics-grid">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <div id="plots-content" class="tab-content">
+            <div class="plot-container">
+                <div class="plot-tabs">
+                    <button class="plot-tab active" onclick="showPlotTab('pulse')">
+                        Pulse Timeline
+                    </button>
+                    <button class="plot-tab" onclick="showPlotTab('rabi')">
+                        Rabi Oscillation
+                    </button>
+                </div>
+                
+                <div id="pulse-content" class="plot-content active">
+                    <div class="loading" id="pulse-loading">
+                        <div class="loading-spinner"></div>
+                        <p>Ready for simulation...</p>
+                    </div>
+                    <div id="pulse-plot"></div>
+                </div>
+                
+                <div id="rabi-content" class="plot-content">
+                    <div class="loading" id="rabi-loading">
+                        <div class="loading-spinner"></div>
+                        <p>Ready for simulation...</p>
+                    </div>
+                    <div id="rabi-plot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentTau = 0;
+        let tauList = [];
+        let isSimulated = false;
+        let physicsInfo = {};
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPhysicsInfo();
+            generateTauList();
+            updateCurrentTau();
+        });
+        
+        function generateTauList() {
+            tauList = [];
+            for (let i = 0; i <= 2000; i += 50) {
+                tauList.push(i);
+            }
+        }
+        
+        async function loadPhysicsInfo() {
+            try {
+                const response = await fetch('/api/physics_info');
+                physicsInfo = await response.json();
+                displayPhysicsInfo();
+                document.getElementById('physics-section').style.display = 'block';
+            } catch (error) {
+                console.error('Error loading physics info:', error);
+            }
+        }
+        
+        function displayPhysicsInfo() {
+            const grid = document.getElementById('physics-grid');
+            grid.innerHTML = `
+                <div class="physics-item">
+                    <strong>DW Factor</strong><br>${physicsInfo.DW_factor}
+                </div>
+                <div class="physics-item">
+                    <strong>T₁</strong><br>${physicsInfo.T1_ms} ms
+                </div>
+                <div class="physics-item">
+                    <strong>T₂*</strong><br>${physicsInfo.T2_star_us} μs
+                </div>
+                <div class="physics-item">
+                    <strong>ISC ms=±1</strong><br>${physicsInfo.gamma_ISC_ms1_MHz} MHz
+                </div>
+                <div class="physics-item">
+                    <strong>ISC ms=0</strong><br>${physicsInfo.gamma_ISC_ms0_MHz} MHz
+                </div>
+                <div class="physics-item">
+                    <strong>Dead Time</strong><br>${physicsInfo.dead_time_ns} ns
+                </div>
+                <div class="physics-item">
+                    <strong>Rabi Freq</strong><br>${(physicsInfo.Omega_Rabi_Hz/1e6).toFixed(1)} MHz
+                </div>
+                <div class="physics-item">
+                    <strong>Readout</strong><br>${physicsInfo.READ_NS} ns
+                </div>
+                <div class="physics-item">
+                    <strong>¹³C Bath</strong><br>${physicsInfo.n_carbon13} nuclei
+                </div>
+                <div class="physics-item">
+                    <strong>¹⁴N Bath</strong><br>${physicsInfo.n_nitrogen14} nuclei
+                </div>
+                <div class="physics-item">
+                    <strong>D (GS)</strong><br>${physicsInfo.D_GS_Hz.toFixed(2)} GHz
+                </div>
+                <div class="physics-item">
+                    <strong>D (ES)</strong><br>${physicsInfo.D_ES_Hz.toFixed(2)} GHz
+                </div>
+                <div class="physics-item">
+                    <strong>B-Field</strong><br>${physicsInfo.B_field_mT[2].toFixed(1)} mT
+                </div>
+                <div class="physics-item">
+                    <strong>g-Factor</strong><br>${physicsInfo.g_e}
+                </div>
+                <div class="physics-item">
+                    <strong>Strain σ</strong><br>${physicsInfo.strain_sigma_MHz} MHz
+                </div>
+                <div class="physics-item">
+                    <strong>Orbital γ</strong><br>${physicsInfo.gamma_orbital_MHz} MHz
+                </div>
+                <div class="physics-item">
+                    <strong>Temperature</strong><br>${physicsInfo.Temperature_K} K
+                </div>
+                <div class="physics-item">
+                    <strong>T₁ (GS)</strong><br>${physicsInfo.T1_GS_ms} ms
+                </div>
+                <div class="physics-item">
+                    <strong>T₂ (GS)</strong><br>${physicsInfo.T2_GS_us} μs
+                </div>
+                <div class="physics-item">
+                    <strong>ISC E₀</strong><br>${physicsInfo.ISC_ms0_activation_meV} meV
+                </div>
+                <div class="physics-item">
+                    <strong>ISC E₁</strong><br>${physicsInfo.ISC_ms1_activation_meV} meV
+                </div>
+                <div class="physics-item">
+                    <strong>Ion (GS)</strong><br>${physicsInfo.ionization_rate_GS_MHz} MHz
+                </div>
+                <div class="physics-item">
+                    <strong>Ion (ES)</strong><br>${physicsInfo.ionization_rate_ES_MHz} MHz
+                </div>
+                <div class="physics-item">
+                    <strong>Recombi</strong><br>${physicsInfo.recombination_rate_MHz} MHz
+                </div>
+                <div class="physics-item">
+                    <strong>Laser P</strong><br>${physicsInfo.laser_power_mW} mW
+                </div>
+                <div class="physics-item">
+                    <strong>λ Laser</strong><br>${physicsInfo.laser_wavelength_nm} nm
+                </div>
+                <div class="physics-item">
+                    <strong>Δν Laser</strong><br>${physicsInfo.laser_linewidth_GHz} GHz
+                </div>
+                <div class="physics-item">
+                    <strong>DW₀ (T=0)</strong><br>${physicsInfo.DW0_at_zero_K} 
+                </div>
+                <div class="physics-item">
+                    <strong>θ_D</strong><br>${physicsInfo.theta_D_K} K
+                </div>
+                <div class="physics-item">
+                    <strong>DW α</strong><br>${physicsInfo.debye_waller_alpha}
+                </div>
+                <div class="physics-item">
+                    <strong>γ_rad</strong><br>${physicsInfo.gamma_rad_MHz} MHz
+                </div>
+                <div class="physics-item">
+                    <strong>k_orb(300K)</strong><br>${physicsInfo.k_orb_300K_MHz} MHz
+                </div>
+                <div class="physics-item">
+                    <strong>k_orb E_a</strong><br>${physicsInfo.k_orb_activation_K} K
+                </div>
+                <div class="physics-item">
+                    <strong>MW Shape</strong><br>${physicsInfo.mw_pulse_shape}
+                </div>
+                <div class="physics-item">
+                    <strong>MW σ</strong><br>${physicsInfo.mw_sigma_ns} ns
+                </div>
+                <div class="physics-item">
+                    <strong>MW Amp Noise</strong><br>${physicsInfo.mw_amplitude_noise_std}
+                </div>
+                <div class="physics-item">
+                    <strong>MW Phase Noise</strong><br>${physicsInfo.mw_phase_noise_std} rad
+                </div>
+                <div class="physics-item">
+                    <strong>MW Freq Drift</strong><br>${physicsInfo.mw_frequency_drift_Hz} Hz
+                </div>
+                <div class="physics-item">
+                    <strong>MW Inhomogeneity</strong><br>${physicsInfo.mw_inhomogeneity}
+                </div>
+            `;
+        }
+        
+        async function simulateAll() {
+            const btn = document.getElementById('simulate-btn');
+            btn.disabled = true;
+            btn.innerHTML = 'Simulating...';
+            
+            document.getElementById('pulse-loading').innerHTML = `
+                <div class="loading-spinner"></div>
+                <p>Running full tau sweep simulation...</p>
+            `;
+            
+            try {
+                const response = await fetch('/api/simulate_tau_sweep');
+                const result = await response.json();
+                
+                isSimulated = true;
+                document.getElementById('status-section').style.display = 'block';
+                document.getElementById('sim-points').textContent = Object.keys(result).length;
+                
+                btn.innerHTML = 'Simulation Complete';
+                btn.disabled = false;
+                
+                // Load initial plots
+                updateCurrentTau();
+                updatePlots();
+            } catch (error) {
+                console.error('Simulation error:', error);
+                btn.innerHTML = 'Simulation Failed';
+                btn.disabled = false;
+            }
+        }
+        
+        function updateCurrentTau() {
+            document.getElementById('current-tau').textContent = `${currentTau} ns`;
+            
+            if (isSimulated && physicsInfo.Omega_Rabi_Hz) {
+                const rabiAngle = physicsInfo.Omega_Rabi_Hz * currentTau * 1e-9 * 180 / Math.PI;
+                document.getElementById('rabi-angle').textContent = `${rabiAngle.toFixed(1)}°`;
+            }
+        }
+        
+        async function updatePlots() {
+            if (!isSimulated) return;
+            
+            // Update pulse plot
+            await updatePulsePlot();
+            
+            // Update Rabi plot
+            await updateRabiPlot();
+        }
+        
+        async function updatePulsePlot() {
+            const startTime = document.getElementById('start-time').value;
+            const endTime = document.getElementById('end-time').value;
+            
+            document.getElementById('pulse-loading').style.display = 'block';
+            document.getElementById('pulse-plot').style.display = 'none';
+            
+            try {
+                const response = await fetch(`/api/pulse_plot/${currentTau}?start=${startTime}&end=${endTime}`);
+                const result = await response.json();
+                
+                // Create plot data
+                const plotData = [{
+                    x: result.time_ns,
+                    y: result.counts,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: {color: '#000000', width: 2},
+                    name: 'Photon Counts'
+                }];
+                
+                const layout = {
+                    title: {
+                        text: `NV Readout τ=${result.tau_ns}ns`,
+                        font: {color: '#000000'}
+                    },
+                    xaxis: {
+                        title: 'Time (ns)',
+                        color: '#000000',
+                        gridcolor: '#cccccc'
+                    },
+                    yaxis: {
+                        title: 'Photon Count',
+                        color: '#000000',
+                        gridcolor: '#cccccc'
+                    },
+                    plot_bgcolor: '#ffffff',
+                    paper_bgcolor: '#ffffff',
+                    font: {color: '#000000'}
+                };
+                
+                Plotly.newPlot('pulse-plot', plotData, layout, {
+                    displayModeBar: true,
+                    displaylogo: false,
+                    modeBarButtonsToRemove: ['pan2d', 'lasso2d']
+                });
+                
+                document.getElementById('pulse-loading').style.display = 'none';
+                document.getElementById('pulse-plot').style.display = 'block';
+                
+                // Update populations
+                document.getElementById('p-ms0').textContent = result.p_ms0.toFixed(3);
+                document.getElementById('p-ms1').textContent = result.p_ms1.toFixed(3);
+                
+            } catch (error) {
+                console.error('Error updating pulse plot:', error);
+                document.getElementById('pulse-loading').innerHTML = '<p style="color: red;">Error loading plot</p>';
+            }
+        }
+        
+        async function updateRabiPlot() {
+            document.getElementById('rabi-loading').style.display = 'block';
+            document.getElementById('rabi-plot').style.display = 'none';
+            
+            try {
+                // Always get full range from 0 to 400ns for Rabi plot
+                const response = await fetch(`/api/rabi_plot?start=0&end=400&current_tau=${currentTau}`);
+                const result = await response.json();
+                
+                // Create plot data
+                const plotData = [{
+                    x: result.tau_values,
+                    y: result.p_ms0_values,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    line: {color: '#000000', width: 2},
+                    marker: {color: '#000000', size: 4},
+                    name: 'ms=0 Population'
+                }, {
+                    x: [currentTau, currentTau],
+                    y: [0, 1],
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: {color: '#ff0000', width: 3, dash: 'dash'},
+                    name: 'Current τ'
+                }];
+                
+                const layout = {
+                    title: {
+                        text: 'Rabi Oscillation',
+                        font: {color: '#000000'}
+                    },
+                    xaxis: {
+                        title: 'MW Pulse Duration τ (ns)',
+                        color: '#000000',
+                        gridcolor: '#cccccc',
+                        range: [0, 400]
+                    },
+                    yaxis: {
+                        title: 'ms=0 Population',
+                        color: '#000000',
+                        gridcolor: '#cccccc',
+                        range: [0, 1]
+                    },
+                    plot_bgcolor: '#ffffff',
+                    paper_bgcolor: '#ffffff',
+                    font: {color: '#000000'}
+                };
+                
+                Plotly.newPlot('rabi-plot', plotData, layout, {
+                    displayModeBar: true,
+                    displaylogo: false,
+                    modeBarButtonsToRemove: ['pan2d', 'lasso2d']
+                });
+                
+                document.getElementById('rabi-loading').style.display = 'none';
+                document.getElementById('rabi-plot').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error updating Rabi plot:', error);
+                document.getElementById('rabi-loading').innerHTML = '<p style="color: red;">Error loading plot</p>';
+            }
+        }
+        
+        function prevTau() {
+            const currentIndex = tauList.indexOf(currentTau);
+            if (currentIndex > 0) {
+                currentTau = tauList[currentIndex - 1];
+                updateCurrentTau();
+                if (isSimulated) updatePlots();
+            }
+        }
+        
+        function nextTau() {
+            const currentIndex = tauList.indexOf(currentTau);
+            if (currentIndex < tauList.length - 1) {
+                currentTau = tauList[currentIndex + 1];
+                updateCurrentTau();
+                if (isSimulated) updatePlots();
+            }
+        }
+        
+        function jumpToAngle(targetAngle) {
+            if (!physicsInfo.Omega_Rabi_Hz) return;
+            
+            const targetTau = targetAngle * Math.PI / (180 * physicsInfo.Omega_Rabi_Hz * 1e-9);
+            const closestTau = tauList.reduce((prev, curr) => 
+                Math.abs(curr - targetTau) < Math.abs(prev - targetTau) ? curr : prev
+            );
+            
+            currentTau = closestTau;
+            updateCurrentTau();
+            if (isSimulated) updatePlots();
+        }
+        
+        function resetTau() {
+            currentTau = 0;
+            updateCurrentTau();
+            if (isSimulated) updatePlots();
+        }
+        
+        function showMainTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.main-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector(`[onclick="showMainTab('${tabName}')"]`).classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`${tabName}-content`).classList.add('active');
+            
+            // Show controls only on plots tab
+            const controls = document.querySelector('.controls');
+            if (tabName === 'plots') {
+                controls.classList.add('show');
+            } else {
+                controls.classList.remove('show');
+            }
+        }
+        
+        function showPlotTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.plot-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector(`[onclick="showPlotTab('${tabName}')"]`).classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.plot-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`${tabName}-content`).classList.add('active');
+        }
+    </script>
+</body>
+</html>
