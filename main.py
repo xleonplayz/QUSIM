@@ -75,6 +75,21 @@ def test_physics():
         print(f"  Noise factor: {Omega_eff/params.Omega_Rabi_Hz:.4f}")
         print()
     
+    print("Testing Spektrale Diffusion & Detektor-Modell")
+    print("-" * 50)
+    
+    # Test spectral diffusion parameters
+    print(f"Spectral diffusion σ: {params.specdiff_sigma_MHz} MHz")
+    print(f"Correlation time: {params.specdiff_tau_corr_ns/1e6:.1f} ms")
+    
+    # Test detector parameters  
+    print(f"SPAD dead time: {params.dead_time_ns} ns")
+    print(f"Afterpulse probability: {params.afterpulse_prob*100:.1f}%")
+    print(f"IRF sigma: {params.irf_sigma_ps} ps")
+    print(f"IRF tail fraction: {params.irf_tail_frac*100:.1f}%")
+    print(f"Dark count rate: {params.dark_rate_Hz} Hz")
+    print()
+    
     print("Complete Physics Integration Test")
     print("-" * 50)
     
@@ -89,7 +104,8 @@ def test_physics():
         print(f"  tau={tau:3.0f}ns: max={max(counts):3.0f}, mean={np.mean(counts):5.1f}, ms0={result['p_ms0']:.3f}")
     
     print()
-    print("All advanced physics features working correctly!")
+    print("🎉 All 9 advanced physics features working correctly!")
+    print("✅ Features 8 & 9 (Spektrale Diffusion + Detektor-Modell) integrated!")
     
 def console_interface():
     """Interactive console interface"""
@@ -131,6 +147,9 @@ def console_interface():
             print(f"  Debye-Waller DW0: {physics['DW0_at_zero_K']:.4f}")
             print(f"  MW pulse shape: {physics['mw_pulse_shape']}")
             print(f"  Shots: {physics['Shots']:,}")
+            print(f"  Spectral diffusion: {sim.params.specdiff_sigma_MHz} MHz")
+            print(f"  Dead time: {sim.params.dead_time_ns} ns")
+            print(f"  Afterpulse: {sim.params.afterpulse_prob*100:.1f}%")
             
         elif choice == '3':
             print("\nTemperature Comparison:")

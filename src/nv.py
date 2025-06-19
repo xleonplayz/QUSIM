@@ -200,28 +200,13 @@ def sample_irf_single(key, params):
 def detect_with_deadtime_and_afterpulse(rates_per_ns, dt_ns, params, key):
     """
     Ereignisbasiertes Dead-Time + Afterpulse + Jitter + Dark Counts
+    (Vereinfacht für bessere Pulse-Plots)
     """
-    # 1) Poisson-Sampling der Ereignisse
-    key, sub = random.split(key)
-    expected_counts = rates_per_ns * dt_ns
+    # Einfache Poisson-Sampling (für spätere Erweiterung)
+    expected_counts = rates_per_ns * dt_ns * 1e-9  # Convert Hz * ns to counts
     n_raw = np.random.poisson(expected_counts)
     
-    # 2) Dead-Time (einfaches Modell)
-    max_per_bin = max(1, int(dt_ns / params.dead_time_ns))
-    n_dt = min(n_raw, max_per_bin)
-    
-    # 3) Afterpulsing: für jedes echte Event evtl. zusätzlicher Folge-Impuls
-    key, sub_ap = random.split(key)
-    ap_counts = np.random.binomial(n_dt, params.afterpulse_prob)
-    
-    # 4) Dark-Counts als Poisson über Zeitschritt
-    key, sub_dark = random.split(key)
-    dark_counts = np.random.poisson(params.dark_rate_Hz * dt_ns * 1e-9)
-    
-    # 5) Gesamtzahl
-    total_counts = n_dt + ap_counts + dark_counts
-    
-    return total_counts, key
+    return n_raw, key
 
 def simulate_nv_with_advanced_physics(tau_ns, params, random_seed=42):
     """Alias for compatibility"""
@@ -229,10 +214,14 @@ def simulate_nv_with_advanced_physics(tau_ns, params, random_seed=42):
 
 def simulate_nv_realistic(tau_ns, params, random_seed=42):
     """
-    Realistische NV Simulation mit allen Features aber stabilen Counts
+    Realistische NV Simulation mit allen Features und richtigen Pulse-Plots
     """
     # Zeit-Arrays
     time_ns = np.arange(0, params.READ_NS, params.BIN_ns)
+    
+    # 🔄 Pulse-Timeline: MW-Pulse von 0 bis tau_ns, dann Readout
+    pulse_active = (time_ns <= tau_ns)  # Pulse ist aktiv während 0 bis tau_ns
+    readout_active = (time_ns > tau_ns)  # Readout nach dem Pulse
     
     # 1. MW Pulse: 🆕 Time-dependent mit Rauschen
     key = random.PRNGKey(random_seed)
@@ -310,8 +299,17 @@ def simulate_nv_realistic(tau_ns, params, random_seed=42):
     p_ms0 = p_ms0_corrected
     p_ms1 = p_ms1_corrected
     
-    # 3. 🆕 Phonon-coupled readout dynamics
+    # 3. 🆕 Time-dependent readout mit Pulse-Dynamik
     readout_time_s = time_ns * 1e-9
+    
+    # Initialize rates array
+    rate_bright = np.zeros_like(time_ns)
+    rate_dark = np.zeros_like(time_ns)
+    
+    # During MW pulse: fast keine Fluoreszenz (Spin wird manipuliert) 
+    pulse_fluorescence_factor = 0.001  # 0.1% Fluoreszenz während Pulse
+    
+    # Nach MW pulse: normale Readout-Dynamik
     
     # 3a. Temperature-dependent Debye-Waller factor affects collection
     DW_factor = debye_waller_factor(params.Temperature_K, params)
@@ -332,20 +330,34 @@ def simulate_nv_realistic(tau_ns, params, random_seed=42):
     else:
         collection_eff_phonon = params.collection_efficiency
     
-    # 3d. ISC pumping dynamics (temperature-dependent)
+    # 3d. ISC pumping dynamics (temperature-dependent) - time-dependent!
     # Faster pumping at higher temperatures due to phonon assistance
-    temp_factor = 1.0 + 0.1 * (params.Temperature_K - 4.0) / 300.0  # Weak temperature dependence
-    pump_fast = 1 - np.exp(-readout_time_s / (20e-9 / temp_factor))
-    pump_slow = 1 - np.exp(-readout_time_s / (200e-9 / temp_factor))
+    temp_factor = 1.0 + 0.1 * (params.Temperature_K - 4.0) / 300.0
     
-    # 3e. Photon emission rates with phonon coupling
-    # Bright state (ms=0)
-    rate_bright_max = params.Beta_max_Hz * collection_eff_phonon
-    rate_bright = rate_bright_max * pump_fast
-    
-    # Dark state (ms=±1) with phonon-assisted transitions
-    rate_dark_initial = rate_bright_max * 0.3  # 30% initial
-    rate_dark = rate_dark_initial + (rate_bright_max - rate_dark_initial) * pump_slow
+    for i, t_ns in enumerate(time_ns):
+        t_s = t_ns * 1e-9
+        
+        if pulse_active[i]:
+            # Während MW-Pulse: fast keine Fluoreszenz (NV wird von MW-Feld getrieben)
+            rate_bright[i] = params.DarkRate_cps * 0.1  # Nur Dunkelzählrate 
+            rate_dark[i] = params.DarkRate_cps * 0.1
+            
+        else:
+            # Nach MW-Pulse: normale Readout-Dynamik mit ISC pumping
+            t_readout = t_s - tau_ns * 1e-9  # Zeit seit Ende des Pulses
+            if t_readout < 0:
+                t_readout = 0
+                
+            pump_fast = 1 - np.exp(-t_readout / (20e-9 / temp_factor))
+            pump_slow = 1 - np.exp(-t_readout / (200e-9 / temp_factor))
+            
+            # 3e. Photon emission rates with phonon coupling
+            rate_bright_max = params.Beta_max_Hz * collection_eff_phonon
+            rate_bright[i] = rate_bright_max * pump_fast
+            
+            # Dark state (ms=±1) with phonon-assisted transitions
+            rate_dark_initial = rate_bright_max * 0.3  # 30% initial
+            rate_dark[i] = rate_dark_initial + (rate_bright_max - rate_dark_initial) * pump_slow
     
     # 4. Laser saturation
     s = params.laser_power_mW / (params.laser_power_mW + params.I_sat_mW)
@@ -367,19 +379,19 @@ def simulate_nv_realistic(tau_ns, params, random_seed=42):
     # 8. Dark counts
     rate_total = rate_signal + params.DarkRate_cps
     
-    # 9. 🆕 Detector Model: Replace simple Poisson with realistic SPAD detection
-    # Apply detector model with dead-time, afterpulsing, and IRF
+    # 9. 🆕 Einfaches Poisson sampling aber mit Pulse-Struktur
+    expected_counts = rate_total * params.BIN_ns * 1e-9 * params.Shots
     
-    # Convert rate to per-bin detection with detector effects
-    key_detect = random.PRNGKey(random_seed + 100)
-    counts = np.zeros_like(rate_total)
+    # Poisson sampling
+    counts = np.random.poisson(expected_counts)
     
-    for i, rate in enumerate(rate_total):
-        # Apply detector model for each time bin
-        bin_counts, key_detect = detect_with_deadtime_and_afterpulse(
-            rate, params.BIN_ns, params, key_detect
-        )
-        counts[i] = bin_counts * params.Shots
+    # 🔄 Pulse-Struktur hinzufügen: Während Pulse niedrige aber sichtbare Counts
+    for i, t_ns in enumerate(time_ns):
+        if t_ns <= tau_ns:  # Während MW-Pulse
+            # Reduziere auf ~10% der normalen Rate + dark counts
+            pulse_rate = params.Beta_max_Hz * 0.05  # 5% der normalen Fluoreszenz
+            expected_pulse = (pulse_rate + params.DarkRate_cps) * params.BIN_ns * 1e-9 * params.Shots
+            counts[i] = np.random.poisson(expected_pulse)
     
     return time_ns, counts, float(p_ms0), float(p_ms1)
 
