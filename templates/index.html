@@ -436,6 +436,11 @@
                 <div class="nav-section-title">Experimente</div>
                 <button class="nav-item" onclick="showPage('rabi')">Rabi Oszillation</button>
             </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Auswertung</div>
+                <button class="nav-item" onclick="showPage('auswertung')">Rabi Oszillation</button>
+            </div>
         </div>
     </div>
 
@@ -559,6 +564,111 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Emission Spectrum Plot (below pulse plot) -->
+            <div class="plot-container" style="margin-top: 20px;">
+                <div class="plot-section">
+                    <h3>NV Emission Spectrum</h3>
+                    <div class="loading" id="spectrum-loading">
+                        <div class="loading-spinner"></div>
+                        <p>Ready for simulation...</p>
+                    </div>
+                    <div id="spectrum-plot"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Auswertung Page -->
+        <div id="auswertung-content" class="page-content">
+            <h2>Auswertung - Rabi Oszillation</h2>
+            
+            <div class="dashboard-card" style="margin-bottom: 20px;">
+                <h3>Datenquelle wählen</h3>
+                <div class="control-row">
+                    <button class="btn" onclick="loadSampleData()" style="margin-right: 10px;">Beispieldaten laden</button>
+                    <button class="btn" onclick="toggleFileUpload()">Eigene Dateien hochladen</button>
+                </div>
+                
+                <div id="file-upload-section" style="display: none; margin-top: 15px; border-top: 1px solid #ccc; padding-top: 15px;">
+                    <div class="control-row">
+                        <div class="control-group">
+                            <label>Datei 1:</label>
+                            <input type="file" id="file1" accept=".dat" style="margin-left: 10px;">
+                        </div>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group">
+                            <label>Datei 2:</label>
+                            <input type="file" id="file2" accept=".dat" style="margin-left: 10px;">
+                        </div>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group">
+                            <label>Datei 3:</label>
+                            <input type="file" id="file3" accept=".dat" style="margin-left: 10px;">
+                        </div>
+                    </div>
+                    <div class="control-row">
+                        <button class="btn" onclick="uploadAndAnalyze()">Eigene Daten analysieren</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="plot-container">
+                <div class="plot-grid">
+                    <div class="plot-section">
+                        <h3>Übersicht</h3>
+                        <div class="loading" id="experimental-loading" style="display: flex;">
+                            <div class="loading-spinner"></div>
+                            <p>Lade Dateien hoch und klicke 'Daten analysieren'...</p>
+                        </div>
+                        <div id="experimental-plot" style="display: none;"></div>
+                    </div>
+                    
+                    <div class="plot-section">
+                        <h3>Rabi Oszillation</h3>
+                        <div class="loading" id="experimental-rabi-loading" style="display: flex;">
+                            <div class="loading-spinner"></div>
+                            <p>Warte auf Datenanalyse...</p>
+                        </div>
+                        <div id="experimental-rabi-plot" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="plot-container">
+                <div class="plot-grid">
+                    <div class="plot-section">
+                        <h3>Einzelner Puls</h3>
+                        <div style="text-align: center; margin-bottom: 10px;">
+                            <button class="btn" onclick="prevPulse()" style="margin-right: 10px;">← Vorheriger</button>
+                            <span id="pulse-counter" style="font-weight: bold;">Puls 1 / --</span>
+                            <button class="btn" onclick="nextPulse()" style="margin-left: 10px;">Nächster →</button>
+                        </div>
+                        <div class="loading" id="single-pulse-loading" style="display: flex;">
+                            <div class="loading-spinner"></div>
+                            <p>Warte auf Datenanalyse...</p>
+                        </div>
+                        <div id="single-pulse-plot" style="display: none;"></div>
+                    </div>
+                    
+                    <div class="plot-section">
+                        <!-- Placeholder for second plot if needed -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Raw Data Plot (Full Width) -->
+            <div class="plot-container" style="margin-top: 20px;">
+                <h2 style="text-align: center; margin-bottom: 15px;">Raw</h2>
+                <div style="background: #ffffff; border: 1px solid #cccccc; border-radius: 6px; padding: 15px; height: 60vh;">
+                    <div class="loading" id="raw-loading" style="display: flex; height: 100%;">
+                        <div class="loading-spinner"></div>
+                        <p>Warte auf Datenanalyse...</p>
+                    </div>
+                    <div id="raw-plot" style="display: none; height: 100%;"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -606,6 +716,11 @@
                 controls.classList.add('show');
             } else {
                 controls.classList.remove('show');
+            }
+            
+            // Auto-load sample data when opening Auswertung page
+            if (pageName === 'auswertung') {
+                loadSampleDataAutomatically();
             }
             
             // Close sidebar
@@ -799,6 +914,11 @@
             
             try {
                 const response = await fetch('/api/simulate_tau_sweep');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const result = await response.json();
                 
                 isSimulated = true;
@@ -828,13 +948,23 @@
         }
         
         async function updatePlots() {
-            if (!isSimulated) return;
+            if (!isSimulated) {
+                console.log('Simulation not yet completed, skipping plot updates');
+                return;
+            }
             
-            // Update pulse plot
-            await updatePulsePlot();
-            
-            // Update Rabi plot
-            await updateRabiPlot();
+            try {
+                // Update pulse plot
+                await updatePulsePlot();
+                
+                // Update Rabi plot
+                await updateRabiPlot();
+                
+                // Update emission spectrum
+                await updateEmissionSpectrum();
+            } catch (error) {
+                console.error('Error updating plots:', error);
+            }
         }
         
         async function updatePulsePlot() {
@@ -968,6 +1098,81 @@
             }
         }
         
+        async function updateEmissionSpectrum() {
+            document.getElementById('spectrum-loading').style.display = 'flex';
+            document.getElementById('spectrum-plot').style.display = 'none';
+            
+            try {
+                const response = await fetch(`/api/emission_spectrum/${currentTau}`);
+                const result = await response.json();
+                
+                // Create plot data for ZPL and PSB
+                const plotData = [{
+                    x: result.wavelengths_nm,
+                    y: result.zpl_intensity,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: {color: '#ff0000', width: 3},
+                    name: 'Zero-Phonon Line (ZPL)',
+                    fill: 'tozeroy',
+                    fillcolor: 'rgba(255, 0, 0, 0.2)'
+                }, {
+                    x: result.wavelengths_nm,
+                    y: result.psb_intensity,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: {color: '#0000ff', width: 2},
+                    name: 'Phonon Sideband (PSB)',
+                    fill: 'tozeroy',
+                    fillcolor: 'rgba(0, 0, 255, 0.1)'
+                }];
+                
+                const layout = {
+                    title: {
+                        text: `NV Emission Spectrum (τ=${currentTau}ns, T=${physicsInfo.Temperature_K}K)`,
+                        font: {color: '#000000', size: 14}
+                    },
+                    xaxis: {
+                        title: 'Wavelength (nm)',
+                        color: '#000000',
+                        gridcolor: '#cccccc',
+                        range: [630, 800]
+                    },
+                    yaxis: {
+                        title: 'Normalized Intensity',
+                        color: '#000000',
+                        gridcolor: '#cccccc',
+                        range: [0, 1.1]
+                    },
+                    plot_bgcolor: '#ffffff',
+                    paper_bgcolor: '#ffffff',
+                    font: {color: '#000000'},
+                    margin: {l: 50, r: 20, t: 40, b: 50},
+                    legend: {
+                        x: 0.02,
+                        y: 0.98,
+                        bgcolor: 'rgba(255,255,255,0.8)',
+                        bordercolor: '#000000',
+                        borderwidth: 1
+                    }
+                };
+                
+                Plotly.newPlot('spectrum-plot', plotData, layout, {
+                    displayModeBar: true,
+                    displaylogo: false,
+                    modeBarButtonsToRemove: ['pan2d', 'lasso2d'],
+                    responsive: true
+                });
+                
+                document.getElementById('spectrum-loading').style.display = 'none';
+                document.getElementById('spectrum-plot').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error updating emission spectrum:', error);
+                document.getElementById('spectrum-loading').innerHTML = '<p style="color: red;">Error loading emission spectrum</p>';
+            }
+        }
+        
         function prevTau() {
             const currentIndex = tauList.indexOf(currentTau);
             if (currentIndex > 0) {
@@ -1005,6 +1210,695 @@
             if (isSimulated) updatePlots();
         }
         
+        // Auswertung functions
+        let uploadedFiles = {};
+        
+        function toggleFileUpload() {
+            const section = document.getElementById('file-upload-section');
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        async function loadSampleData() {
+            // Show loading states
+            document.getElementById('experimental-loading').style.display = 'flex';
+            document.getElementById('experimental-plot').style.display = 'none';
+            document.getElementById('experimental-rabi-loading').style.display = 'flex';
+            document.getElementById('experimental-rabi-plot').style.display = 'none';
+            document.getElementById('raw-loading').style.display = 'flex';
+            document.getElementById('raw-plot').style.display = 'none';
+            
+            document.getElementById('experimental-loading').innerHTML = `
+                <div class="loading-spinner"></div>
+                <p>Lade Beispieldaten...</p>
+            `;
+            
+            document.getElementById('raw-loading').innerHTML = `
+                <div class="loading-spinner"></div>
+                <p>Lade Raw-Daten...</p>
+            `;
+            
+            try {
+                // Load sample data from server
+                const response = await fetch('/api/load_sample_data');
+                const result = await response.json();
+                
+                if (!result.success) {
+                    throw new Error(result.error);
+                }
+                
+                // Parse the files
+                const fileDataArray = [];
+                for (const file of result.files) {
+                    const parsedData = parseDataFile(file.content, file.filename);
+                    fileDataArray.push(parsedData);
+                }
+                
+                // Process and plot
+                const experimentalData = processExperimentalData(fileDataArray);
+                plotExperimentalData(experimentalData);
+                plotExperimentalRabi(experimentalData);
+                
+            } catch (error) {
+                console.error('Error loading sample data:', error);
+                document.getElementById('experimental-loading').innerHTML = '<p style="color: red;">Fehler beim Laden der Beispieldaten: ' + error.message + '</p>';
+                document.getElementById('experimental-rabi-loading').innerHTML = '<p style="color: red;">Fehler beim Laden der Beispieldaten</p>';
+            }
+        }
+        
+        function loadSampleDataAutomatically() {
+            console.log('Auto-loading sample data...');
+            loadSampleData();
+        }
+        
+        async function uploadAndAnalyze() {
+            const file1 = document.getElementById('file1').files[0];
+            const file2 = document.getElementById('file2').files[0];
+            const file3 = document.getElementById('file3').files[0];
+            
+            if (!file1 || !file2 || !file3) {
+                alert('Bitte alle 3 Dateien hochladen!');
+                return;
+            }
+            
+            // Show loading states
+            document.getElementById('experimental-loading').style.display = 'flex';
+            document.getElementById('experimental-plot').style.display = 'none';
+            document.getElementById('experimental-rabi-loading').style.display = 'flex';
+            document.getElementById('experimental-rabi-plot').style.display = 'none';
+            
+            try {
+                // Read and parse all files
+                const fileData1 = await readAndParseFile(file1);
+                const fileData2 = await readAndParseFile(file2);
+                const fileData3 = await readAndParseFile(file3);
+                
+                // Extract experimental data
+                const experimentalData = processExperimentalData([fileData1, fileData2, fileData3]);
+                
+                // Plot experimental data
+                plotExperimentalData(experimentalData);
+                
+                // Generate Rabi oscillation plot
+                plotExperimentalRabi(experimentalData);
+                
+            } catch (error) {
+                console.error('Error processing files:', error);
+                document.getElementById('experimental-loading').innerHTML = '<p style="color: red;">Fehler beim Verarbeiten der Dateien</p>';
+                document.getElementById('experimental-rabi-loading').innerHTML = '<p style="color: red;">Fehler beim Verarbeiten der Dateien</p>';
+            }
+        }
+        
+        function readAndParseFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const content = e.target.result;
+                        const parsedData = parseDataFile(content, file.name);
+                        resolve(parsedData);
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                reader.onerror = reject;
+                reader.readAsText(file);
+            });
+        }
+        
+        function parseDataFile(content, filename) {
+            const lines = content.split('\n');
+            let dataStartIndex = -1;
+            let metadata = {};
+            
+            // Find data start and extract metadata
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (line.includes('---- END HEADER ----')) {
+                    dataStartIndex = i + 1;
+                    break;
+                }
+                
+                // Extract ALL metadata
+                if (line.startsWith('# microwave_amplitude=')) {
+                    metadata.mw_amplitude = parseFloat(line.split('=')[1]);
+                }
+                if (line.startsWith('# rabi_period=')) {
+                    metadata.rabi_period = parseFloat(line.split('=')[1]);
+                }
+                if (line.startsWith('# bin width (s)=')) {
+                    metadata.bin_width = parseFloat(line.split('=')[1]);
+                }
+                if (line.startsWith('# column_dtypes=')) {
+                    metadata.column_dtypes = line.split('=')[1];
+                }
+                if (line.startsWith('# column_headers=')) {
+                    metadata.column_headers = line.split('=')[1];
+                }
+            }
+            
+            if (dataStartIndex === -1) {
+                console.log('No header end found, treating as raw data');
+                dataStartIndex = 0;
+            }
+            
+            // Auto-detect file type based on content structure
+            let sampleDataLines = [];
+            for (let i = dataStartIndex; i < Math.min(dataStartIndex + 20, lines.length); i++) {
+                const line = lines[i].trim();
+                if (line && !line.startsWith('#') && line.length > 0) {
+                    sampleDataLines.push(line);
+                }
+            }
+            
+            console.log(`File ${filename}: Found ${sampleDataLines.length} data lines`);
+            console.log(`Data starts at index: ${dataStartIndex}, total lines: ${lines.length}`);
+            console.log(`Sample lines:`, sampleDataLines.slice(0, 3));
+            
+            if (sampleDataLines.length === 0) {
+                return {
+                    type: 'empty',
+                    filename: filename,
+                    metadata: metadata,
+                    debug_info: `No data lines found after index ${dataStartIndex}, total lines: ${lines.length}`
+                };
+            }
+            
+            // Check if it's frequency sweep data (two columns with float values)
+            const firstDataLine = sampleDataLines[0];
+            const parts = firstDataLine.split('\t');
+            
+            console.log(`First line parts:`, parts);
+            
+            if (parts.length >= 2) {
+                // Try to parse as two columns
+                try {
+                    const freq = parseFloat(parts[0]);
+                    const signal = parseFloat(parts[1]);
+                    
+                    console.log(`Trying freq/signal: ${freq}, ${signal}`);
+                    
+                    if (!isNaN(freq) && !isNaN(signal) && freq > 1e6) { // Likely frequency data
+                        // Parse as frequency sweep
+                        const frequencies = [];
+                        const signals = [];
+                        
+                        for (let i = dataStartIndex; i < lines.length; i++) {
+                            const line = lines[i].trim();
+                            if (line && !line.startsWith('#') && line.length > 0) {
+                                const parts = line.split('\t');
+                                if (parts.length >= 2) {
+                                    const f = parseFloat(parts[0]);
+                                    const s = parseFloat(parts[1]);
+                                    if (!isNaN(f) && !isNaN(s)) {
+                                        frequencies.push(f);
+                                        signals.push(s);
+                                    }
+                                }
+                            }
+                        }
+                        
+                        console.log(`Found ${frequencies.length} frequency points`);
+                        
+                        return {
+                            type: 'frequency_sweep',
+                            frequencies: frequencies,
+                            signals: signals,
+                            metadata: metadata,
+                            filename: filename
+                        };
+                    }
+                } catch (e) {
+                    console.log('Error parsing as frequency data:', e);
+                }
+            }
+            
+            // Check if it's pulse data (many integer counts in one or multiple columns)
+            try {
+                const values = firstDataLine.split('\t').map(v => parseInt(v.trim()));
+                console.log(`Trying pulse data, first values:`, values.slice(0, 5));
+                
+                if (values.length > 0 && values.every(v => !isNaN(v) && v >= 0 && v < 10000)) { // Looks like count data
+                    // Parse as INDIVIDUAL PULSES - each line is one pulse
+                    const pulses = [];
+                    
+                    for (let i = dataStartIndex; i < lines.length; i++) {
+                        const line = lines[i].trim();
+                        if (line && !line.startsWith('#') && line.length > 0) {
+                            const values = line.split('\t');
+                            const pulseData = [];
+                            
+                            for (const val of values) {
+                                const count = parseInt(val.trim());
+                                if (!isNaN(count)) {
+                                    pulseData.push(count);
+                                }
+                            }
+                            
+                            if (pulseData.length > 0) {
+                                // Create time axis for this pulse
+                                const timeAxis = pulseData.map((_, index) => index * (metadata.bin_width || 3.2e-9) * 1e9); // Convert to ns
+                                
+                                pulses.push({
+                                    counts: pulseData,
+                                    time_ns: timeAxis,
+                                    pulse_number: pulses.length + 1
+                                });
+                            }
+                        }
+                    }
+                    
+                    console.log(`Found ${pulses.length} individual pulses`);
+                    
+                    return {
+                        type: 'pulse_collection',
+                        pulses: pulses,
+                        metadata: metadata,
+                        filename: filename
+                    };
+                }
+            } catch (e) {
+                console.log('Error parsing as pulse data:', e);
+            }
+            
+            // Check if it's single column data (like raw_timetrace)
+            if (parts.length === 1) {
+                try {
+                    const singleVal = parseInt(parts[0].trim());
+                    if (!isNaN(singleVal) && singleVal >= 0) {
+                        // Parse as single column data
+                        const data = [];
+                        
+                        for (let i = dataStartIndex; i < lines.length; i++) {
+                            const line = lines[i].trim();
+                            if (line && !line.startsWith('#') && line.length > 0) {
+                                const val = parseInt(line.trim());
+                                if (!isNaN(val)) {
+                                    data.push(val);
+                                }
+                            }
+                        }
+                        
+                        console.log(`Found ${data.length} single column data points`);
+                        
+                        // Create time axis
+                        const timeAxis = data.map((_, index) => index * (metadata.bin_width || 3.2e-9) * 1e9); // Convert to ns
+                        
+                        return {
+                            type: 'pulse',
+                            time_ns: timeAxis,
+                            counts: data,
+                            metadata: metadata,
+                            filename: filename
+                        };
+                    }
+                } catch (e) {
+                    console.log('Error parsing as single column:', e);
+                }
+            }
+            
+            // Fallback: treat as raw data
+            const allDataLines = [];
+            for (let i = dataStartIndex; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (line && !line.startsWith('#')) {
+                    allDataLines.push(line);
+                }
+            }
+            
+            return {
+                type: 'raw',
+                raw_data: allDataLines,
+                metadata: metadata,
+                filename: filename,
+                sample_lines: sampleDataLines.slice(0, 5)
+            };
+        }
+        
+        // Global variables for pulse navigation
+        let currentPulseIndex = 0;
+        let allPulses = [];
+        
+        function processExperimentalData(fileDataArray) {
+            // Log what we detected
+            console.log('Detected file types:');
+            fileDataArray.forEach(f => {
+                console.log(`${f.filename}: ${f.type}`);
+                if (f.type === 'raw') {
+                    console.log('Sample data lines:', f.sample_lines);
+                } else if (f.type === 'pulse_collection') {
+                    console.log(`Pulse collection with ${f.pulses.length} pulses`);
+                }
+            });
+            
+            // Group files by type
+            const pulseFiles = fileDataArray.filter(f => f.type === 'pulse');
+            const pulseCollections = fileDataArray.filter(f => f.type === 'pulse_collection');
+            const freqFiles = fileDataArray.filter(f => f.type === 'frequency_sweep');
+            const rawFiles = fileDataArray.filter(f => f.type === 'raw');
+            
+            // Collect all individual pulses from pulse collections
+            allPulses = [];
+            pulseCollections.forEach(collection => {
+                allPulses.push(...collection.pulses);
+            });
+            
+            console.log(`Total individual pulses found: ${allPulses.length}`);
+            
+            // Reset pulse navigation
+            currentPulseIndex = 0;
+            
+            return {
+                pulse_files: pulseFiles,
+                pulse_collections: pulseCollections,
+                frequency_files: freqFiles,
+                raw_files: rawFiles,
+                all_pulses: allPulses,
+                all_files: fileDataArray
+            };
+        }
+        
+        function prevPulse() {
+            if (currentPulseIndex > 0) {
+                currentPulseIndex--;
+                updateSinglePulsePlot();
+            }
+        }
+        
+        function nextPulse() {
+            if (currentPulseIndex < allPulses.length - 1) {
+                currentPulseIndex++;
+                updateSinglePulsePlot();
+            }
+        }
+        
+        function updateSinglePulsePlot() {
+            if (allPulses.length === 0) return;
+            
+            const pulse = allPulses[currentPulseIndex];
+            
+            // Update counter
+            document.getElementById('pulse-counter').textContent = `Puls ${currentPulseIndex + 1} / ${allPulses.length}`;
+            
+            const plotData = [{
+                x: pulse.time_ns,
+                y: pulse.counts,
+                type: 'scatter',
+                mode: 'lines',
+                line: {color: '#000000', width: 2},
+                name: `Puls ${pulse.pulse_number}`
+            }];
+            
+            const layout = {
+                title: {
+                    text: `Einzelner Puls ${currentPulseIndex + 1}`,
+                    font: {color: '#000000', size: 14}
+                },
+                xaxis: {
+                    title: 'Zeit (ns)',
+                    color: '#000000',
+                    gridcolor: '#cccccc'
+                },
+                yaxis: {
+                    title: 'Counts',
+                    color: '#000000',
+                    gridcolor: '#cccccc'
+                },
+                plot_bgcolor: '#ffffff',
+                paper_bgcolor: '#ffffff',
+                font: {color: '#000000'},
+                margin: {l: 50, r: 20, t: 40, b: 50}
+            };
+            
+            Plotly.newPlot('single-pulse-plot', plotData, layout, {
+                displayModeBar: true,
+                displaylogo: false,
+                modeBarButtonsToRemove: ['pan2d', 'lasso2d'],
+                responsive: true
+            });
+            
+            document.getElementById('single-pulse-loading').style.display = 'none';
+            document.getElementById('single-pulse-plot').style.display = 'block';
+        }
+        
+        
+        function plotExperimentalRabi(experimentalData) {
+            // Always show some information about what we found
+            let infoText = '<h4>Datenanalyse:</h4>';
+            
+            if (experimentalData.pulse_files.length > 1) {
+                // We have multiple pulse files - try to create Rabi oscillation
+                const amplitudes = experimentalData.rabi_data.map(d => d.amplitude);
+                const meanCounts = experimentalData.rabi_data.map(d => d.mean_counts);
+                
+                if (meanCounts.length > 0 && meanCounts.every(c => !isNaN(c))) {
+                    // Normalize data to 0-1 range for comparison with simulation
+                    const maxCounts = Math.max(...meanCounts);
+                    const minCounts = Math.min(...meanCounts);
+                    const normalizedCounts = meanCounts.map(c => (maxCounts - minCounts) > 0 ? 
+                        (c - minCounts) / (maxCounts - minCounts) : 0);
+                    
+                    const plotData = [{
+                        x: amplitudes,
+                        y: normalizedCounts,
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        line: {color: '#000000', width: 2},
+                        marker: {color: '#000000', size: 6},
+                        name: 'Multi-File Rabi Analysis'
+                    }];
+                    
+                    const layout = {
+                        title: {
+                            text: 'Rabi Analysis (Multiple Files)',
+                            font: {color: '#000000', size: 14}
+                        },
+                        xaxis: {
+                            title: 'File Index / Amplitude',
+                            color: '#000000',
+                            gridcolor: '#cccccc'
+                        },
+                        yaxis: {
+                            title: 'Normalisierte Fluoreszenz',
+                            color: '#000000',
+                            gridcolor: '#cccccc',
+                            range: [0, 1]
+                        },
+                        plot_bgcolor: '#ffffff',
+                        paper_bgcolor: '#ffffff',
+                        font: {color: '#000000'},
+                        margin: {l: 50, r: 20, t: 40, b: 50}
+                    };
+                    
+                    Plotly.newPlot('experimental-rabi-plot', plotData, layout, {
+                        displayModeBar: true,
+                        displaylogo: false,
+                        modeBarButtonsToRemove: ['pan2d', 'lasso2d'],
+                        responsive: true
+                    });
+                    
+                    infoText += `<p>${experimentalData.pulse_files.length} Pulse-Dateien analysiert für Rabi-Oszillation</p>`;
+                    document.getElementById('experimental-rabi-loading').innerHTML = infoText;
+                    document.getElementById('experimental-rabi-loading').style.display = 'block';
+                    document.getElementById('experimental-rabi-plot').style.display = 'block';
+                    return;
+                }
+            }
+            
+            if (experimentalData.frequency_files.length > 0) {
+                // Plot frequency sweep data as "Rabi" 
+                const freqData = experimentalData.frequency_files[0];
+                
+                const plotData = [{
+                    x: freqData.frequencies,
+                    y: freqData.signals,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    line: {color: '#000000', width: 2},
+                    marker: {color: '#000000', size: 4},
+                    name: 'Frequency Sweep'
+                }];
+                
+                const layout = {
+                    title: {
+                        text: 'Frequency Sweep Analysis',
+                        font: {color: '#000000', size: 14}
+                    },
+                    xaxis: {
+                        title: 'Frequenz (Hz)',
+                        color: '#000000',
+                        gridcolor: '#cccccc'
+                    },
+                    yaxis: {
+                        title: 'Signal',
+                        color: '#000000',
+                        gridcolor: '#cccccc'
+                    },
+                    plot_bgcolor: '#ffffff',
+                    paper_bgcolor: '#ffffff',
+                    font: {color: '#000000'},
+                    margin: {l: 50, r: 20, t: 40, b: 50}
+                };
+                
+                Plotly.newPlot('experimental-rabi-plot', plotData, layout, {
+                    displayModeBar: true,
+                    displaylogo: false,
+                    modeBarButtonsToRemove: ['pan2d', 'lasso2d'],
+                    responsive: true
+                });
+                
+                infoText += '<p>Frequency-Sweep als Rabi-ähnliche Analyse dargestellt</p>';
+                document.getElementById('experimental-rabi-loading').innerHTML = infoText;
+                document.getElementById('experimental-rabi-loading').style.display = 'block';
+                document.getElementById('experimental-rabi-plot').style.display = 'block';
+                return;
+            }
+            
+            // Fallback: show what we have
+            infoText += '<p>Für Rabi-Oszillation benötigt: mehrere Pulse-Dateien oder Frequency-Sweep-Daten</p>';
+            infoText += `<p>Gefunden: ${experimentalData.pulse_files.length} Pulse-Dateien, ${experimentalData.frequency_files.length} Frequency-Dateien</p>`;
+            
+            document.getElementById('experimental-rabi-loading').innerHTML = infoText;
+        }
+        
+        function plotExperimentalData(experimentalData) {
+            // Show what files we have detected
+            let infoText = '<h4>Erkannte Dateien:</h4><ul>';
+            experimentalData.all_files.forEach(f => {
+                infoText += `<li><strong>${f.filename}</strong>: ${f.type}`;
+                if (f.type === 'pulse') {
+                    infoText += ` (${f.counts.length} Datenpunkte)`;
+                } else if (f.type === 'pulse_collection') {
+                    infoText += ` (${f.pulses.length} Pulse)`;
+                } else if (f.type === 'frequency_sweep') {
+                    infoText += ` (${f.frequencies.length} Frequenzpunkte)`;
+                } else if (f.type === 'raw') {
+                    infoText += ` (${f.raw_data.length} Zeilen)`;
+                }
+                infoText += '</li>';
+            });
+            infoText += '</ul>';
+            
+            // Show overview plot based on what we have
+            if (experimentalData.frequency_files.length > 0) {
+                // Plot frequency data as overview
+                const freqData = experimentalData.frequency_files[0];
+                const plotData = [{
+                    x: freqData.frequencies,
+                    y: freqData.signals,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    line: {color: '#000000', width: 2},
+                    marker: {color: '#000000', size: 4},
+                    name: 'Frequency Sweep'
+                }];
+                
+                const layout = {
+                    title: {
+                        text: `Übersicht: ${freqData.filename}`,
+                        font: {color: '#000000', size: 14}
+                    },
+                    xaxis: {
+                        title: 'Frequenz (Hz)',
+                        color: '#000000',
+                        gridcolor: '#cccccc'
+                    },
+                    yaxis: {
+                        title: 'Signal',
+                        color: '#000000',
+                        gridcolor: '#cccccc'
+                    },
+                    plot_bgcolor: '#ffffff',
+                    paper_bgcolor: '#ffffff',
+                    font: {color: '#000000'},
+                    margin: {l: 50, r: 20, t: 40, b: 50}
+                };
+                
+                Plotly.newPlot('experimental-plot', plotData, layout, {
+                    displayModeBar: true,
+                    displaylogo: false,
+                    modeBarButtonsToRemove: ['pan2d', 'lasso2d'],
+                    responsive: true
+                });
+                
+                document.getElementById('experimental-loading').innerHTML = infoText;
+                document.getElementById('experimental-loading').style.display = 'block';
+                document.getElementById('experimental-plot').style.display = 'block';
+            } else {
+                // Just show info if no frequency data available
+                document.getElementById('experimental-loading').innerHTML = infoText;
+            }
+            
+            // Initialize single pulse plot if we have pulses
+            if (experimentalData.all_pulses.length > 0) {
+                updateSinglePulsePlot();
+            }
+            
+            // Create Raw plot with all pulse data
+            plotRawData(experimentalData);
+        }
+        
+        function plotRawData(experimentalData) {
+            if (experimentalData.all_pulses.length === 0) {
+                document.getElementById('raw-loading').innerHTML = '<p>Keine Pulsdaten für Raw-Ansicht gefunden</p>';
+                return;
+            }
+            
+            // Create traces for all pulses (show first 20 for performance)
+            const maxPulsesToShow = Math.min(20, experimentalData.all_pulses.length);
+            const plotData = [];
+            
+            for (let i = 0; i < maxPulsesToShow; i++) {
+                const pulse = experimentalData.all_pulses[i];
+                plotData.push({
+                    x: pulse.time_ns,
+                    y: pulse.counts,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: {
+                        color: `hsl(${(i * 360 / maxPulsesToShow)}, 70%, 50%)`,
+                        width: 1
+                    },
+                    name: `Puls ${i + 1}`,
+                    opacity: 0.7
+                });
+            }
+            
+            const layout = {
+                title: {
+                    text: `Alle Pulse (zeige ersten ${maxPulsesToShow} von ${experimentalData.all_pulses.length})`,
+                    font: {color: '#000000', size: 16}
+                },
+                xaxis: {
+                    title: 'Zeit (ns)',
+                    color: '#000000',
+                    gridcolor: '#cccccc'
+                },
+                yaxis: {
+                    title: 'Counts',
+                    color: '#000000',
+                    gridcolor: '#cccccc'
+                },
+                plot_bgcolor: '#ffffff',
+                paper_bgcolor: '#ffffff',
+                font: {color: '#000000'},
+                margin: {l: 60, r: 20, t: 60, b: 60},
+                showlegend: true,
+                legend: {
+                    orientation: "h",
+                    y: -0.2
+                }
+            };
+            
+            Plotly.newPlot('raw-plot', plotData, layout, {
+                displayModeBar: true,
+                displaylogo: false,
+                modeBarButtonsToRemove: ['pan2d', 'lasso2d'],
+                responsive: true
+            });
+            
+            document.getElementById('raw-loading').style.display = 'none';
+            document.getElementById('raw-plot').style.display = 'block';
+        }
         
     </script>
 </body>

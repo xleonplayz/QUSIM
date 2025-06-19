@@ -31,8 +31,8 @@ def get_physics_info():
 @app.route('/api/simulate_tau_sweep')
 def simulate_tau_sweep():
     """Simulate a full tau sweep with progress tracking"""
-    # Default tau range
-    tau_list = list(range(0, 401, 50))  # 0 to 400ns in 50ns steps
+    # Default tau range - reduced for faster initial simulation
+    tau_list = list(range(0, 501, 25))  # 0 to 500ns in 25ns steps (21 points)
     
     # Get custom range if provided
     start = request.args.get('start', type=int)
@@ -96,6 +96,44 @@ def get_pulse_data(tau):
         'total_counts': int(sum(counts))
     })
 
+@app.route('/api/load_sample_data')
+def load_sample_data():
+    """Load and analyze sample data files"""
+    import os
+    
+    # Path to sample directory
+    sample_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'sample')
+    
+    try:
+        sample_files = []
+        
+        # List all .dat files in sample directory
+        for filename in os.listdir(sample_dir):
+            if filename.endswith('.dat'):
+                filepath = os.path.join(sample_dir, filename)
+                
+                # Read file content
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                
+                sample_files.append({
+                    'filename': filename,
+                    'content': content,
+                    'size': len(content)
+                })
+        
+        return jsonify({
+            'success': True,
+            'files': sample_files,
+            'count': len(sample_files)
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 @app.route('/api/rabi_plot')
 def get_rabi_plot():
     """Get Rabi oscillation plot with time window averaging"""
@@ -103,8 +141,8 @@ def get_rabi_plot():
     end_time = request.args.get('end', 1000, type=int)
     current_tau = request.args.get('current_tau', 0, type=int)
     
-    # Generate tau range with finer resolution (every 10ns up to 500ns)
-    tau_list = list(range(0, 501, 10))
+    # Generate tau range with good resolution for smooth Rabi curve
+    tau_list = list(range(0, 501, 5))  # Every 5ns for smooth curve
     
     # Progress callback for Rabi plot
     def rabi_progress(i, total, tau):
@@ -147,6 +185,85 @@ def get_rabi_plot():
         'mean_counts': mean_counts,
         'current_tau': current_tau
     })
+
+@app.route('/api/emission_spectrum/<int:tau>')
+def get_emission_spectrum(tau):
+    """Get NV emission spectrum (ZPL vs PSB) for specific tau"""
+    try:
+        # Get the NV parameters
+        params = simulator.params
+        
+        # Calculate temperature-dependent Debye-Waller factor
+        from .nv import debye_waller_factor
+        DW_factor = debye_waller_factor(params.Temperature_K, params)
+        
+        # Wavelength range for NV emission (NV- center: 637nm ZPL + PSB up to 800nm)
+        wavelengths_nm = np.linspace(630, 800, 1000)
+        
+        # NV- zero-phonon line at 637 nm (correct!)
+        zpl_center_nm = 637.0
+        zpl_width_nm = 0.13  # Natural linewidth ~0.13 nm at low T
+        
+        # Phonon sideband: vibronic progression starting from ZPL
+        # Main vibronic peak around 700-750 nm region
+        psb_center_nm = 700.0  # Center of vibronic envelope
+        psb_width_nm = 50.0    # Broad vibronic envelope
+        
+        # ZPL intensity (Gaussian profile)
+        zpl_intensity = DW_factor * np.exp(-0.5 * ((wavelengths_nm - zpl_center_nm) / zpl_width_nm)**2)
+        
+        # PSB intensity (broader Gaussian with vibronic structure)
+        psb_base = (1 - DW_factor) * np.exp(-0.5 * ((wavelengths_nm - psb_center_nm) / psb_width_nm)**2)
+        
+        # Realistic vibronic structure for NV- PSB
+        # Main vibronic peaks: 0-phonon (637nm), 1-phonon (~700nm), 2-phonon (~770nm)
+        vibronic_peaks = [
+            {'center': 700, 'width': 15, 'strength': 0.4},  # 1-phonon (strongest)
+            {'center': 770, 'width': 25, 'strength': 0.2},  # 2-phonon 
+            {'center': 650, 'width': 10, 'strength': 0.1},  # Weak local phonon
+            {'center': 730, 'width': 20, 'strength': 0.3}   # Mixed vibronic mode
+        ]
+        
+        psb_intensity = np.zeros_like(wavelengths_nm)
+        
+        for peak in vibronic_peaks:
+            peak_contribution = peak['strength'] * (1 - DW_factor) * np.exp(
+                -0.5 * ((wavelengths_nm - peak['center']) / peak['width'])**2
+            )
+            psb_intensity += peak_contribution
+        
+        # Normalize to maximum of 1
+        max_total = max(np.max(zpl_intensity), np.max(psb_intensity))
+        if max_total > 0:
+            zpl_intensity = zpl_intensity / max_total
+            psb_intensity = psb_intensity / max_total
+        
+        # Tau-dependent effects (excited state population affects spectrum)
+        # Longer pulses -> more excited state population -> stronger emission
+        if params.Omega_Rabi_Hz > 0:
+            rabi_angle = params.Omega_Rabi_Hz * tau * 1e-9 * np.pi
+            excitation_factor = np.sin(rabi_angle/2)**2  # Probability of exciting the NV
+        else:
+            excitation_factor = 0.0
+        
+        # Scale intensities by excitation
+        zpl_intensity = zpl_intensity * (0.1 + 0.9 * excitation_factor)  # 10% baseline + 90% excited
+        psb_intensity = psb_intensity * (0.1 + 0.9 * excitation_factor)
+        
+        return jsonify({
+            'wavelengths_nm': wavelengths_nm.tolist(),
+            'zpl_intensity': zpl_intensity.tolist(),
+            'psb_intensity': psb_intensity.tolist(),
+            'tau_ns': tau,
+            'dw_factor': float(DW_factor),
+            'temperature_K': params.Temperature_K,
+            'zpl_fraction': float(DW_factor),
+            'psb_fraction': float(1 - DW_factor)
+        })
+        
+    except Exception as e:
+        print(f"Emission spectrum error: {e}")
+        return jsonify({'error': str(e)}), 500
 
 def run_webapp(port=5002, debug=True):
     """Run the web application"""

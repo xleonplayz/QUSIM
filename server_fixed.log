@@ -1,0 +1,23 @@
+HYPERREALISTIC NV Simulator
+Phonon-Coupling + Time-dependent MW Pulses + All Advanced Physics
+======================================================================
+
+Starting web interface on port 5009...
+Open http://localhost:5009 in your browser
+
+=� Starting NV Simulator Web App...
+========================================
+=� Interactive Plotly interface
+=, Advanced physics simulation
+< Web-based - works in any browser
+
+Starting Flask server...
+ * Serving Flask app 'src.webapp'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5009
+ * Running on http://192.168.178.27:5009
+[33mPress CTRL+C to quit[0m
+127.0.0.1 - - [19/Jun/2025 18:47:55] "GET /api/emission_spectrum/50 HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jun/2025 18:48:38] "GET /api/emission_spectrum/100 HTTP/1.1" 200 -
