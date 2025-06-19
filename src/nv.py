@@ -80,6 +80,13 @@ class AdvancedNVParams:
         self.irf_sigma_ps = 300.0  # IRF Gaussian width [ps]
         self.irf_tail_frac = 0.1  # Fraction with exponential tail
         self.irf_tail_tau_ns = 5.0  # Exponential tail time constant [ns]
+        
+        # Magnetic field for advanced simulations
+        self.B_field_mT = [0.0, 0.0, 1.0]  # 1 mT along z-axis
+        
+        # Zero-field splittings for Lindblad simulation
+        self.D_GS_Hz = 2.87e9  # Ground state ZFS in Hz (2.87 GHz)
+        self.D_ES_Hz = 1.42e9  # Excited state ZFS in Hz (1.42 GHz)
 
 # ===================== 🆕 Phonon-Kopplung & Debye-Waller ==================
 def debye_waller_factor(T_K, params):
