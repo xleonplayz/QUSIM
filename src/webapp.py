@@ -186,6 +186,137 @@ def get_rabi_plot():
         'current_tau': current_tau
     })
 
+@app.route('/api/pulse_detail/<int:pulse_number>')
+def get_pulse_detail(pulse_number):
+    """Get detailed photon count data for a specific pulse"""
+    # Load actual PODMR data
+    sample_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'sample')
+    data_file = os.path.join(sample_dir, '20250527-0002-49_Qubit_XQ1i_PODMR_amp_0.012V_laser_pulses.dat')
+    
+    try:
+        # Read the file and skip header
+        with open(data_file, 'r') as f:
+            lines = f.readlines()
+        
+        # Find end of header
+        data_start = 0
+        for i, line in enumerate(lines):
+            if line.strip() == '# ---- END HEADER ----':
+                data_start = i + 1
+                break
+        
+        # Parse pulses (each line is one pulse)
+        pulses = []
+        for line in lines[data_start:]:
+            line = line.strip()
+            if line and not line.startswith('#'):
+                try:
+                    # Split by tabs and convert to integers
+                    photon_counts = [int(x) for x in line.split('\t') if x.strip()]
+                    if photon_counts:  # Only add non-empty pulses
+                        pulses.append(photon_counts)
+                except ValueError:
+                    continue
+        
+        # Check if pulse number is valid
+        if pulse_number < 0 or pulse_number >= len(pulses):
+            return jsonify({'error': f'Invalid pulse number. Available: 0-{len(pulses)-1}'}), 400
+        
+        # Get the specific pulse data
+        pulse_data = pulses[pulse_number]
+        time_points = list(range(len(pulse_data)))  # Time points from left to right
+        
+        return jsonify({
+            'pulse_number': pulse_number,
+            'time_points': time_points,
+            'photon_counts': pulse_data,
+            'total_photons': sum(pulse_data),
+            'max_photons': max(pulse_data),
+            'min_photons': min(pulse_data),
+            'pulse_length': len(pulse_data)
+        })
+        
+    except Exception as e:
+        print(f"Error loading pulse detail: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/podmr_rabi_plot')
+def get_podmr_rabi_plot():
+    """Get PODMR Rabi oscillation plot with time window integration"""
+    # Get time window parameters
+    start_time_ns = request.args.get('start_time', 0, type=float)
+    end_time_ns = request.args.get('end_time', 200, type=float)
+    
+    # Load actual PODMR data
+    sample_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'sample')
+    data_file = os.path.join(sample_dir, '20250527-0002-49_Qubit_XQ1i_PODMR_amp_0.012V_laser_pulses.dat')
+    
+    try:
+        # Read the file and skip header
+        with open(data_file, 'r') as f:
+            lines = f.readlines()
+        
+        # Find end of header and extract bin width
+        data_start = 0
+        bin_width_s = 3.2e-9  # Default bin width in seconds
+        for i, line in enumerate(lines):
+            if line.strip() == '# ---- END HEADER ----':
+                data_start = i + 1
+                break
+            if line.startswith('# bin width (s)='):
+                bin_width_s = float(line.split('=')[1])
+        
+        # Convert bin width to nanoseconds
+        bin_width_ns = bin_width_s * 1e9
+        
+        # Parse pulses (each line is one pulse)
+        pulses = []
+        for line in lines[data_start:]:
+            line = line.strip()
+            if line and not line.startswith('#'):
+                try:
+                    # Split by tabs and convert to integers
+                    photon_counts = [int(x) for x in line.split('\t') if x.strip()]
+                    if photon_counts:  # Only add non-empty pulses
+                        pulses.append(photon_counts)
+                except ValueError:
+                    continue
+        
+        # Calculate TOTAL COUNTS for EACH pulse in the time window
+        pulse_totals = []
+        pulse_numbers = []
+        
+        for i, pulse in enumerate(pulses):
+            # Create time axis for this pulse
+            time_axis = np.array([j * bin_width_ns for j in range(len(pulse))])
+            
+            # Find indices within the time window
+            mask = (time_axis >= start_time_ns) & (time_axis <= end_time_ns)
+            
+            if np.any(mask):
+                # SUM all photon counts within the time window for THIS pulse
+                windowed_counts = np.array(pulse)[mask]
+                total_count = float(np.sum(windowed_counts))
+                pulse_totals.append(total_count)
+                pulse_numbers.append(i)
+        
+        return jsonify({
+            'pulse_numbers': pulse_numbers,
+            'pulse_totals': pulse_totals,
+            'total_pulses': len(pulses),
+            'time_window': {
+                'start_ns': start_time_ns,
+                'end_ns': end_time_ns,
+                'bin_width_ns': bin_width_ns
+            },
+            'mean_total': float(np.mean(pulse_totals)) if pulse_totals else 0,
+            'std_total': float(np.std(pulse_totals)) if pulse_totals else 0
+        })
+        
+    except Exception as e:
+        print(f"Error loading PODMR data: {e}")
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/api/emission_spectrum/<int:tau>')
 def get_emission_spectrum(tau):
     """Get NV emission spectrum (ZPL vs PSB) for specific tau"""

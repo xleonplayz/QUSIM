@@ -589,6 +589,17 @@
                     <button class="btn" onclick="toggleFileUpload()">Eigene Dateien hochladen</button>
                 </div>
                 
+                <div class="control-row" style="border-top: 1px solid #ccc; padding-top: 15px; margin-top: 15px;">
+                    <div class="control-group">
+                        <label>Zeitfenster für Rabi-Analyse:</label>
+                        <input type="number" id="auswertung-start-time" value="0" min="0" max="3000" style="width: 60px;">
+                        <span>bis</span>
+                        <input type="number" id="auswertung-end-time" value="100" min="0" max="3000" style="width: 60px;">
+                        <span>ns</span>
+                        <button class="btn" onclick="updateAuswertungRabi()" style="margin-left: 10px;">Rabi aktualisieren</button>
+                    </div>
+                </div>
+                
                 <div id="file-upload-section" style="display: none; margin-top: 15px; border-top: 1px solid #ccc; padding-top: 15px;">
                     <div class="control-row">
                         <div class="control-group">
@@ -1028,6 +1039,15 @@
                 document.getElementById('pulse-loading').innerHTML = '<p style="color: red;">Error loading plot</p>';
             }
         }
+
+        // This function is only used in the Auswertung section for PODMR data
+        async function showPulseDetail(pulseNumber) {
+            // This function should only be called from the Auswertung section
+            console.log('showPulseDetail called with pulse number:', pulseNumber);
+            
+            // For now, we'll just log it - this function is meant for PODMR pulse details
+            // The actual pulse plotting in the simulator is handled by updatePulsePlot()
+        }
         
         async function updateRabiPlot() {
             document.getElementById('rabi-loading').style.display = 'flex';
@@ -1265,9 +1285,202 @@
             }
         }
         
-        function loadSampleDataAutomatically() {
-            console.log('Auto-loading sample data...');
-            loadSampleData();
+        async function loadSampleDataAutomatically() {
+            console.log('Auto-loading PODMR data...');
+            
+            try {
+                // Show loading states
+                document.getElementById('experimental-loading').style.display = 'flex';
+                document.getElementById('experimental-plot').style.display = 'none';
+                
+                // Directly call the functions to load PODMR data
+                await updateAuswertungRabi();
+                await loadPODMRPulseData();
+                
+                // Show overview info
+                document.getElementById('experimental-loading').innerHTML = `
+                    <h4>PODMR Daten geladen:</h4>
+                    <p>✅ 50 Pulse aus PODMR-Messung</p>
+                    <p>✅ Zeitfenster: 0-100ns</p>
+                    <p>✅ Bin width: 3.2ns</p>
+                `;
+                document.getElementById('experimental-loading').style.display = 'block';
+                document.getElementById('experimental-plot').style.display = 'none';
+                
+            } catch (error) {
+                console.error('Error auto-loading PODMR data:', error);
+            }
+        }
+        
+        async function loadPODMRPulseData() {
+            try {
+                // Load some sample pulse data for display
+                const pulses = [];
+                for (let i = 0; i < 10; i++) {
+                    const pulseResponse = await fetch(`/api/pulse_detail/${i}`);
+                    const pulseData = await pulseResponse.json();
+                    
+                    if (!pulseData.error) {
+                        pulses.push({
+                            counts: pulseData.photon_counts,
+                            time_ns: pulseData.time_points.map(t => t * 3.2), // Convert to actual ns
+                            pulse_number: i + 1
+                        });
+                    }
+                }
+                
+                // Set global variables for pulse navigation
+                allPulses = pulses;
+                currentPulseIndex = 0;
+                
+                // Show first pulse
+                if (pulses.length > 0) {
+                    updateSinglePulsePlot();
+                }
+                
+                // Create raw plot
+                plotRawPODMRData(pulses);
+                
+            } catch (error) {
+                console.error('Error loading PODMR pulse data:', error);
+            }
+        }
+        
+        function plotRawPODMRData(pulses) {
+            if (pulses.length === 0) {
+                document.getElementById('raw-loading').innerHTML = '<p>Keine PODMR-Pulsdaten gefunden</p>';
+                return;
+            }
+            
+            // Create traces for all pulses
+            const plotData = [];
+            
+            for (let i = 0; i < pulses.length; i++) {
+                const pulse = pulses[i];
+                plotData.push({
+                    x: pulse.time_ns,
+                    y: pulse.counts,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: {
+                        color: `hsl(${(i * 360 / pulses.length)}, 70%, 50%)`,
+                        width: 1
+                    },
+                    name: `Puls ${i + 1}`,
+                    opacity: 0.7
+                });
+            }
+            
+            const layout = {
+                title: {
+                    text: `PODMR Pulse Data (${pulses.length} Pulse)`,
+                    font: {color: '#000000', size: 16}
+                },
+                xaxis: {
+                    title: 'Zeit (ns)',
+                    color: '#000000',
+                    gridcolor: '#cccccc'
+                },
+                yaxis: {
+                    title: 'Counts',
+                    color: '#000000',
+                    gridcolor: '#cccccc'
+                },
+                plot_bgcolor: '#ffffff',
+                paper_bgcolor: '#ffffff',
+                font: {color: '#000000'},
+                margin: {l: 60, r: 20, t: 60, b: 60},
+                showlegend: true,
+                legend: {
+                    orientation: "h",
+                    y: -0.2
+                }
+            };
+            
+            Plotly.newPlot('raw-plot', plotData, layout, {
+                displayModeBar: true,
+                displaylogo: false,
+                modeBarButtonsToRemove: ['pan2d', 'lasso2d'],
+                responsive: true
+            });
+            
+            document.getElementById('raw-loading').style.display = 'none';
+            document.getElementById('raw-plot').style.display = 'block';
+        }
+        
+        
+        async function updateAuswertungRabi() {
+            // Get time window from auswertung controls with defaults
+            const startTime = document.getElementById('auswertung-start-time') ? 
+                document.getElementById('auswertung-start-time').value : 0;
+            const endTime = document.getElementById('auswertung-end-time') ? 
+                document.getElementById('auswertung-end-time').value : 100;
+            
+            try {
+                document.getElementById('experimental-rabi-loading').style.display = 'flex';
+                document.getElementById('experimental-rabi-plot').style.display = 'none';
+                
+                const response = await fetch(`/api/podmr_rabi_plot?start_time=${startTime}&end_time=${endTime}`);
+                const result = await response.json();
+                
+                // Show connected line plot: each pulse gets its total counts in time window
+                const plotData = [{
+                    x: result.pulse_numbers,
+                    y: result.pulse_totals,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    line: {color: '#000000', width: 2},
+                    marker: {color: '#000000', size: 4},
+                    name: `Total Counts pro Puls (${startTime}-${endTime}ns)`
+                }];
+                
+                const layout = {
+                    title: {
+                        text: `PODMR Rabi Oszillation (${startTime}-${endTime}ns Zeitfenster)`,
+                        font: {color: '#000000', size: 14}
+                    },
+                    xaxis: {
+                        title: 'Pulse Number',
+                        color: '#000000',
+                        gridcolor: '#cccccc'
+                    },
+                    yaxis: {
+                        title: `Total Photonen (${startTime}-${endTime}ns)`,
+                        color: '#000000',
+                        gridcolor: '#cccccc'
+                    },
+                    plot_bgcolor: '#ffffff',
+                    paper_bgcolor: '#ffffff',
+                    font: {color: '#000000'},
+                    margin: {l: 50, r: 20, t: 40, b: 50},
+                    annotations: [{
+                        text: `Zeitfenster: ${startTime}-${endTime}ns<br>Mittlere Summe: ${result.mean_total.toFixed(0)}<br>Std: ${result.std_total.toFixed(0)}<br>Pulse: ${result.total_pulses}<br>Bin width: ${result.time_window.bin_width_ns.toFixed(2)}ns`,
+                        x: 0.02,
+                        y: 0.98,
+                        xref: 'paper',
+                        yref: 'paper',
+                        bgcolor: 'rgba(255,255,255,0.8)',
+                        bordercolor: '#000000',
+                        borderwidth: 1,
+                        showarrow: false
+                    }]
+                };
+                
+                Plotly.newPlot('experimental-rabi-plot', plotData, layout, {
+                    displayModeBar: true,
+                    displaylogo: false,
+                    modeBarButtonsToRemove: ['pan2d', 'lasso2d'],
+                    responsive: true
+                });
+                
+                // Show the plot
+                document.getElementById('experimental-rabi-loading').style.display = 'none';
+                document.getElementById('experimental-rabi-plot').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error plotting PODMR Rabi:', error);
+                document.getElementById('experimental-rabi-loading').innerHTML = '<p style="color: red;">Error loading PODMR Rabi data</p>';
+            }
         }
         
         async function uploadAndAnalyze() {
