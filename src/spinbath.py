@@ -10,8 +10,13 @@ import jax.numpy as jnp
 from jax import jit, random, vmap
 import numpy as np
 from functools import partial
+from scipy.linalg import expm
 
 jax.config.update("jax_enable_x64", True)
+
+# Basic constants for hyperfine simulations
+mu_B = 1.3996e6  # MHz/T
+g_e = 2.003
 
 class SpinBathParams:
     """Parameters for spin bath simulation."""
@@ -291,6 +296,20 @@ def bath_induced_frequency_shift(bath_result, time_ns):
             total_shift_Hz += shift_amplitude * jnp.cos(phase + i)  # Different phase per nucleus
     
     return total_shift_Hz
+
+def simulate_single_c13_hyperfine(D, A_parallel, A_perp, B_ext, pulse_time):
+    """Simulate evolution with a single strongly coupled ¹³C nucleus."""
+    Sx = np.array([[0,1,0],[1,0,1],[0,1,0]], dtype=np.complex128)/np.sqrt(2)
+    Sz = np.diag([1,0,-1])
+    Ix = np.array([[0,1],[1,0]], dtype=np.complex128)/2
+    Iz = np.diag([0.5,-0.5])
+
+    H0 = D * Sz @ Sz + g_e * mu_B * B_ext * Sz
+    Hhf = np.kron(Sz, A_parallel * Iz + A_perp * Ix)
+    H = np.kron(H0, np.eye(2)) + Hhf
+
+    U = expm(-1j * H * pulse_time)
+    return U
 
 class SpinBathSimulator:
     """
