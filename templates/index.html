@@ -302,7 +302,7 @@
         
         .physics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 12px;
             margin-top: 15px;
         }
@@ -310,9 +310,129 @@
         .physics-item {
             background: #ffffff;
             border: 1px solid #cccccc;
-            padding: 12px;
+            padding: 10px;
             border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .physics-item-info {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .physics-item-name {
+            font-weight: bold;
+            color: #000000;
+            font-size: 0.9em;
+        }
+        
+        .physics-item-desc {
+            font-size: 0.7em;
+            color: #666666;
+            margin-top: 2px;
+        }
+        
+        .physics-item-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .physics-input {
+            width: 80px;
+            padding: 4px;
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+            text-align: right;
+            font-size: 0.8em;
+        }
+        
+        .physics-unit {
+            font-size: 0.7em;
+            color: #666666;
+            min-width: 25px;
+        }
+        
+        .physics-actions {
+            margin-top: 15px;
             text-align: center;
+        }
+        
+        .physics-btn {
+            background: #000000;
+            color: #ffffff;
+            border: 1px solid #000000;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            margin: 0 5px;
+        }
+        
+        .physics-btn:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+        
+        .experiment-settings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .experiment-category {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+        }
+        
+        .experiment-category h4 {
+            margin: 0 0 10px 0;
+            color: #000000;
+            font-size: 1em;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+        
+        .experiment-param {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 5px 0;
+        }
+        
+        .experiment-param-label {
+            font-weight: 600;
+            color: #000000;
+            font-size: 0.85em;
+            flex: 1;
+        }
+        
+        .experiment-param-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            min-width: 120px;
+        }
+        
+        .experiment-input {
+            width: 80px;
+            padding: 3px 5px;
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+            text-align: right;
+            font-size: 0.8em;
+        }
+        
+        .experiment-unit {
+            font-size: 0.7em;
+            color: #666666;
+            min-width: 30px;
         }
         
         .plot-container {
@@ -382,6 +502,84 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* Parameter page styles */
+        .parameter-section {
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .parameter-section h3 {
+            margin: 0 0 15px 0;
+            color: #000000;
+            font-size: 1.2em;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 10px;
+        }
+        
+        .parameter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .parameter-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+        
+        .parameter-info {
+            flex: 1;
+            margin-right: 15px;
+        }
+        
+        .parameter-name {
+            font-weight: 600;
+            color: #000000;
+            font-size: 0.9em;
+        }
+        
+        .parameter-description {
+            font-size: 0.8em;
+            color: #666666;
+            margin-top: 2px;
+        }
+        
+        .parameter-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .parameter-input {
+            width: 100px;
+            padding: 5px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            text-align: right;
+        }
+        
+        .parameter-unit {
+            font-size: 0.8em;
+            color: #666666;
+            min-width: 30px;
+        }
+        
+        .parameter-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
         @media (max-width: 768px) {
             .header {
                 padding: 8px 15px;
@@ -416,6 +614,10 @@
             .plot-section {
                 height: 50vh;
             }
+            
+            .parameter-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -429,7 +631,6 @@
         <div class="sidebar-nav">
             <div class="nav-section">
                 <button class="nav-item active" onclick="showPage('dashboard')">Dashboard</button>
-                <button class="nav-item" onclick="showPage('parameters')">Parameters</button>
             </div>
             
             <div class="nav-section">
@@ -513,36 +714,51 @@
                 </div>
                 
                 <div class="dashboard-card">
-                    <h3>Key Parameters</h3>
-                    <div id="key-parameters">
+                    <h3>Simulation Parameters</h3>
+                    <div class="physics-grid" id="physics-grid">
                         <!-- Will be populated by JavaScript -->
+                    </div>
+                    <div class="physics-actions">
+                        <button class="physics-btn" onclick="resetParameters()">Reset</button>
+                        <button class="physics-btn" onclick="saveParameters()">Apply</button>
+                        <button class="physics-btn" onclick="exportParameters()">Export</button>
+                        <button class="physics-btn" onclick="importParameters()">Import</button>
                     </div>
                 </div>
             </div>
             
             <div class="dashboard-actions">
                 <button class="btn" onclick="simulateAll()" id="simulate-btn">
-                    Start Full Simulation
+                    Run Full Tau Sweep
                 </button>
                 <button class="btn" onclick="updatePlots()">
-                    Update Plots
+                    Refresh Current Plots
                 </button>
             </div>
         </div>
         
-        <!-- Parameters Page -->
-        <div id="parameters-content" class="page-content">
-            <h2>Physics Parameters</h2>
-            <div class="physics-info">
-                <div class="physics-grid" id="physics-grid">
-                    <!-- Will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
         
         <!-- Rabi Oscillation Page -->
         <div id="rabi-content" class="page-content">
             <h2>Rabi Oszillation</h2>
+            
+            <!-- Experiment Settings -->
+            <div class="dashboard-card" style="margin-bottom: 20px;">
+                <h3>Experiment Einstellungen</h3>
+                <div class="experiment-settings" id="experiment-settings">
+                    <div class="loading" style="text-align: center; padding: 20px;">
+                        <div class="loading-spinner"></div>
+                        <p>Lade Experiment-Parameter...</p>
+                    </div>
+                </div>
+                <div class="physics-actions">
+                    <button class="physics-btn" onclick="resetExperimentParameters()">Reset</button>
+                    <button class="physics-btn" onclick="saveExperimentParameters()">Apply</button>
+                    <button class="physics-btn" onclick="exportExperimentParameters()">Export</button>
+                    <button class="physics-btn" onclick="importExperimentParameters()">Import</button>
+                </div>
+            </div>
+            
             <div class="plot-container">
                 <div class="plot-grid">
                     <div class="plot-section">
@@ -681,6 +897,25 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Parameters Page -->
+        <div id="parameters-content" class="page-content">
+            <h2>Simulationsparameter</h2>
+            
+            <div id="parameters-container">
+                <div class="loading" style="text-align: center; padding: 50px;">
+                    <div class="loading-spinner"></div>
+                    <p>Lade Parameter...</p>
+                </div>
+            </div>
+            
+            <div class="parameter-actions" style="display: none;" id="parameter-actions">
+                <button class="btn" onclick="resetParameters()">Zurücksetzen</button>
+                <button class="btn" onclick="saveParameters()">Parameter übernehmen</button>
+                <button class="btn" onclick="exportParameters()">Export</button>
+                <button class="btn" onclick="importParameters()">Import</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -725,6 +960,7 @@
             const controls = document.querySelector('.controls');
             if (pageName === 'rabi') {
                 controls.classList.add('show');
+                loadExperimentParameters();
             } else {
                 controls.classList.remove('show');
             }
@@ -734,15 +970,22 @@
                 loadSampleDataAutomatically();
             }
             
+            // Load parameters when opening Parameters page
+            if (pageName === 'parameters') {
+                loadSimulationParameters();
+            }
+            
             // Close sidebar
             closeSidebar();
         }
         
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadPhysicsInfo();
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadPhysicsInfo();
             generateTauList();
             updateCurrentTau();
+            // Load initial plots without requiring full simulation
+            await updatePlots();
         });
         
         function generateTauList() {
@@ -755,8 +998,8 @@
         
         async function loadPhysicsInfo() {
             try {
-                const response = await fetch('/api/physics_info');
-                physicsInfo = await response.json();
+                const response = await fetch('/api/simulation_parameters');
+                simulationParameters = await response.json();
                 displayPhysicsInfo();
             } catch (error) {
                 console.error('Error loading physics info:', error);
@@ -766,151 +1009,86 @@
         function displayPhysicsInfo() {
             const grid = document.getElementById('physics-grid');
             
-            // Populate main physics grid
-            grid.innerHTML = `
-                <div class="physics-item">
-                    <strong>DW Factor</strong><br>${physicsInfo.DW_factor}
-                </div>
-                <div class="physics-item">
-                    <strong>T₁</strong><br>${physicsInfo.T1_ms} ms
-                </div>
-                <div class="physics-item">
-                    <strong>T₂*</strong><br>${physicsInfo.T2_star_us} μs
-                </div>
-                <div class="physics-item">
-                    <strong>ISC ms=±1</strong><br>${physicsInfo.gamma_ISC_ms1_MHz} MHz
-                </div>
-                <div class="physics-item">
-                    <strong>ISC ms=0</strong><br>${physicsInfo.gamma_ISC_ms0_MHz} MHz
-                </div>
-                <div class="physics-item">
-                    <strong>Dead Time</strong><br>${physicsInfo.dead_time_ns} ns
-                </div>
-                <div class="physics-item">
-                    <strong>Rabi Freq</strong><br>${(physicsInfo.Omega_Rabi_Hz/1e6).toFixed(1)} MHz
-                </div>
-                <div class="physics-item">
-                    <strong>Readout</strong><br>${physicsInfo.READ_NS} ns
-                </div>
-                <div class="physics-item">
-                    <strong>¹³C Bath</strong><br>${physicsInfo.n_carbon13} nuclei
-                </div>
-                <div class="physics-item">
-                    <strong>¹⁴N Bath</strong><br>${physicsInfo.n_nitrogen14} nuclei
-                </div>
-                <div class="physics-item">
-                    <strong>D (GS)</strong><br>${physicsInfo.D_GS_Hz.toFixed(2)} GHz
-                </div>
-                <div class="physics-item">
-                    <strong>D (ES)</strong><br>${physicsInfo.D_ES_Hz.toFixed(2)} GHz
-                </div>
-                <div class="physics-item">
-                    <strong>B-Field</strong><br>${physicsInfo.B_field_mT[2].toFixed(1)} mT
-                </div>
-                <div class="physics-item">
-                    <strong>g-Factor</strong><br>${physicsInfo.g_e}
-                </div>
-                <div class="physics-item">
-                    <strong>Strain σ</strong><br>${physicsInfo.strain_sigma_MHz} MHz
-                </div>
-                <div class="physics-item">
-                    <strong>Orbital γ</strong><br>${physicsInfo.gamma_orbital_MHz} MHz
-                </div>
-                <div class="physics-item">
-                    <strong>Temperature</strong><br>${physicsInfo.Temperature_K} K
-                </div>
-                <div class="physics-item">
-                    <strong>T₁ (GS)</strong><br>${physicsInfo.T1_GS_ms} ms
-                </div>
-                <div class="physics-item">
-                    <strong>T₂ (GS)</strong><br>${physicsInfo.T2_GS_us} μs
-                </div>
-                <div class="physics-item">
-                    <strong>ISC E₀</strong><br>${physicsInfo.ISC_ms0_activation_meV} meV
-                </div>
-                <div class="physics-item">
-                    <strong>ISC E₁</strong><br>${physicsInfo.ISC_ms1_activation_meV} meV
-                </div>
-                <div class="physics-item">
-                    <strong>Ion (GS)</strong><br>${physicsInfo.ionization_rate_GS_MHz} MHz
-                </div>
-                <div class="physics-item">
-                    <strong>Ion (ES)</strong><br>${physicsInfo.ionization_rate_ES_MHz} MHz
-                </div>
-                <div class="physics-item">
-                    <strong>Recombi</strong><br>${physicsInfo.recombination_rate_MHz} MHz
-                </div>
-                <div class="physics-item">
-                    <strong>Laser P</strong><br>${physicsInfo.laser_power_mW} mW
-                </div>
-                <div class="physics-item">
-                    <strong>λ Laser</strong><br>${physicsInfo.laser_wavelength_nm} nm
-                </div>
-                <div class="physics-item">
-                    <strong>Δν Laser</strong><br>${physicsInfo.laser_linewidth_GHz} GHz
-                </div>
-                <div class="physics-item">
-                    <strong>DW₀ (T=0)</strong><br>${physicsInfo.DW0_at_zero_K} 
-                </div>
-                <div class="physics-item">
-                    <strong>θ_D</strong><br>${physicsInfo.theta_D_K} K
-                </div>
-                <div class="physics-item">
-                    <strong>DW α</strong><br>${physicsInfo.debye_waller_alpha}
-                </div>
-                <div class="physics-item">
-                    <strong>γ_rad</strong><br>${physicsInfo.gamma_rad_MHz} MHz
-                </div>
-                <div class="physics-item">
-                    <strong>k_orb(300K)</strong><br>${physicsInfo.k_orb_300K_MHz} MHz
-                </div>
-                <div class="physics-item">
-                    <strong>k_orb E_a</strong><br>${physicsInfo.k_orb_activation_K} K
-                </div>
-                <div class="physics-item">
-                    <strong>MW Shape</strong><br>${physicsInfo.mw_pulse_shape}
-                </div>
-                <div class="physics-item">
-                    <strong>MW σ</strong><br>${physicsInfo.mw_sigma_ns} ns
-                </div>
-                <div class="physics-item">
-                    <strong>MW Amp Noise</strong><br>${physicsInfo.mw_amplitude_noise_std}
-                </div>
-                <div class="physics-item">
-                    <strong>MW Phase Noise</strong><br>${physicsInfo.mw_phase_noise_std} rad
-                </div>
-                <div class="physics-item">
-                    <strong>MW Freq Drift</strong><br>${physicsInfo.mw_frequency_drift_Hz} Hz
-                </div>
-                <div class="physics-item">
-                    <strong>MW Inhomogeneity</strong><br>${physicsInfo.mw_inhomogeneity}
-                </div>
-            `;
+            // Select key parameters to show on dashboard
+            const keyParameters = [
+                // Basic Physics
+                {category: "Basic Physics", name: "Omega_Rabi_Hz", displayName: "Rabi Freq", unit: "Hz", scale: 1e-6, displayUnit: "MHz"},
+                {category: "Basic Physics", name: "BIN_ns", displayName: "Bin Width", unit: "ns", scale: 1, displayUnit: "ns"},
+                {category: "Basic Physics", name: "READ_NS", displayName: "Readout", unit: "ns", scale: 1, displayUnit: "ns"}, 
+                {category: "Basic Physics", name: "Shots", displayName: "Shots", unit: "", scale: 1, displayUnit: ""},
+                
+                // Collection & Efficiency
+                {category: "Collection & Efficiency", name: "collection_efficiency", displayName: "Collection η", unit: "", scale: 100, displayUnit: "%"},
+                {category: "Collection & Efficiency", name: "DW_factor", displayName: "DW Factor", unit: "", scale: 1, displayUnit: ""},
+                
+                // Relaxation Times
+                {category: "Relaxation Times", name: "T1_ms", displayName: "T₁", unit: "ms", scale: 1, displayUnit: "ms"},
+                {category: "Relaxation Times", name: "T2_star_us", displayName: "T₂*", unit: "μs", scale: 1, displayUnit: "μs"},
+                
+                // ISC & Optical
+                {category: "ISC & Optical", name: "gamma_ISC_ms1_MHz", displayName: "ISC ms=±1", unit: "MHz", scale: 1, displayUnit: "MHz"},
+                {category: "ISC & Optical", name: "gamma_ISC_ms0_MHz", displayName: "ISC ms=0", unit: "MHz", scale: 1, displayUnit: "MHz"},
+                {category: "ISC & Optical", name: "laser_power_mW", displayName: "Laser Power", unit: "mW", scale: 1, displayUnit: "mW"},
+                
+                // Temperature
+                {category: "Temperature & Activation", name: "Temperature_K", displayName: "Temperature", unit: "K", scale: 1, displayUnit: "K"},
+                
+                // Spin Bath
+                {category: "Spin Bath", name: "n_carbon13", displayName: "¹³C Bath", unit: "", scale: 1, displayUnit: ""},
+                {category: "Spin Bath", name: "n_nitrogen14", displayName: "¹⁴N Bath", unit: "", scale: 1, displayUnit: ""},
+                
+                // Detector
+                {category: "Detector Model", name: "dead_time_ns", displayName: "Dead Time", unit: "ns", scale: 1, displayUnit: "ns"},
+                
+                // MW Pulse
+                {category: "MW Pulse", name: "mw_pulse_shape", displayName: "MW Shape", unit: "", scale: 1, displayUnit: ""},
+                {category: "MW Pulse", name: "mw_sigma_ns", displayName: "MW σ", unit: "ns", scale: 1, displayUnit: "ns"},
+                
+                // Phonon
+                {category: "Phonon & Debye-Waller", name: "theta_D_K", displayName: "θ_D", unit: "K", scale: 1, displayUnit: "K"},
+                {category: "Phonon & Debye-Waller", name: "gamma_rad_MHz", displayName: "γ_rad", unit: "MHz", scale: 1, displayUnit: "MHz"},
+            ];
             
-            // Populate dashboard key parameters
-            const keyParams = document.getElementById('key-parameters');
-            keyParams.innerHTML = `
-                <div class="status-grid">
-                    <div class="status-item">
-                        <strong>Rabi Freq:</strong> ${(physicsInfo.Omega_Rabi_Hz/1e6).toFixed(1)} MHz
-                    </div>
-                    <div class="status-item">
-                        <strong>Temperature:</strong> ${physicsInfo.Temperature_K} K
-                    </div>
-                    <div class="status-item">
-                        <strong>Collection:</strong> ${(physicsInfo.collection_efficiency*100).toFixed(1)}%
-                    </div>
-                    <div class="status-item">
-                        <strong>Shots:</strong> ${physicsInfo.Shots.toLocaleString()}
-                    </div>
-                    <div class="status-item">
-                        <strong>T₁:</strong> ${physicsInfo.T1_ms} ms
-                    </div>
-                    <div class="status-item">
-                        <strong>T₂*:</strong> ${physicsInfo.T2_star_us} μs
-                    </div>
-                </div>
-            `;
+            let html = '';
+            
+            for (const keyParam of keyParameters) {
+                const categoryParams = simulationParameters[keyParam.category];
+                if (categoryParams) {
+                    const param = categoryParams.find(p => p.name === keyParam.name);
+                    if (param) {
+                        html += `<div class="physics-item">
+                            <div class="physics-item-info">
+                                <div class="physics-item-name">${keyParam.displayName}</div>
+                                <div class="physics-item-desc">${param.description}</div>
+                            </div>
+                            <div class="physics-item-control">`;
+                        
+                        if (param.options) {
+                            html += `<select class="physics-input" id="param_${param.name}" onchange="updateParameterValue('${param.name}', this.value)">`;
+                            for (const option of param.options) {
+                                const selected = option === param.value ? 'selected' : '';
+                                html += `<option value="${option}" ${selected}>${option}</option>`;
+                            }
+                            html += `</select>`;
+                        } else {
+                            html += `<input type="number" 
+                                class="physics-input" 
+                                id="param_${param.name}" 
+                                value="${param.value}" 
+                                min="${param.min || ''}" 
+                                max="${param.max || ''}" 
+                                step="${param.step || 'any'}"
+                                onchange="updateParameterValue('${param.name}', this.value)">`;
+                        }
+                        
+                        html += `<span class="physics-unit">${keyParam.displayUnit}</span>
+                            </div>
+                        </div>`;
+                    }
+                }
+            }
+            
+            grid.innerHTML = html;
         }
         
         async function simulateAll() {
@@ -933,8 +1111,11 @@
                 const result = await response.json();
                 
                 isSimulated = true;
-                document.getElementById('status-section').style.display = 'block';
-                document.getElementById('sim-points').textContent = Object.keys(result).length;
+                // Update simulation points if element exists
+                const simPointsElement = document.getElementById('sim-points');
+                if (simPointsElement) {
+                    simPointsElement.textContent = Object.keys(result).length;
+                }
                 
                 btn.innerHTML = 'Simulation Complete';
                 btn.disabled = false;
@@ -946,6 +1127,8 @@
                 console.error('Simulation error:', error);
                 btn.innerHTML = 'Simulation Failed';
                 btn.disabled = false;
+                document.getElementById('pulse-loading').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+                alert(`Simulation failed: ${error.message}`);
             }
         }
         
@@ -959,10 +1142,7 @@
         }
         
         async function updatePlots() {
-            if (!isSimulated) {
-                console.log('Simulation not yet completed, skipping plot updates');
-                return;
-            }
+            // Removed the isSimulated check - always fetch fresh data from backend
             
             try {
                 // Update pulse plot
@@ -989,10 +1169,14 @@
                 const response = await fetch(`/api/pulse_plot/${currentTau}?start=${startTime}&end=${endTime}`);
                 const result = await response.json();
                 
+                // Apply count multiplier from experiment settings
+                const countMultiplier = window.countMultiplier || experimentParameters.count_multiplier || 1;
+                const enhancedCounts = result.counts.map(count => count * countMultiplier);
+                
                 // Create plot data
                 const plotData = [{
                     x: result.time_ns,
-                    y: result.counts,
+                    y: enhancedCounts,
                     type: 'scatter',
                     mode: 'lines',
                     line: {color: '#000000', width: 2},
@@ -1040,13 +1224,76 @@
             }
         }
 
-        // This function is only used in the Auswertung section for PODMR data
-        async function showPulseDetail(pulseNumber) {
-            // This function should only be called from the Auswertung section
-            console.log('showPulseDetail called with pulse number:', pulseNumber);
-            
-            // For now, we'll just log it - this function is meant for PODMR pulse details
-            // The actual pulse plotting in the simulator is handled by updatePulsePlot()
+        // Show PODMR pulse detail without integration window marking
+        async function showPODMRPulseDetail(pulseNumber) {
+            try {
+                const response = await fetch(`/api/pulse_detail/${pulseNumber}`);
+                const result = await response.json();
+                
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+                
+                // Convert time points to actual time in ns
+                const binWidth = 3.2; // ns
+                const timeAxis = result.time_points.map(t => t * binWidth);
+                
+                // Create plot data WITHOUT integration window marking
+                const plotData = [{
+                    x: timeAxis,
+                    y: result.photon_counts,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: {color: '#000000', width: 2},
+                    name: `Puls ${pulseNumber + 1}`
+                }];
+                
+                const layout = {
+                    title: {
+                        text: `Puls ${pulseNumber + 1} Details`,
+                        font: {color: '#000000', size: 14}
+                    },
+                    xaxis: {
+                        title: 'Zeit (ns)',
+                        color: '#000000',
+                        gridcolor: '#cccccc'
+                    },
+                    yaxis: {
+                        title: 'Photon Count',
+                        color: '#000000',
+                        gridcolor: '#cccccc'
+                    },
+                    plot_bgcolor: '#ffffff',
+                    paper_bgcolor: '#ffffff',
+                    font: {color: '#000000'},
+                    margin: {l: 50, r: 20, t: 40, b: 50},
+                    annotations: [{
+                        text: `Total: ${result.total_photons}<br>Max: ${result.max_photons}<br>Min: ${result.min_photons}<br>Length: ${result.pulse_length}`,
+                        x: 0.02,
+                        y: 0.98,
+                        xref: 'paper',
+                        yref: 'paper',
+                        bgcolor: 'rgba(255,255,255,0.8)',
+                        bordercolor: '#000000',
+                        borderwidth: 1,
+                        showarrow: false
+                    }]
+                };
+                
+                Plotly.newPlot('single-pulse-plot', plotData, layout, {
+                    displayModeBar: true,
+                    displaylogo: false,
+                    modeBarButtonsToRemove: ['pan2d', 'lasso2d'],
+                    responsive: true
+                });
+                
+                document.getElementById('single-pulse-loading').style.display = 'none';
+                document.getElementById('single-pulse-plot').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error showing PODMR pulse detail:', error);
+                document.getElementById('single-pulse-loading').innerHTML = '<p style="color: red;">Error loading pulse: ' + error.message + '</p>';
+            }
         }
         
         async function updateRabiPlot() {
@@ -1198,7 +1445,7 @@
             if (currentIndex > 0) {
                 currentTau = tauList[currentIndex - 1];
                 updateCurrentTau();
-                if (isSimulated) updatePlots();
+                updatePlots(); // Always update plots with fresh data
             }
         }
         
@@ -1207,7 +1454,7 @@
             if (currentIndex < tauList.length - 1) {
                 currentTau = tauList[currentIndex + 1];
                 updateCurrentTau();
-                if (isSimulated) updatePlots();
+                updatePlots(); // Always update plots with fresh data
             }
         }
         
@@ -1221,7 +1468,7 @@
             
             currentTau = closestTau;
             updateCurrentTau();
-            if (isSimulated) updatePlots();
+            updatePlots(); // Always update plots with fresh data
         }
         
         function resetTau() {
@@ -1436,7 +1683,7 @@
                 
                 const layout = {
                     title: {
-                        text: `PODMR Rabi Oszillation (${startTime}-${endTime}ns Zeitfenster)`,
+                        text: `PODMR Rabi Oszillation`,
                         font: {color: '#000000', size: 14}
                     },
                     xaxis: {
@@ -1445,7 +1692,7 @@
                         gridcolor: '#cccccc'
                     },
                     yaxis: {
-                        title: `Total Photonen (${startTime}-${endTime}ns)`,
+                        title: `Total Photonen`,
                         color: '#000000',
                         gridcolor: '#cccccc'
                     },
@@ -1453,16 +1700,29 @@
                     paper_bgcolor: '#ffffff',
                     font: {color: '#000000'},
                     margin: {l: 50, r: 20, t: 40, b: 50},
+                    shapes: [{
+                        // Show integration window as shaded area on right side
+                        type: 'rect',
+                        xref: 'paper',
+                        yref: 'paper', 
+                        x0: 0.75,
+                        y0: 0.02,
+                        x1: 0.98,
+                        y1: 0.25,
+                        fillcolor: 'rgba(255, 0, 0, 0.1)',
+                        line: {color: '#ff0000', width: 2}
+                    }],
                     annotations: [{
-                        text: `Zeitfenster: ${startTime}-${endTime}ns<br>Mittlere Summe: ${result.mean_total.toFixed(0)}<br>Std: ${result.std_total.toFixed(0)}<br>Pulse: ${result.total_pulses}<br>Bin width: ${result.time_window.bin_width_ns.toFixed(2)}ns`,
-                        x: 0.02,
-                        y: 0.98,
+                        text: `Integration Window<br>${startTime}-${endTime}ns<br><br>Mittlere Summe: ${result.mean_total.toFixed(0)}<br>Std: ${result.std_total.toFixed(0)}<br>Pulse: ${result.total_pulses}<br>Bin width: ${result.time_window.bin_width_ns.toFixed(2)}ns`,
+                        x: 0.865,
+                        y: 0.135,
                         xref: 'paper',
                         yref: 'paper',
-                        bgcolor: 'rgba(255,255,255,0.8)',
-                        bordercolor: '#000000',
-                        borderwidth: 1,
-                        showarrow: false
+                        bgcolor: 'rgba(255,255,255,0.9)',
+                        bordercolor: '#ff0000',
+                        borderwidth: 2,
+                        showarrow: false,
+                        font: {size: 10}
                     }]
                 };
                 
@@ -1807,50 +2067,11 @@
         function updateSinglePulsePlot() {
             if (allPulses.length === 0) return;
             
-            const pulse = allPulses[currentPulseIndex];
-            
             // Update counter
             document.getElementById('pulse-counter').textContent = `Puls ${currentPulseIndex + 1} / ${allPulses.length}`;
             
-            const plotData = [{
-                x: pulse.time_ns,
-                y: pulse.counts,
-                type: 'scatter',
-                mode: 'lines',
-                line: {color: '#000000', width: 2},
-                name: `Puls ${pulse.pulse_number}`
-            }];
-            
-            const layout = {
-                title: {
-                    text: `Einzelner Puls ${currentPulseIndex + 1}`,
-                    font: {color: '#000000', size: 14}
-                },
-                xaxis: {
-                    title: 'Zeit (ns)',
-                    color: '#000000',
-                    gridcolor: '#cccccc'
-                },
-                yaxis: {
-                    title: 'Counts',
-                    color: '#000000',
-                    gridcolor: '#cccccc'
-                },
-                plot_bgcolor: '#ffffff',
-                paper_bgcolor: '#ffffff',
-                font: {color: '#000000'},
-                margin: {l: 50, r: 20, t: 40, b: 50}
-            };
-            
-            Plotly.newPlot('single-pulse-plot', plotData, layout, {
-                displayModeBar: true,
-                displaylogo: false,
-                modeBarButtonsToRemove: ['pan2d', 'lasso2d'],
-                responsive: true
-            });
-            
-            document.getElementById('single-pulse-loading').style.display = 'none';
-            document.getElementById('single-pulse-plot').style.display = 'block';
+            // Use the new function that doesn't show integration window
+            showPODMRPulseDetail(currentPulseIndex);
         }
         
         
@@ -2111,6 +2332,472 @@
             
             document.getElementById('raw-loading').style.display = 'none';
             document.getElementById('raw-plot').style.display = 'block';
+        }
+        
+        // Global variable for storing parameters
+        let simulationParameters = {};
+        
+        async function loadSimulationParameters() {
+            try {
+                const response = await fetch('/api/simulation_parameters');
+                simulationParameters = await response.json();
+                displayParameters();
+            } catch (error) {
+                console.error('Error loading simulation parameters:', error);
+                document.getElementById('parameters-container').innerHTML = '<p style="color: red;">Fehler beim Laden der Parameter</p>';
+            }
+        }
+        
+        function displayParameters() {
+            const container = document.getElementById('parameters-container');
+            let html = '';
+            
+            for (const [categoryName, parameters] of Object.entries(simulationParameters)) {
+                html += `<div class="parameter-section">
+                    <h3>${categoryName}</h3>
+                    <div class="parameter-grid">`;
+                
+                for (const param of parameters) {
+                    html += `<div class="parameter-item">
+                        <div class="parameter-info">
+                            <div class="parameter-name">${param.name}</div>
+                            <div class="parameter-description">${param.description}</div>
+                        </div>
+                        <div class="parameter-control">`;
+                    
+                    if (param.options) {
+                        // Dropdown for enum parameters
+                        html += `<select class="parameter-input" id="param_${param.name}" onchange="updateParameterValue('${param.name}', this.value)">`;
+                        for (const option of param.options) {
+                            const selected = option === param.value ? 'selected' : '';
+                            html += `<option value="${option}" ${selected}>${option}</option>`;
+                        }
+                        html += `</select>`;
+                    } else {
+                        // Number input for numeric parameters
+                        html += `<input type="number" 
+                            class="parameter-input" 
+                            id="param_${param.name}" 
+                            value="${param.value}" 
+                            min="${param.min || ''}" 
+                            max="${param.max || ''}" 
+                            step="${param.step || 'any'}"
+                            onchange="updateParameterValue('${param.name}', this.value)">`;
+                    }
+                    
+                    html += `<span class="parameter-unit">${param.unit}</span>
+                        </div>
+                    </div>`;
+                }
+                
+                html += `</div></div>`;
+            }
+            
+            container.innerHTML = html;
+            document.getElementById('parameter-actions').style.display = 'flex';
+        }
+        
+        function updateParameterValue(paramName, value) {
+            // Find and update the parameter value in our data structure
+            for (const [categoryName, parameters] of Object.entries(simulationParameters)) {
+                const param = parameters.find(p => p.name === paramName);
+                if (param) {
+                    param.value = value;
+                    break;
+                }
+            }
+        }
+        
+        async function saveParameters() {
+            try {
+                // Collect all parameter values
+                const parameterUpdates = {};
+                for (const [categoryName, parameters] of Object.entries(simulationParameters)) {
+                    for (const param of parameters) {
+                        parameterUpdates[param.name] = param.value;
+                    }
+                }
+                
+                const response = await fetch('/api/update_parameters', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(parameterUpdates)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Parameter erfolgreich gespeichert! Neue Simulation wird gestartet...');
+                    // Automatisch neue Simulation starten
+                    await simulateAll();
+                } else {
+                    alert('Fehler beim Speichern: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error saving parameters:', error);
+                alert('Fehler beim Speichern der Parameter');
+            }
+        }
+        
+        function resetParameters() {
+            if (confirm('Alle Parameter auf Standardwerte zurücksetzen?')) {
+                loadSimulationParameters();
+            }
+        }
+        
+        function exportParameters() {
+            const parameterData = {};
+            for (const [categoryName, parameters] of Object.entries(simulationParameters)) {
+                parameterData[categoryName] = {};
+                for (const param of parameters) {
+                    parameterData[categoryName][param.name] = {
+                        value: param.value,
+                        unit: param.unit,
+                        description: param.description
+                    };
+                }
+            }
+            
+            const dataStr = JSON.stringify(parameterData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const downloadLink = document.createElement('a');
+            downloadLink.href = url;
+            downloadLink.download = 'nv_simulation_parameters.json';
+            downloadLink.click();
+            
+            URL.revokeObjectURL(url);
+        }
+        
+        function importParameters() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const importedData = JSON.parse(e.target.result);
+                            
+                            // Update parameter values from imported data
+                            for (const [categoryName, parameters] of Object.entries(simulationParameters)) {
+                                if (importedData[categoryName]) {
+                                    for (const param of parameters) {
+                                        if (importedData[categoryName][param.name]) {
+                                            param.value = importedData[categoryName][param.name].value;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            displayParameters();
+                            alert('Parameter erfolgreich importiert!');
+                        } catch (error) {
+                            alert('Fehler beim Importieren der Parameter: ' + error.message);
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
+        
+        // Experiment Parameters for Rabi Oscillation
+        let experimentParameters = {};
+        
+        async function loadExperimentParameters() {
+            try {
+                // Load saved experiment parameters from localStorage
+                const saved = localStorage.getItem('rabiExperimentParameters');
+                if (saved) {
+                    experimentParameters = JSON.parse(saved);
+                }
+                
+                displayExperimentParameters();
+                applyExperimentSettings(); // Apply the settings immediately
+            } catch (error) {
+                console.error('Error loading experiment parameters:', error);
+                document.getElementById('experiment-settings').innerHTML = '<p style="color: red;">Fehler beim Laden der Experiment-Parameter</p>';
+            }
+        }
+        
+        function displayExperimentParameters() {
+            const container = document.getElementById('experiment-settings');
+            
+            // Only experiment-specific parameters, NOT global physics parameters
+            const experimentCategories = {
+                "Mikrowelle": [
+                    {name: "mw_frequency_ghz", displayName: "MW Frequenz", value: 2.87, min: 2.8, max: 2.95, step: 0.001, unit: "GHz", description: "Mikrowellenfrequenz (NV⁻ Resonanz bei ~2.87 GHz)"},
+                    {name: "mw_power_dbm", displayName: "MW Leistung", value: 10, min: -10, max: 30, step: 1, unit: "dBm", description: "Mikrowellenleistung am NV-Zentrum"},
+                    {name: "rabi_frequency_mhz", displayName: "Rabi Frequenz", value: 5, min: 0.1, max: 50, step: 0.1, unit: "MHz", description: "Effektive Rabi-Frequenz (bestimmt π-Puls Zeit)"},
+                    {name: "mw_phase_deg", displayName: "MW Phase", value: 0, min: 0, max: 360, step: 1, unit: "°", description: "Mikrowellenphase für Kohärenz"}
+                ],
+                "Laser": [
+                    {name: "laser_power_mw", displayName: "Laser Leistung", value: 3.0, min: 0.1, max: 10, step: 0.1, unit: "mW", description: "Grüner Laser für Initialization/Readout"},
+                    {name: "laser_wavelength_nm", displayName: "Laser Wellenlänge", value: 532, min: 510, max: 550, step: 1, unit: "nm", description: "Laserwellenlänge (532nm optimal für NV⁻)"},
+                    {name: "initialization_time_us", displayName: "Initialization", value: 3, min: 0.5, max: 10, step: 0.1, unit: "μs", description: "Laserzeit für Spin-Initialisierung"},
+                    {name: "readout_time_us", displayName: "Readout Zeit", value: 3, min: 0.3, max: 10, step: 0.1, unit: "μs", description: "Laserzeit für Photon-Readout"}
+                ],
+                "Messung": [
+                    {name: "experiment_shots", displayName: "Anzahl Messungen", value: 1000, min: 100, max: 100000, step: 100, unit: "", description: "Wie oft das Experiment wiederholt wird"},
+                    {name: "experiment_averages", displayName: "Mittelungen", value: 10, min: 1, max: 1000, step: 1, unit: "", description: "Anzahl Mittelungen pro Datenpunkt"},
+                    {name: "count_multiplier", displayName: "Count Verstärkung", value: 5, min: 1, max: 50, step: 1, unit: "x", description: "Faktor um Counts zu verstärken (für realistische Intensität)"},
+                    {name: "noise_floor", displayName: "Rauschen", value: 0.1, min: 0, max: 1, step: 0.01, unit: "", description: "Zusätzliches Messrauschen"}
+                ],
+                "Timing": [
+                    {name: "tau_start", displayName: "τ Start", value: 0, min: 0, max: 1000, step: 10, unit: "ns", description: "Startzeit für τ-Sweep"},
+                    {name: "tau_end", displayName: "τ Ende", value: 500, min: 10, max: 2000, step: 10, unit: "ns", description: "Endzeit für τ-Sweep"},
+                    {name: "tau_step", displayName: "τ Schrittweite", value: 5, min: 1, max: 50, step: 1, unit: "ns", description: "Schrittweite für τ-Sweep"},
+                    {name: "repetition_time", displayName: "Wiederholzeit", value: 1000, min: 100, max: 10000, step: 100, unit: "μs", description: "Zeit zwischen Messungen"}
+                ],
+                "Analyse": [
+                    {name: "integration_start", displayName: "Integration Start", value: 0, min: 0, max: 1000, step: 10, unit: "ns", description: "Start der Integration für Rabi-Plot"},
+                    {name: "integration_end", displayName: "Integration Ende", value: 1000, min: 10, max: 3000, step: 10, unit: "ns", description: "Ende der Integration für Rabi-Plot"},
+                    {name: "background_subtraction", displayName: "Untergrund abziehen", value: true, options: [true, false], unit: "", description: "Untergrund-Korrektur aktivieren"},
+                    {name: "normalize_data", displayName: "Normalisieren", value: false, options: [true, false], unit: "", description: "Daten auf 0-1 normalisieren"}
+                ]
+            };
+            
+            // Initialize experiment parameters if not set
+            if (!experimentParameters || Object.keys(experimentParameters).length === 0) {
+                experimentParameters = {};
+                for (const [categoryName, params] of Object.entries(experimentCategories)) {
+                    for (const param of params) {
+                        experimentParameters[param.name] = param.value;
+                    }
+                }
+            }
+            
+            let html = '';
+            
+            for (const [categoryDisplayName, params] of Object.entries(experimentCategories)) {
+                html += `<div class="experiment-category">
+                    <h4>${categoryDisplayName}</h4>`;
+                
+                for (const param of params) {
+                    const currentValue = experimentParameters[param.name] !== undefined ? 
+                        experimentParameters[param.name] : param.value;
+                    
+                    html += `<div class="experiment-param">
+                        <div class="experiment-param-label">${param.displayName}:</div>
+                        <div class="experiment-param-control">`;
+                    
+                    if (param.options) {
+                        html += `<select class="experiment-input" id="exp_${param.name}" onchange="updateExperimentParameter('${param.name}', this.value)">`;
+                        for (const option of param.options) {
+                            const selected = option === currentValue ? 'selected' : '';
+                            html += `<option value="${option}" ${selected}>${option}</option>`;
+                        }
+                        html += `</select>`;
+                    } else {
+                        html += `<input type="number" 
+                            class="experiment-input" 
+                            id="exp_${param.name}" 
+                            value="${currentValue}" 
+                            min="${param.min || ''}" 
+                            max="${param.max || ''}" 
+                            step="${param.step || 'any'}"
+                            onchange="updateExperimentParameter('${param.name}', this.value)"
+                            title="${param.description}">`;
+                    }
+                    
+                    html += `<span class="experiment-unit">${param.unit}</span>
+                        </div>
+                    </div>`;
+                }
+                
+                html += `</div>`;
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        function updateExperimentParameter(paramName, value) {
+            // Update experiment-specific parameter
+            if (paramName === 'background_subtraction' || paramName === 'normalize_data') {
+                experimentParameters[paramName] = (value === 'true');
+            } else {
+                experimentParameters[paramName] = parseFloat(value) || value;
+            }
+            
+            // Update tau range controls if they changed
+            if (paramName === 'tau_start' || paramName === 'tau_end' || paramName === 'tau_step') {
+                updateTauControls();
+            }
+            
+            // Update integration window if they changed
+            if (paramName === 'integration_start' || paramName === 'integration_end') {
+                updateIntegrationControls();
+            }
+            
+            // Apply all experiment settings immediately for instant feedback
+            applyExperimentSettings();
+            
+            // Auto-save to localStorage
+            localStorage.setItem('rabiExperimentParameters', JSON.stringify(experimentParameters));
+        }
+        
+        function updateTauControls() {
+            // Update the global tau list based on experiment parameters
+            const start = experimentParameters.tau_start || 0;
+            const end = experimentParameters.tau_end || 500;
+            const step = experimentParameters.tau_step || 5;
+            
+            tauList = [];
+            for (let i = start; i <= end; i += step) {
+                tauList.push(i);
+            }
+            
+            // Reset current tau if out of range
+            if (currentTau < start || currentTau > end) {
+                currentTau = start;
+                updateCurrentTau();
+            }
+        }
+        
+        function updateIntegrationControls() {
+            // Update the integration window controls
+            const startInput = document.getElementById('start-time');
+            const endInput = document.getElementById('end-time');
+            
+            if (startInput && experimentParameters.integration_start !== undefined) {
+                startInput.value = experimentParameters.integration_start;
+            }
+            if (endInput && experimentParameters.integration_end !== undefined) {
+                endInput.value = experimentParameters.integration_end;
+            }
+        }
+        
+        function applyExperimentSettings() {
+            // Apply experiment parameters to the simulation
+            if (experimentParameters.rabi_frequency_mhz !== undefined) {
+                // Update global Rabi frequency if physics info is available
+                if (physicsInfo) {
+                    physicsInfo.Omega_Rabi_Hz = experimentParameters.rabi_frequency_mhz * 1e6;
+                }
+            }
+            
+            // Apply count multiplier to enhance counts display
+            if (experimentParameters.count_multiplier !== undefined && experimentParameters.count_multiplier > 1) {
+                // This affects plot display - handled in plotting functions
+                window.countMultiplier = experimentParameters.count_multiplier;
+            }
+            
+            // Update tau sweep range if parameters changed
+            updateTauControls();
+            updateIntegrationControls();
+            
+            // Show current MW settings in UI
+            updateExperimentDisplay();
+        }
+        
+        function updateExperimentDisplay() {
+            // Create a status display showing current experiment settings
+            const rabiContainer = document.querySelector('.main-content .card:nth-child(2)');
+            if (rabiContainer) {
+                let statusDiv = rabiContainer.querySelector('.experiment-status');
+                if (!statusDiv) {
+                    statusDiv = document.createElement('div');
+                    statusDiv.className = 'experiment-status';
+                    statusDiv.style.cssText = 'margin: 10px 0; padding: 10px; background: #f0f0f0; border-radius: 5px; font-size: 12px;';
+                    rabiContainer.insertBefore(statusDiv, rabiContainer.querySelector('.controls'));
+                }
+                
+                const mwFreq = experimentParameters.mw_frequency_ghz || 2.87;
+                const rabiFreq = experimentParameters.rabi_frequency_mhz || 5;
+                const mwPower = experimentParameters.mw_power_dbm || 10;
+                const countMult = experimentParameters.count_multiplier || 1;
+                
+                statusDiv.innerHTML = `
+                    <strong>Aktuelle Experiment-Einstellungen:</strong><br>
+                    MW: ${mwFreq} GHz, ${mwPower} dBm | Rabi: ${rabiFreq} MHz | Count: ${countMult}x | 
+                    τ: ${experimentParameters.tau_start || 0}-${experimentParameters.tau_end || 500} ns
+                `;
+            }
+        }
+
+        async function saveExperimentParameters() {
+            try {
+                // Save experiment parameters to local storage (not to simulator)
+                localStorage.setItem('rabiExperimentParameters', JSON.stringify(experimentParameters));
+                
+                // Apply experiment settings to current simulation
+                applyExperimentSettings();
+                
+                alert('Experiment-Einstellungen erfolgreich gespeichert! Die neuen Werte werden für das Rabi-Experiment verwendet.');
+            } catch (error) {
+                console.error('Error saving experiment parameters:', error);
+                alert('Fehler beim Speichern der Experiment-Einstellungen');
+            }
+        }
+        
+        function resetExperimentParameters() {
+            if (confirm('Alle Experiment-Einstellungen auf Standardwerte zurücksetzen?')) {
+                localStorage.removeItem('rabiExperimentParameters');
+                experimentParameters = {};
+                displayExperimentParameters();
+            }
+        }
+        
+        function exportExperimentParameters() {
+            const experimentData = {
+                "experiment_info": {
+                    "name": "Rabi Oscillation Experiment Settings",
+                    "timestamp": new Date().toISOString(),
+                    "description": "Experiment-spezifische Einstellungen (nicht globale Physik-Parameter)"
+                },
+                "experiment_parameters": experimentParameters
+            };
+            
+            const dataStr = JSON.stringify(experimentData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const downloadLink = document.createElement('a');
+            downloadLink.href = url;
+            downloadLink.download = 'rabi_experiment_settings.json';
+            downloadLink.click();
+            
+            URL.revokeObjectURL(url);
+        }
+        
+        function importExperimentParameters() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const importedData = JSON.parse(e.target.result);
+                            
+                            // Import experiment parameters
+                            if (importedData.experiment_parameters) {
+                                experimentParameters = importedData.experiment_parameters;
+                            } else {
+                                // Legacy format fallback
+                                experimentParameters = importedData;
+                            }
+                            
+                            displayExperimentParameters();
+                            updateTauControls();
+                            updateIntegrationControls();
+                            alert('Experiment-Einstellungen erfolgreich importiert!');
+                        } catch (error) {
+                            alert('Fehler beim Importieren der Einstellungen: ' + error.message);
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
         }
         
     </script>

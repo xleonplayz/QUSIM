@@ -28,6 +28,103 @@ def get_physics_info():
     """Get all physics parameters"""
     return jsonify(simulator.get_physics_info())
 
+@app.route('/api/simulation_parameters')
+def get_simulation_parameters():
+    """Get all editable simulation parameters"""
+    params = simulator.params
+    
+    # Organize parameters by category
+    parameter_categories = {
+        "Basic Physics": [
+            {"name": "Omega_Rabi_Hz", "value": params.Omega_Rabi_Hz, "unit": "Hz", "description": "MW Rabi frequency (0=no MW)", "min": 0, "max": 1e8, "step": 1e5},
+            {"name": "Beta_max_Hz", "value": params.Beta_max_Hz, "unit": "Hz", "description": "Max collection rate", "min": 1e6, "max": 1e8, "step": 1e6},
+            {"name": "BIN_ns", "value": params.BIN_ns, "unit": "ns", "description": "Time bin width", "min": 1, "max": 100, "step": 1},
+            {"name": "READ_NS", "value": params.READ_NS, "unit": "ns", "description": "Readout duration", "min": 100, "max": 10000, "step": 100},
+            {"name": "Shots", "value": params.Shots, "unit": "", "description": "Number of shots", "min": 100, "max": 100000, "step": 100},
+            {"name": "DarkRate_cps", "value": params.DarkRate_cps, "unit": "cps", "description": "Dark count rate", "min": 0, "max": 1000, "step": 10}
+        ],
+        "Collection & Efficiency": [
+            {"name": "collection_efficiency", "value": params.collection_efficiency, "unit": "", "description": "Collection efficiency", "min": 0.01, "max": 1.0, "step": 0.01},
+            {"name": "DW_factor", "value": params.DW_factor, "unit": "", "description": "Debye-Waller factor", "min": 0.01, "max": 0.1, "step": 0.001},
+            {"name": "PSB_efficiency", "value": params.PSB_efficiency, "unit": "", "description": "PSB efficiency", "min": 0.1, "max": 1.0, "step": 0.01}
+        ],
+        "Relaxation Times": [
+            {"name": "T1_ms", "value": params.T1_ms, "unit": "ms", "description": "T1 relaxation time", "min": 0.1, "max": 10, "step": 0.1},
+            {"name": "T2_star_us", "value": params.T2_star_us, "unit": "μs", "description": "T2* dephasing time", "min": 0.1, "max": 20, "step": 0.1},
+            {"name": "tau_singlet_ns", "value": params.tau_singlet_ns, "unit": "ns", "description": "Singlet lifetime", "min": 50, "max": 500, "step": 10}
+        ],
+        "ISC & Optical": [
+            {"name": "gamma_ISC_ms1_MHz", "value": params.gamma_ISC_ms1_MHz, "unit": "MHz", "description": "ISC rate ms=±1", "min": 10, "max": 100, "step": 1},
+            {"name": "gamma_ISC_ms0_MHz", "value": params.gamma_ISC_ms0_MHz, "unit": "MHz", "description": "ISC rate ms=0", "min": 1, "max": 20, "step": 0.5},
+            {"name": "I_sat_mW", "value": params.I_sat_mW, "unit": "mW", "description": "Saturation intensity", "min": 0.1, "max": 1, "step": 0.01},
+            {"name": "laser_power_mW", "value": params.laser_power_mW, "unit": "mW", "description": "Laser power", "min": 0.1, "max": 10, "step": 0.1}
+        ],
+        "Temperature & Activation": [
+            {"name": "Temperature_K", "value": params.Temperature_K, "unit": "K", "description": "Temperature", "min": 1, "max": 300, "step": 1},
+            {"name": "ISC_ms0_activation_meV", "value": params.ISC_ms0_activation_meV, "unit": "meV", "description": "ms=0 ISC activation", "min": 10, "max": 100, "step": 1},
+            {"name": "ISC_ms1_activation_meV", "value": params.ISC_ms1_activation_meV, "unit": "meV", "description": "ms=±1 ISC activation", "min": 1, "max": 50, "step": 1}
+        ],
+        "Spin Bath": [
+            {"name": "n_carbon13", "value": params.n_carbon13, "unit": "", "description": "Number of 13C spins", "min": 0, "max": 20, "step": 1},
+            {"name": "n_nitrogen14", "value": params.n_nitrogen14, "unit": "", "description": "Number of 14N spins", "min": 0, "max": 5, "step": 1}
+        ],
+        "MW Pulse": [
+            {"name": "mw_frequency_Hz", "value": params.mw_frequency_Hz, "unit": "Hz", "description": "MW frequency (2.87 GHz = resonance)", "min": 0, "max": 5e9, "step": 1e6},
+            {"name": "mw_pulse_shape", "value": params.mw_pulse_shape, "unit": "", "description": "MW pulse shape", "options": ["gaussian", "square", "hermite"]},
+            {"name": "mw_sigma_ns", "value": params.mw_sigma_ns, "unit": "ns", "description": "Gaussian pulse width", "min": 10, "max": 200, "step": 5},
+            {"name": "mw_amplitude_noise_std", "value": params.mw_amplitude_noise_std, "unit": "", "description": "Amplitude noise", "min": 0, "max": 0.1, "step": 0.001},
+            {"name": "mw_phase_noise_std", "value": params.mw_phase_noise_std, "unit": "rad", "description": "Phase noise", "min": 0, "max": 0.1, "step": 0.001}
+        ],
+        "Phonon & Debye-Waller": [
+            {"name": "DW0_at_zero_K", "value": params.DW0_at_zero_K, "unit": "", "description": "DW factor at T=0", "min": 0.01, "max": 0.1, "step": 0.001},
+            {"name": "theta_D_K", "value": params.theta_D_K, "unit": "K", "description": "Debye temperature", "min": 50, "max": 500, "step": 10},
+            {"name": "debye_waller_alpha", "value": params.debye_waller_alpha, "unit": "", "description": "DW temperature coeff", "min": 0.001, "max": 0.01, "step": 0.0001},
+            {"name": "gamma_rad_MHz", "value": params.gamma_rad_MHz, "unit": "MHz", "description": "Radiative decay rate", "min": 50, "max": 150, "step": 1}
+        ],
+        "Detector Model": [
+            {"name": "dead_time_ns", "value": params.dead_time_ns, "unit": "ns", "description": "SPAD dead time", "min": 1, "max": 50, "step": 1},
+            {"name": "afterpulse_prob", "value": params.afterpulse_prob, "unit": "", "description": "Afterpulse probability", "min": 0, "max": 0.1, "step": 0.001},
+            {"name": "dark_rate_Hz", "value": params.dark_rate_Hz, "unit": "Hz", "description": "Dark count rate", "min": 0, "max": 1000, "step": 10},
+            {"name": "irf_sigma_ps", "value": params.irf_sigma_ps, "unit": "ps", "description": "IRF width", "min": 50, "max": 1000, "step": 10}
+        ]
+    }
+    
+    return jsonify(parameter_categories)
+
+@app.route('/api/update_parameters', methods=['POST'])
+def update_parameters():
+    """Update simulation parameters"""
+    data = request.json
+    
+    print("\n=== PARAMETER UPDATE REQUEST ===")
+    print(f"Received parameters: {data}")
+    
+    try:
+        # Update each parameter
+        for param_name, param_value in data.items():
+            if hasattr(simulator.params, param_name):
+                # Convert to appropriate type
+                current_value = getattr(simulator.params, param_name)
+                old_value = current_value
+                
+                if isinstance(current_value, (int, float)):
+                    if isinstance(current_value, int) and '.' not in str(param_value):
+                        param_value = int(param_value)
+                    else:
+                        param_value = float(param_value)
+                setattr(simulator.params, param_name, param_value)
+                
+                print(f"Updated {param_name}: {old_value} -> {param_value}")
+        
+        # Debug: Print critical parameters
+        print(f"\nCurrent Omega_Rabi_Hz: {simulator.params.Omega_Rabi_Hz}")
+        print("=== END PARAMETER UPDATE ===\n")
+        
+        return jsonify({"success": True, "message": "Parameters updated successfully"})
+    except Exception as e:
+        print(f"Error updating parameters: {e}")
+        return jsonify({"success": False, "error": str(e)}), 400
+
 @app.route('/api/simulate_tau_sweep')
 def simulate_tau_sweep():
     """Simulate a full tau sweep with progress tracking"""
@@ -61,7 +158,7 @@ def get_pulse_plot(tau):
     start = request.args.get('start', 0, type=int)
     end = request.args.get('end', 200, type=int)
     
-    result = simulator.simulate_single_tau(tau, random_seed=42)
+    result = simulator.simulate_single_tau(tau)  # Use random seed
     
     time_ns = np.array(result['time_ns'])
     counts = np.array(result['counts'])
@@ -84,7 +181,7 @@ def get_pulse_plot(tau):
 @app.route('/api/get_pulse_data/<int:tau>')
 def get_pulse_data(tau):
     """Get pulse data for tau slider"""
-    result = simulator.simulate_single_tau(tau, random_seed=42)
+    result = simulator.simulate_single_tau(tau)  # Use random seed
     
     counts = np.array(result['counts'])
     return jsonify({

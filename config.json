@@ -1,0 +1,23 @@
+{
+  "nv_center": {
+    "zero_field_splitting_Hz": 2870000000.0,
+    "excited_state_lifetime_ns": 12.0,
+    "spin_relaxation_time_ms": 5.0,
+    "spin_coherence_time_us": 6.0
+  },
+  "environment": {
+    "temperature_K": 4.0,
+    "magnetic_field_mT": [0.0, 0.0, 1.0],
+    "strain_MHz": 0.0
+  },
+  "detection": {
+    "collection_efficiency": 0.15,
+    "detector_efficiency": 0.7,
+    "dark_counts_Hz": 200.0,
+    "bin_width_ns": 10.0
+  },
+  "spin_bath": {
+    "carbon13_concentration": 0.011,
+    "nitrogen_density_ppm": 1.0
+  }
+}

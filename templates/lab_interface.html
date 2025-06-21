@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NV Lab Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .equipment-panel {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #fafafa;
+        }
+        .equipment-panel h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .control-group {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .control-group label {
+            min-width: 120px;
+            font-weight: bold;
+        }
+        .control-group input, .control-group select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            min-width: 100px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn.danger {
+            background-color: #dc3545;
+        }
+        .btn.danger:hover {
+            background-color: #c82333;
+        }
+        .btn.success {
+            background-color: #28a745;
+        }
+        .btn.success:hover {
+            background-color: #218838;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .status.online {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .status.offline {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .status.counting {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+        .results {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+        }
+        .chart-container {
+            margin: 20px 0;
+            height: 300px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+        }
+        #log {
+            background-color: #000;
+            color: #0f0;
+            font-family: monospace;
+            padding: 10px;
+            border-radius: 4px;
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NV Center Laboratory Simulator</h1>
+        <p>Clean API-based laboratory equipment simulation</p>
+        
+        <div class="grid">
+            <!-- Laser Control -->
+            <div class="equipment-panel">
+                <h3>🔴 Laser Control</h3>
+                <div id="laser-status" class="status offline">Status: OFF</div>
+                
+                <div class="control-group">
+                    <label>Power (mW):</label>
+                    <input type="number" id="laser-power" value="3.0" min="0" max="10" step="0.1">
+                </div>
+                
+                <div class="control-group">
+                    <label>Wavelength (nm):</label>
+                    <input type="number" id="laser-wavelength" value="532" min="400" max="700" step="1">
+                </div>
+                
+                <button class="btn success" onclick="laserOn()">Turn ON</button>
+                <button class="btn danger" onclick="laserOff()">Turn OFF</button>
+                <button class="btn" onclick="updateLaserStatus()">Refresh</button>
+            </div>
+            
+            <!-- MW Control -->
+            <div class="equipment-panel">
+                <h3>📡 Microwave Generator</h3>
+                <div id="mw-status" class="status offline">Status: Not Configured</div>
+                
+                <div class="control-group">
+                    <label>Frequency (GHz):</label>
+                    <input type="number" id="mw-frequency" value="2.87" min="0" max="5" step="0.001">
+                </div>
+                
+                <div class="control-group">
+                    <label>Power (dBm):</label>
+                    <input type="number" id="mw-power" value="-10" min="-30" max="10" step="1">
+                </div>
+                
+                <div class="control-group">
+                    <label>Pulse Length (ns):</label>
+                    <input type="number" id="mw-pulse-length" value="100" min="1" max="10000" step="1">
+                </div>
+                
+                <button class="btn" onclick="mwConfigure()">Configure</button>
+                <button class="btn success" onclick="mwPulse()">Send Pulse</button>
+                <button class="btn" onclick="updateMWStatus()">Refresh</button>
+            </div>
+        </div>
+        
+        <!-- Photon Counter -->
+        <div class="equipment-panel">
+            <h3>📊 Photon Counter</h3>
+            <div id="counter-status" class="status offline">Status: IDLE</div>
+            
+            <div class="grid">
+                <div>
+                    <div class="control-group">
+                        <label>Integration Time (ms):</label>
+                        <input type="number" id="integration-time" value="1000" min="10" max="10000" step="10">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Number of Bins:</label>
+                        <input type="number" id="bins" value="100" min="10" max="1000" step="10">
+                    </div>
+                    
+                    <button class="btn success" onclick="startCounting()">Start Counting</button>
+                    <button class="btn danger" onclick="stopCounting()">Stop</button>
+                    <button class="btn" onclick="readCounter()">Read Results</button>
+                </div>
+                
+                <div id="counter-results" class="results" style="display:none;">
+                    <h4>Results:</h4>
+                    <div id="count-summary"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Tests -->
+        <div class="equipment-panel">
+            <h3>🧪 Quick Tests</h3>
+            
+            <div class="control-group">
+                <label>MW Frequency (GHz):</label>
+                <input type="number" id="test-mw-freq" value="2.87" min="0" max="5" step="0.001">
+                <label>Pulse Length (ns):</label>
+                <input type="number" id="test-pulse-length" value="100" min="1" max="1000" step="1">
+            </div>
+            
+            <button class="btn" onclick="quickTest()">Quick Measurement</button>
+            <button class="btn" onclick="frequencySweep()">Frequency Sweep</button>
+            <button class="btn" onclick="clearLog()">Clear Log</button>
+        </div>
+        
+        <!-- Results Chart -->
+        <div class="chart-container">
+            <canvas id="chart" width="800" height="250"></canvas>
+        </div>
+        
+        <!-- Log -->
+        <div id="log"></div>
+    </div>
+
+    <script>
+        let chartData = [];
+        
+        // Logging function
+        function log(message) {
+            const logElement = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logElement.innerHTML += `[${timestamp}] ${message}\n`;
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+        
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+        
+        // API helper
+        async function apiCall(endpoint, method = 'GET', data = null) {
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                };
+                
+                if (data) {
+                    options.body = JSON.stringify(data);
+                }
+                
+                const response = await fetch(endpoint, options);
+                const result = await response.json();
+                
+                log(`${method} ${endpoint}: ${JSON.stringify(result)}`);
+                return result;
+            } catch (error) {
+                log(`Error calling ${endpoint}: ${error.message}`);
+                return { success: false, error: error.message };
+            }
+        }
+        
+        // Laser functions
+        async function laserOn() {
+            const power = parseFloat(document.getElementById('laser-power').value);
+            const wavelength = parseFloat(document.getElementById('laser-wavelength').value);
+            
+            const result = await apiCall('/api/laser/on', 'POST', {
+                power_mW: power,
+                wavelength_nm: wavelength
+            });
+            
+            updateLaserStatus();
+        }
+        
+        async function laserOff() {
+            await apiCall('/api/laser/off', 'POST');
+            updateLaserStatus();
+        }
+        
+        async function updateLaserStatus() {
+            const status = await apiCall('/api/laser/status');
+            const statusElement = document.getElementById('laser-status');
+            
+            if (status.status === 'on') {
+                statusElement.className = 'status online';
+                statusElement.textContent = `Status: ON | Power: ${status.actual_power_mW?.toFixed(2)} mW | λ: ${status.wavelength_nm} nm`;
+            } else {
+                statusElement.className = 'status offline';
+                statusElement.textContent = 'Status: OFF';
+            }
+        }
+        
+        // MW functions
+        async function mwConfigure() {
+            const frequency = parseFloat(document.getElementById('mw-frequency').value) * 1e9; // Convert to Hz
+            const power = parseFloat(document.getElementById('mw-power').value);
+            const pulseLength = parseFloat(document.getElementById('mw-pulse-length').value);
+            
+            const result = await apiCall('/api/mw/configure', 'POST', {
+                frequency_Hz: frequency,
+                power_dBm: power,
+                pulse_length_ns: pulseLength
+            });
+            
+            updateMWStatus();
+        }
+        
+        async function mwPulse() {
+            const result = await apiCall('/api/mw/pulse', 'POST', {
+                number_of_pulses: 1,
+                repetition_rate_Hz: 1000
+            });
+        }
+        
+        async function updateMWStatus() {
+            const status = await apiCall('/api/mw/status');
+            const statusElement = document.getElementById('mw-status');
+            
+            if (status.configured) {
+                statusElement.className = 'status online';
+                statusElement.textContent = `Configured | ${(status.frequency_Hz/1e9).toFixed(3)} GHz | ${status.power_dBm} dBm | ${status.pulse_length_ns} ns`;
+            } else {
+                statusElement.className = 'status offline';
+                statusElement.textContent = 'Status: Not Configured';
+            }
+        }
+        
+        // Counter functions
+        async function startCounting() {
+            const integrationTime = parseFloat(document.getElementById('integration-time').value);
+            const bins = parseInt(document.getElementById('bins').value);
+            
+            const result = await apiCall('/api/counter/start', 'POST', {
+                integration_time_ms: integrationTime,
+                bins: bins
+            });
+            
+            if (result.status === 'counting') {
+                document.getElementById('counter-status').className = 'status counting';
+                document.getElementById('counter-status').textContent = `Status: COUNTING (${integrationTime} ms)`;
+                
+                // Poll for completion
+                setTimeout(pollCounter, 100);
+            }
+        }
+        
+        async function pollCounter() {
+            const result = await readCounter();
+            
+            if (result.status === 'counting') {
+                document.getElementById('counter-status').textContent = `Status: COUNTING (${result.progress?.toFixed(1)}%)`;
+                setTimeout(pollCounter, 100);
+            } else if (result.status === 'ready') {
+                document.getElementById('counter-status').className = 'status online';
+                document.getElementById('counter-status').textContent = `Status: READY | Total: ${result.total_counts} counts`;
+                showCounterResults(result);
+            }
+        }
+        
+        async function readCounter() {
+            return await apiCall('/api/counter/read');
+        }
+        
+        async function stopCounting() {
+            await apiCall('/api/counter/stop', 'POST');
+            document.getElementById('counter-status').className = 'status offline';
+            document.getElementById('counter-status').textContent = 'Status: STOPPED';
+        }
+        
+        function showCounterResults(result) {
+            if (result.counts) {
+                const resultsDiv = document.getElementById('counter-results');
+                const summaryDiv = document.getElementById('count-summary');
+                
+                const totalCounts = result.total_counts;
+                const avgCounts = totalCounts / result.counts.length;
+                const maxCounts = Math.max(...result.counts);
+                const minCounts = Math.min(...result.counts);
+                
+                summaryDiv.innerHTML = `
+                    <strong>Total Counts:</strong> ${totalCounts}<br>
+                    <strong>Average per bin:</strong> ${avgCounts.toFixed(1)}<br>
+                    <strong>Max:</strong> ${maxCounts} | <strong>Min:</strong> ${minCounts}<br>
+                    <strong>Bins:</strong> ${result.counts.length} | <strong>Bin width:</strong> ${result.bin_width_ns?.toFixed(1)} ns
+                `;
+                
+                resultsDiv.style.display = 'block';
+                
+                // Update chart
+                chartData = result.counts;
+                drawChart();
+            }
+        }
+        
+        // Quick test functions
+        async function quickTest() {
+            const mwFreq = parseFloat(document.getElementById('test-mw-freq').value) * 1e9;
+            const pulseLength = parseFloat(document.getElementById('test-pulse-length').value);
+            
+            log('=== Starting Quick Test ===');
+            
+            const result = await apiCall('/api/test/simple_measurement', 'POST', {
+                mw_frequency_Hz: mwFreq,
+                pulse_length_ns: pulseLength
+            });
+            
+            if (result.success && result.sequence.counts.counts) {
+                chartData = result.sequence.counts.counts;
+                drawChart();
+                showCounterResults(result.sequence.counts);
+            }
+            
+            // Update all status displays
+            updateLaserStatus();
+            updateMWStatus();
+        }
+        
+        async function frequencySweep() {
+            log('=== Starting Frequency Sweep ===');
+            
+            const frequencies = [2.86, 2.865, 2.87, 2.875, 2.88]; // GHz
+            const results = [];
+            
+            for (const freq of frequencies) {
+                log(`Testing frequency: ${freq} GHz`);
+                
+                const result = await apiCall('/api/test/simple_measurement', 'POST', {
+                    mw_frequency_Hz: freq * 1e9,
+                    pulse_length_ns: 100
+                });
+                
+                if (result.success && result.sequence.counts.total_counts) {
+                    results.push({
+                        frequency: freq,
+                        counts: result.sequence.counts.total_counts
+                    });
+                    log(`${freq} GHz: ${result.sequence.counts.total_counts} counts`);
+                }
+                
+                // Small delay between measurements
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            
+            log('=== Frequency Sweep Complete ===');
+            
+            // Plot frequency sweep results
+            chartData = results.map(r => r.counts);
+            drawChart();
+        }
+        
+        // Simple chart drawing
+        function drawChart() {
+            const canvas = document.getElementById('chart');
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (chartData.length === 0) {
+                ctx.fillStyle = '#666';
+                ctx.font = '16px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('No data to display', canvas.width/2, canvas.height/2);
+                return;
+            }
+            
+            // Draw chart
+            const margin = 40;
+            const plotWidth = canvas.width - 2 * margin;
+            const plotHeight = canvas.height - 2 * margin;
+            
+            const maxValue = Math.max(...chartData);
+            const minValue = Math.min(...chartData);
+            const range = maxValue - minValue || 1;
+            
+            // Draw axes
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(margin, margin);
+            ctx.lineTo(margin, canvas.height - margin);
+            ctx.lineTo(canvas.width - margin, canvas.height - margin);
+            ctx.stroke();
+            
+            // Draw data
+            ctx.strokeStyle = '#007bff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            for (let i = 0; i < chartData.length; i++) {
+                const x = margin + (i / (chartData.length - 1)) * plotWidth;
+                const y = canvas.height - margin - ((chartData[i] - minValue) / range) * plotHeight;
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            
+            ctx.stroke();
+            
+            // Labels
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`Data points: ${chartData.length}`, canvas.width/2, canvas.height - 10);
+            ctx.fillText(`Max: ${maxValue}`, canvas.width - 80, 20);
+            ctx.fillText(`Min: ${minValue}`, canvas.width - 80, 35);
+        }
+        
+        // Initialize on page load
+        window.onload = function() {
+            log('NV Lab Simulator Interface Loaded');
+            updateLaserStatus();
+            updateMWStatus();
+            drawChart();
+        }
+    </script>
+</body>
+</html>

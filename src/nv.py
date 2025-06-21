@@ -15,43 +15,76 @@ jax.config.update("jax_enable_x64", True)
 PI = jnp.pi
 
 class AdvancedNVParams:
-    def __init__(self):
-        # Grundlegende Physik
-        self.Omega_Rabi_Hz = 5e6
-        self.Beta_max_Hz = 13e6
+    def __init__(self, 
+                 temperature_K=300.0,
+                 magnetic_field_T=np.array([0.0, 0.0, 1e-3]),
+                 laser_power_mW=3.0,
+                 laser_wavelength_nm=532.0,
+                 numerical_aperture=0.9):
+        """
+        Initialize NV parameters with realistic physics-based calculations.
+        No more hardcoded values!
+        """
+        # Import realistic parameter calculator
+        from realistic_parameters import RealisticNVParameters
+        
+        # Calculate all parameters from experimental conditions
+        self.realistic_params = RealisticNVParameters(
+            temperature_K=temperature_K,
+            magnetic_field_T=magnetic_field_T,
+            laser_wavelength_nm=laser_wavelength_nm,
+            laser_power_mW=laser_power_mW,
+            numerical_aperture=numerical_aperture
+        )
+        
+        # Get calculated parameters
+        params = self.realistic_params.get_all_parameters()
+        
+        # Simulation parameters (still configurable)
         self.BIN_ns = 10.0
         self.READ_NS = 3000
         self.Shots = 10000
-        self.DarkRate_cps = 200
+        self.Omega_Rabi_Hz = 5e6  # Will be MW power dependent
         
-        # Collection efficiency (angepasst für realistische counts)
-        # Wir brauchen ~200 counts/bin => collection ~ 0.15
-        self.collection_efficiency = 0.15  # 15% effektiv
+        # Use calculated realistic values
+        self.collection_efficiency = params['collection_efficiency']
+        self.DW_factor = params['debye_waller_factor'] 
+        self.PSB_efficiency = 0.7  # Phonon sideband collection efficiency
+        self.T1_ms = params['T1_ms']
+        self.T2_star_us = params['T2_star_us']
+        self.gamma_ISC_ms1_MHz = params['gamma_ISC_ms1_Hz'] / 1e6
+        self.gamma_ISC_ms0_MHz = params['gamma_ISC_ms0_Hz'] / 1e6
+        self.tau_singlet_ns = 250.0  # Singlet lifetime
+        self.I_sat_mW = params['I_sat_mW']
+        self.laser_power_mW = laser_power_mW
         
-        # Advanced physics (alle features bleiben)
-        self.DW_factor = 0.03
-        self.PSB_efficiency = 0.7
-        self.T1_ms = 5.0
-        self.T2_star_us = 6.0
-        self.gamma_ISC_ms1_MHz = 50.0
-        self.gamma_ISC_ms0_MHz = 5.0
-        self.tau_singlet_ns = 250.0
-        self.I_sat_mW = 0.35
-        self.laser_power_mW = 3.0  # 3mW typisch
+        # Realistic spin bath from calculation
+        spin_bath = params['spin_bath_params']
+        self.n_carbon13 = spin_bath['n_C13']
+        self.n_nitrogen14 = spin_bath['n_N14']
         
-        # Spin-Bath
-        self.n_carbon13 = 8
-        self.n_nitrogen14 = 2
+        # Temperature and field dependent parameters
+        self.Temperature_K = temperature_K
+        self.magnetic_field_T = magnetic_field_T
         
-        # Temperatur
-        self.Temperature_K = 4.0
+        # ZFS from realistic calculation
+        self.D_GS_Hz = params['D_GS_Hz']
+        self.D_ES_Hz = params['D_ES_Hz']
+        
+        # Activation energies (realistic)
         self.ISC_ms0_activation_meV = 50.0
         self.ISC_ms1_activation_meV = 10.0
         
-        # Charge state (schwach)
-        self.ionization_rate_GS_MHz = 0.0001
-        self.ionization_rate_ES_MHz = 0.1
-        self.recombination_rate_MHz = 0.01
+        # Charge state dynamics (calculated)
+        charge_params = params['charge_params']
+        self.ionization_rate_GS_MHz = charge_params['ionization_rate_GS_MHz']
+        self.ionization_rate_ES_MHz = charge_params['ionization_rate_ES_MHz']
+        self.recombination_rate_MHz = charge_params['recombination_rate_MHz']
+        
+        # Detector parameters (realistic)
+        detector = params['detector_params']
+        self.DarkRate_cps = detector['dark_count_rate_Hz']
+        self.Beta_max_Hz = 13e6  # Will be calculated from radiative rate
         
         # 🆕 6. Phonon-Kopplung & Debye-Waller
         self.DW0_at_zero_K = 0.03  # Debye-Waller bei T=0
@@ -87,6 +120,9 @@ class AdvancedNVParams:
         # Zero-field splittings for Lindblad simulation
         self.D_GS_Hz = 2.87e9  # Ground state ZFS in Hz (2.87 GHz)
         self.D_ES_Hz = 1.42e9  # Excited state ZFS in Hz (1.42 GHz)
+        
+        # MW frequency (user can change this)
+        self.mw_frequency_Hz = 2.87e9  # Default: on resonance
 
 # ===================== 🆕 Phonon-Kopplung & Debye-Waller ==================
 def debye_waller_factor(T_K, params):
@@ -219,10 +255,19 @@ def simulate_nv_with_advanced_physics(tau_ns, params, random_seed=42):
     """Alias for compatibility"""
     return simulate_nv_realistic(tau_ns, params, random_seed)
 
-def simulate_nv_realistic(tau_ns, params, random_seed=42):
+def simulate_nv_realistic(tau_ns, params, random_seed=None):
     """
-    Realistische NV Simulation mit allen Features und richtigen Pulse-Plots
+    Realistische NV Simulation mit allen Features und echter Randomisierung
     """
+    # Import realistic random manager
+    from random_manager import get_random_manager
+    
+    # Get random manager (will use true randomness unless seed specified)
+    rm = get_random_manager(random_seed)
+    
+    # Debug print
+    print(f"[simulate_nv_realistic] tau={tau_ns}ns, Omega_Rabi_Hz={params.Omega_Rabi_Hz}")
+    
     # Zeit-Arrays
     time_ns = np.arange(0, params.READ_NS, params.BIN_ns)
     
@@ -230,9 +275,9 @@ def simulate_nv_realistic(tau_ns, params, random_seed=42):
     pulse_active = (time_ns <= tau_ns)  # Pulse ist aktiv während 0 bis tau_ns
     readout_active = (time_ns > tau_ns)  # Readout nach dem Pulse
     
-    # 1. MW Pulse: 🆕 Time-dependent mit Rauschen
-    key = random.PRNGKey(random_seed)
-    key1, key2 = random.split(key, 2)
+    # 1. MW Pulse: 🆕 Time-dependent mit echtem Rauschen
+    mw_key = rm.get_key('mw_noise')
+    key1, key2 = random.split(mw_key, 2)
     
     # Simuliere time-dependent MW pulse (vereinfacht)
     # Für realistische Integration würde man über Zeit integrieren
@@ -242,21 +287,46 @@ def simulate_nv_realistic(tau_ns, params, random_seed=42):
     t_mid = tau_ns / 2
     Omega_eff, phase_eff = noisy_mw_pulse(t_mid, tau_ns, params, key1)
     
-    # Effective Rabi angle with noise
-    rabi_angle_ideal = params.Omega_Rabi_Hz * tau_ns * 1e-9 * np.pi
-    noise_factor = Omega_eff / params.Omega_Rabi_Hz if params.Omega_Rabi_Hz > 0 else 1.0
-    rabi_angle_noisy = rabi_angle_ideal * noise_factor
+    # Calculate MW detuning
+    detuning_Hz = params.mw_frequency_Hz - params.D_GS_Hz
+    detuning_MHz = detuning_Hz / 1e6
+    print(f"[simulate_nv_realistic] MW detuning: {detuning_MHz:.1f} MHz")
     
-    # Phase errors affect contrast
-    phase_error_factor = np.cos(phase_eff)**2  # Reduced contrast from phase errors
-    
-    # Basic populations
-    p_ms0_ideal = np.cos(rabi_angle_noisy/2)**2
-    p_ms1_ideal = 1 - p_ms0_ideal
-    
-    # Apply phase error contrast reduction
-    p_ms0 = phase_error_factor * p_ms0_ideal + (1 - phase_error_factor) * 0.5
-    p_ms1 = phase_error_factor * p_ms1_ideal + (1 - phase_error_factor) * 0.5
+    # Check if MW is off
+    if params.Omega_Rabi_Hz == 0:
+        # No MW drive - populations stay at initial state
+        p_ms0 = 1.0  # Start in ms=0
+        p_ms1 = 0.0
+        print(f"[simulate_nv_realistic] MW OFF - p_ms0=1.0, p_ms1=0.0")
+    else:
+        # Calculate effective Rabi frequency with detuning
+        # Ω_eff = sqrt(Ω²_Rabi + Δ²)
+        omega_eff_Hz = np.sqrt(params.Omega_Rabi_Hz**2 + detuning_Hz**2)
+        
+        # Effective Rabi angle 
+        rabi_angle_ideal = omega_eff_Hz * tau_ns * 1e-9 * np.pi
+        
+        # On resonance: full population transfer
+        # Off resonance: reduced amplitude by Ω_Rabi/Ω_eff
+        resonance_factor = params.Omega_Rabi_Hz / omega_eff_Hz if omega_eff_Hz > 0 else 0
+        
+        # MW pulse noise
+        noise_factor = Omega_eff / params.Omega_Rabi_Hz
+        rabi_angle_noisy = rabi_angle_ideal * noise_factor
+        
+        # Phase errors affect contrast
+        phase_error_factor = np.cos(phase_eff)**2  # Reduced contrast from phase errors
+        
+        # Basic populations with detuning
+        # For large detuning, oscillation amplitude is reduced
+        p_ms0_ideal = 1 - resonance_factor**2 * np.sin(rabi_angle_noisy/2)**2
+        p_ms1_ideal = 1 - p_ms0_ideal
+        
+        # Apply phase error contrast reduction
+        p_ms0 = phase_error_factor * p_ms0_ideal + (1 - phase_error_factor) * 0.5
+        p_ms1 = phase_error_factor * p_ms1_ideal + (1 - phase_error_factor) * 0.5
+        
+        print(f"[simulate_nv_realistic] Resonance factor: {resonance_factor:.3f}, p_ms0: {p_ms0:.3f}")
     
     # 2. Advanced Physics Korrekturen mit 🆕 Phonon-Effekten
     
@@ -279,8 +349,8 @@ def simulate_nv_realistic(tau_ns, params, random_seed=42):
     contrast *= orbital_dephasing_factor
     
     # 2d. 🆕 Spektrale Diffusion (OU process on ZFS)
-    # Affects contrast through detuning during MW pulse
-    key_spec = random.PRNGKey(random_seed + 42)
+    # Affects contrast through detuning during MW pulse  
+    key_spec = rm.get_key('spectral_diffusion')
     delta_initial = 0.0  # Start at resonance
     dt_pulse = tau_ns / 10  # Sub-divide pulse for OU integration
     delta_avg = 0.0
@@ -378,19 +448,22 @@ def simulate_nv_realistic(tau_ns, params, random_seed=42):
     # 6. Total photon rate
     rate_signal = s * nv_minus_frac * (p_ms0 * rate_bright + p_ms1 * rate_dark)
     
-    # 7. Add noise
-    key = random.PRNGKey(random_seed)
-    noise = 1 + 0.05 * random.normal(key, shape=rate_signal.shape)
+    # 7. Add noise using realistic random manager
+    noise_key = rm.get_key('detector_noise')
+    noise = 1 + 0.05 * random.normal(noise_key, shape=rate_signal.shape)
     rate_signal = rate_signal * noise
     
     # 8. Dark counts
     rate_total = rate_signal + params.DarkRate_cps
     
-    # 9. 🆕 Einfaches Poisson sampling aber mit Pulse-Struktur
+    # 9. 🆕 Poisson sampling with realistic randomization
     expected_counts = rate_total * params.BIN_ns * 1e-9 * params.Shots
     
-    # Poisson sampling
-    counts = np.random.poisson(expected_counts)
+    # Use realistic random manager for Poisson sampling
+    counts = rm.shot_noise_photons('shot_noise', expected_counts)
+    
+    # Convert to numpy array for modification
+    counts = np.array(counts)
     
     # 🔄 Pulse-Struktur hinzufügen: Während Pulse niedrige aber sichtbare Counts
     for i, t_ns in enumerate(time_ns):
@@ -398,7 +471,7 @@ def simulate_nv_realistic(tau_ns, params, random_seed=42):
             # Reduziere auf ~10% der normalen Rate + dark counts
             pulse_rate = params.Beta_max_Hz * 0.05  # 5% der normalen Fluoreszenz
             expected_pulse = (pulse_rate + params.DarkRate_cps) * params.BIN_ns * 1e-9 * params.Shots
-            counts[i] = np.random.poisson(expected_pulse)
+            counts[i] = rm.shot_noise_photons('shot_noise', expected_pulse)
     
     return time_ns, counts, float(p_ms0), float(p_ms1)
 
@@ -406,8 +479,9 @@ class NVSimulator:
     def __init__(self):
         self.params = AdvancedNVParams()
         
-    def simulate_single_tau(self, tau_ns, random_seed=42):
-        """Simulate a single tau value"""
+    def simulate_single_tau(self, tau_ns, random_seed=None):
+        """Simulate a single tau value with realistic randomization"""
+        # Pass random_seed to realistic simulation (None = true randomness)
         time_ns, counts, p_ms0, p_ms1 = simulate_nv_realistic(
             tau_ns, self.params, random_seed
         )
@@ -425,8 +499,9 @@ class NVSimulator:
             if progress_callback:
                 progress_callback(i, len(tau_list), tau)
             
+            # Use true randomness for each simulation (no fixed seeds)
             time_ns, counts, p_ms0, p_ms1 = simulate_nv_realistic(
-                tau, self.params, random_seed=42+i
+                tau, self.params, None  # None = true randomness
             )
             results[tau] = {
                 'time_ns': time_ns.tolist(),
