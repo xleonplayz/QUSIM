@@ -1,0 +1,91 @@
+{
+  "ZFS": {
+    "enabled": true,
+    "D": 2.87e9,
+    "Ex": 0.0,
+    "Ey": 0.0
+  },
+  "Zeeman": {
+    "enabled": true,
+    "B0": [0, 0, 100],
+    "B_ac": [0, 0, 0],
+    "f_ac": 1e6,
+    "ac_phase": 0,
+    "g_tensor": [2.0028, 2.0028, 2.0028],
+    "noise": {
+      "white": 0.0,
+      "telegraph": 0.0
+    },
+    "seed": 42
+  },
+  "N14_Hyperfine": {
+    "enabled": true,
+    "r_vec": [1e-10, 0, 0],
+    "rho_e0": 2.688e28,
+    "A_iso": 2.14e6,
+    "P_quad": -5.0e6
+  },
+  "N14_Quadrupole": {
+    "enabled": true,
+    "P": -5.0e6,
+    "eta": 0.0
+  },
+  "C13_Hyperfine": {
+    "enabled": true,
+    "r_vec": [0.45e-9, 0.0, 0.0],
+    "A_iso": 120e3
+  },
+  "Strain": {
+    "enabled": true,
+    "r_um": [0.0, 0.0, 0.5]
+  },
+  "Stark": {
+    "enabled": false,
+    "D_PA": [[17e-3, 0, 0], [0, -17e-3, 0], [0, 0, 3.5e-3]],
+    "euler_D": [0.0, 0.0, 0.0],
+    "E0_lab": [1.0e6, 2.0e6, 0.0],
+    "E_modes": []
+  },
+  "MW": {
+    "enabled": false,
+    "Omegas": [31415926.54, 31415926.54, 31415926.54, 31415926.54, 31415926.54],
+    "Phis": [0.0, 0.0, 0.0, 0.0, 0.0],
+    "T": 1e-6
+  },
+  "Laser": {
+    "enabled": false,
+    "omega_L": 2.927e15,
+    "Omega_L_type": "pulse",
+    "pulse_amplitude": 62831853.08,
+    "pulse_start": 0.0,
+    "pulse_duration": 100e-9
+  },
+  "JahnTeller": {
+    "enabled": false,
+    "omega_x": 6.283185307,
+    "omega_y": 7.539822972,
+    "lambda_x": 0.05,
+    "lambda_y": 0.04,
+    "alpha_x": 0.01,
+    "alpha_y": 0.01
+  },
+  "lindblad": {
+    "spontaneous_emission": {
+      "enabled": true,
+      "gamma": 1e7
+    },
+    "spin_relaxation": {
+      "enabled": true,
+      "gamma": 1e3
+    },
+    "dephasing": {
+      "enabled": true,
+      "gamma": 1e4
+    },
+    "nuclear_noise": {
+      "enabled": false,
+      "gamma": 1e2
+    },
+    "temperature": 300.0
+  }
+}
