@@ -6,7 +6,7 @@
     "Ey": 0.0
   },
   "Zeeman": {
-    "enabled": true,
+    "enabled": false,
     "B0": [0, 0, 100],
     "B_ac": [0, 0, 0],
     "f_ac": 1e6,
@@ -19,24 +19,24 @@
     "seed": 42
   },
   "N14_Hyperfine": {
-    "enabled": true,
+    "enabled": false,
     "r_vec": [1e-10, 0, 0],
     "rho_e0": 2.688e28,
     "A_iso": 2.14e6,
     "P_quad": -5.0e6
   },
   "N14_Quadrupole": {
-    "enabled": true,
+    "enabled": false,
     "P": -5.0e6,
     "eta": 0.0
   },
   "C13_Hyperfine": {
-    "enabled": true,
+    "enabled": false,
     "r_vec": [0.45e-9, 0.0, 0.0],
     "A_iso": 120e3
   },
   "Strain": {
-    "enabled": true,
+    "enabled": false,
     "r_um": [0.0, 0.0, 0.5]
   },
   "Stark": {
@@ -83,7 +83,7 @@
       "gamma": 1e4
     },
     "nuclear_noise": {
-      "enabled": false,
+      "enabled": true,
       "gamma": 1e2
     },
     "temperature": 300.0

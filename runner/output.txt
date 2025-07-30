@@ -1,2 +1,0 @@
-# Simulation Output
-# Format: [ns]: |g⟩ |e⟩ ⟨Sz⟩ Coherence Purity
