@@ -1,0 +1,140 @@
+name: NEWSIM Simulation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Ermöglicht manuellen Start
+
+jobs:
+  run-newsim:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install numpy scipy matplotlib pandas
+        
+    - name: Run NEWSIM simulation
+      run: |
+        cd cases
+        chmod +x run_test.sh
+        ./run_test.sh 1000 1.0  # 1μs, 1mW
+        
+    - name: Generate count graph
+      run: |
+        cd cases
+        python3 << 'EOF'
+        import numpy as np
+        import matplotlib.pyplot as plt
+        import glob
+        import os
+        
+        # Finde neueste Photon-Counts-Datei
+        files = glob.glob('photon_counts_*.txt')
+        if not files:
+            print("Keine Photon-Counts-Datei gefunden!")
+            exit(1)
+            
+        latest_file = max(files, key=os.path.getctime)
+        print(f"Verarbeite: {latest_file}")
+        
+        # Lade Daten
+        data = []
+        with open(latest_file, 'r') as f:
+            for line in f:
+                if line.startswith('#') or line.strip() == '':
+                    continue
+                parts = line.strip().split()
+                if len(parts) >= 6:
+                    time_ns = float(parts[0])
+                    photons = int(parts[4])
+                    total = int(parts[5])
+                    data.append([time_ns, photons, total])
+        
+        if not data:
+            print("Keine Daten gefunden!")
+            exit(1)
+            
+        data = np.array(data)
+        times = data[:, 0]
+        photons_per_bin = data[:, 1]
+        total_counts = data[:, 2]
+        
+        # Erstelle Plots
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
+        
+        # Plot 1: Photonen pro Bin
+        ax1.step(times, photons_per_bin, where='mid', linewidth=2, color='blue')
+        ax1.set_xlabel('Zeit [ns]')
+        ax1.set_ylabel('Photonen pro Bin')
+        ax1.set_title('NEWSIM: Photonenzählung pro Zeitbin')
+        ax1.grid(True, alpha=0.3)
+        
+        # Plot 2: Kumulative Counts
+        ax2.plot(times, total_counts, linewidth=2, color='red')
+        ax2.set_xlabel('Zeit [ns]')
+        ax2.set_ylabel('Gesamte Photonen')
+        ax2.set_title('Kumulative Photonenzählung')
+        ax2.grid(True, alpha=0.3)
+        
+        plt.tight_layout()
+        plt.savefig('photon_counts_graph.png', dpi=300, bbox_inches='tight')
+        plt.savefig('photon_counts_graph.pdf', bbox_inches='tight')
+        
+        # Statistiken ausgeben
+        print(f"\nStatistiken:")
+        print(f"Simulationsdauer: {times[-1]:.1f} ns")
+        print(f"Gesamte Photonen: {total_counts[-1]}")
+        print(f"Mittlere Count-Rate: {total_counts[-1]/(times[-1]*1e-9)/1e6:.2f} MHz")
+        print(f"Max Photonen/Bin: {max(photons_per_bin)}")
+        
+        # Erstelle Summary-Datei
+        with open('simulation_summary.txt', 'w') as f:
+            f.write(f"NEWSIM Simulation Summary\n")
+            f.write(f"========================\n\n")
+            f.write(f"Simulationsdauer: {times[-1]:.1f} ns\n")
+            f.write(f"Gesamte Photonen: {total_counts[-1]}\n")
+            f.write(f"Mittlere Count-Rate: {total_counts[-1]/(times[-1]*1e-9)/1e6:.2f} MHz\n")
+            f.write(f"Max Photonen/Bin: {max(photons_per_bin)}\n")
+            f.write(f"Anzahl Datenpunkte: {len(data)}\n")
+        
+        print("Graphen und Summary erstellt!")
+        EOF
+        
+    - name: Upload raw data
+      uses: actions/upload-artifact@v3
+      with:
+        name: newsim-raw-data
+        path: |
+          cases/photon_counts_*.txt
+          cases/simulation_summary.txt
+        retention-days: 30
+        
+    - name: Upload graphs
+      uses: actions/upload-artifact@v3
+      with:
+        name: newsim-graphs
+        path: |
+          cases/photon_counts_graph.png
+          cases/photon_counts_graph.pdf
+        retention-days: 30
+        
+    - name: Display summary
+      run: |
+        cd cases
+        echo "=== SIMULATION SUMMARY ==="
+        cat simulation_summary.txt
+        echo ""
+        echo "=== LETZTE DATENPUNKTE ==="
+        tail -n 10 photon_counts_*.txt | grep -v "^#"

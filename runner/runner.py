@@ -8,6 +8,7 @@ import numpy as np
 from lindblad import LindbladEvolution
 from scipy.integrate import solve_ivp
 from photoncounter import PhotonCounter
+from laser import LaserInterface
 
 class SimpleRunner:
     def __init__(self):
@@ -28,6 +29,12 @@ class SimpleRunner:
             dark_count_rate=100.0      # 100 Hz Dunkelzählrate
         )
         
+        # Laser-Interface initialisieren
+        self.laser = LaserInterface()
+        
+        # Verbinde Laser mit Hamiltonian
+        self.lindblad.H_builder.set_laser_interface(self.laser)
+        
         # Hole spontane Emissionsrate aus Config
         with open('../src/system.json', 'r') as f:
             system_config = json.load(f)
@@ -39,6 +46,7 @@ class SimpleRunner:
         
         print(f"Runner gestartet: {self.steps_per_ns} steps/ns, dt={self.dt*1e9:.2f}ns")
         print(f"Photonenzähler aktiv: η={self.photon_counter.detection_efficiency}, DCR={self.photon_counter.dark_count_rate} Hz")
+        print("Laser-Interface bereit (verwende laser_on()/laser_off())")
         
     def evolve_one_step(self, rho, dt):
         """Ein einzelner Lindblad-Zeitschritt"""
@@ -74,9 +82,14 @@ class SimpleRunner:
         coherence = obs['coherence'][0]
         purity = obs['purity'][0]
         
+        # Laser-Status
+        laser_status = "ON" if self.laser.is_on else "OFF"
+        laser_power = f"{self.laser.power_mw:.1f}mW" if self.laser.is_on else "0mW"
+        
         return (f"|g⟩={pop_g:.3f} |e⟩={pop_e:.3f} "
                 f"⟨Sz⟩={spin_z:.3f} Coh={coherence:.3f} Pur={purity:.3f} "
-                f"γ={photon_stats['emission_rate']/1e6:.1f}MHz Photons={photon_stats['total_count']}")
+                f"γ={photon_stats['emission_rate']/1e6:.1f}MHz Photons={photon_stats['total_count']} "
+                f"Laser={laser_status}({laser_power})")
     
     def run_forever(self):
         """Hauptschleife: Läuft für immer"""
@@ -120,6 +133,21 @@ class SimpleRunner:
                 print(f"  Mittlere Emissionsrate: {stats['average_rate']/1e6:.2f} MHz")
                 print(f"  Mittlere Zählrate: {stats['average_count_rate']:.1f} Hz")
                 print(f"  Fano-Faktor: {stats['fano_factor']:.3f}")
+                
+                # Laser-Statistiken
+                laser_stats = self.laser.get_status()
+                print(f"\nLaser-Status:")
+                print(f"  Status: {'EIN' if laser_stats['is_on'] else 'AUS'}")
+                print(f"  Leistung: {laser_stats['power_mw']:.2f} mW")
+                print(f"  Rabi-Frequenz: {laser_stats['rabi_frequency_mhz']:.1f} MHz")
+    
+    def laser_on(self, power_mw: float, detuning_mhz: float = 0.0):
+        """Schaltet Laser ein (kann während Simulation aufgerufen werden)"""
+        self.laser.turn_on(power_mw, detuning_mhz * 1e6)
+    
+    def laser_off(self):
+        """Schaltet Laser aus (kann während Simulation aufgerufen werden)"""
+        self.laser.turn_off()
 
 if __name__ == "__main__":
     runner = SimpleRunner()

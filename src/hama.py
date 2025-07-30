@@ -16,6 +16,13 @@ class TotalHamiltonian:
         with open(config_path, 'r') as f:
             self.config = json.load(f)
         self.Sx, self.Sy, self.Sz = spin1_ops()
+        
+        # Laser-Interface (wird von außen gesetzt)
+        self.laser_interface = None
+    
+    def set_laser_interface(self, laser_interface):
+        """Setzt das Laser-Interface"""
+        self.laser_interface = laser_interface
     
     def build_hamiltonian(self, t=0.0):
         """Baut den Gesamt-Hamiltonian durch Addition aller aktivierten Terme"""
@@ -138,7 +145,7 @@ class TotalHamiltonian:
             
             H_total += H_mw
         
-        # Laser Term
+        # Laser Term (aus system.json)
         if self.config.get('Laser', {}).get('enabled', False):
             laser_params = self.config['Laser']
             
@@ -162,6 +169,11 @@ class TotalHamiltonian:
             H_laser_18x18 = H_laser(t, Omega_L, omega_L)
             
             H_total += H_laser_18x18
+        
+        # Laser Interface (dynamisch schaltbar)
+        if self.laser_interface is not None:
+            H_laser_interface = self.laser_interface.get_hamiltonian_contribution(t)
+            H_total += H_laser_interface
         
         # Jahn-Teller Term
         if self.config.get('JahnTeller', {}).get('enabled', False):
