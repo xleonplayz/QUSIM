@@ -113,7 +113,7 @@ jobs:
         EOF
         
     - name: Upload raw data
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: newsim-raw-data
         path: |
@@ -122,7 +122,7 @@ jobs:
         retention-days: 30
         
     - name: Upload graphs
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: newsim-graphs
         path: |
