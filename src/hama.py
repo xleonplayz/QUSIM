@@ -1,3 +1,9 @@
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#  Leon Kaiser QUSIM Quantum Simulator für NV center simulations
+#  MSQC Goethe University https://msqc.cgi-host6.rz.uni-frankfurt.de
+#  I.kaiser[at]em.uni-frankfurt.de
+#
+
 import numpy as np
 import json
 from ZFS.zfs import H_ZFS, spin1_ops
