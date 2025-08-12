@@ -1,27 +1,27 @@
 {
   "ZFS": {
-    "enabled": true,
+    "enabled": false,
     "D": 2.87e9,
     "Ex": 0.0,
     "Ey": 0.0
   },
   "Zeeman": {
-    "enabled": false,
+    "enabled": true,
     "B0": [0, 0, 100],
     "B_ac": [0, 0, 0],
     "f_ac": 1e6,
     "ac_phase": 0,
     "g_tensor": [2.0028, 2.0028, 2.0028],
     "noise": {
-      "white": 0.0,
-      "telegraph": 0.0
+      "white": 0.5,
+      "telegraph": 1.0
     },
     "seed": 42
   },
   "N14_Hyperfine": {
-    "enabled": false,
-    "r_vec": [1e-10, 0, 0],
-    "rho_e0": 2.688e28,
+    "enabled": true,
+    "r_vec": [3e-10, 0, 0],
+    "rho_e0": 0.0,
     "A_iso": 2.14e6,
     "P_quad": -5.0e6
   },
@@ -31,12 +31,12 @@
     "eta": 0.0
   },
   "C13_Hyperfine": {
-    "enabled": false,
+    "enabled": true,
     "r_vec": [0.45e-9, 0.0, 0.0],
     "A_iso": 120e3
   },
   "Strain": {
-    "enabled": false,
+    "enabled": true,
     "r_um": [0.0, 0.0, 0.5]
   },
   "Stark": {

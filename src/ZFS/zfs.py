@@ -63,30 +63,32 @@ def H_ZFS(D, Ex=0.0, Ey=0.0, Sx=None, Sy=None, Sz=None):
     SxSy_plus_SySx = Sx @ Sy + Sy @ Sx
     return D * Sz2 + Ex * Sx2_minus_Sy2 + Ey * SxSy_plus_SySx
 
-# ---------- 4) Parameter-Beispiel und 3×3 Hamiltonian ----------
-T = 295.0                                  # Temperatur in K
-D  = D_of_T(T)                             # D(T) in Hz
-Ex, Ey = ExEy_from_strain(
-    (5e-6, 2e-6),                          # Dehnungsvektor εx, εy
-    kx=1e9, ky=1e9                         # Umrechnungsfaktoren in Hz
-)
-
-# Erzeuge Spin-1-Operatoren und 3×3-Hamiltonian
-Sx, Sy, Sz = spin1_ops()
-H3 = H_ZFS(D, Ex, Ey, Sx, Sy, Sz)
-
-# ---------- 5) Aufweiten auf 18×18 ----------
-# Variante A: Block-Diagonal (H in oberem 3×3-Block)
-H18_block = np.zeros((18,18), dtype=complex)
-H18_block[:3, :3] = H3
-
-# Variante B: Tensorprodukt mit 6×6-Einheitsoperator
-I6       = np.eye(6, dtype=complex)
-H18_tensor = np.kron(H3, I6)
-
-# ---------- 6) Ausgabe ----------
-np.set_printoptions(precision=3, suppress=True)
-
-print("3×3 Zero-Field-Splitting Hamiltonian H3:\n", H3, "\n")
-print("18×18 Block-diagonal Einbettung:\n", H18_block, "\n")
-print("18×18 Tensorprodukt Einbettung:\n", H18_tensor)
+# ---------- 4) Beispiel-Funktion (nur bei direktem Aufruf) ----------
+if __name__ == "__main__":
+    # Parameter-Beispiel und 3×3 Hamiltonian
+    T = 295.0                                  # Temperatur in K
+    D  = D_of_T(T)                             # D(T) in Hz
+    Ex, Ey = ExEy_from_strain(
+        (5e-6, 2e-6),                          # Dehnungsvektor εx, εy
+        kx=1e9, ky=1e9                         # Umrechnungsfaktoren in Hz
+    )
+    
+    # Erzeuge Spin-1-Operatoren und 3×3-Hamiltonian
+    Sx, Sy, Sz = spin1_ops()
+    H3 = H_ZFS(D, Ex, Ey, Sx, Sy, Sz)
+    
+    # ---------- 5) Aufweiten auf 18×18 ----------
+    # Variante A: Block-Diagonal (H in oberem 3×3-Block)
+    H18_block = np.zeros((18,18), dtype=complex)
+    H18_block[:3, :3] = H3
+    
+    # Variante B: Tensorprodukt mit 6×6-Einheitsoperator
+    I6       = np.eye(6, dtype=complex)
+    H18_tensor = np.kron(H3, I6)
+    
+    # ---------- 6) Ausgabe ----------
+    np.set_printoptions(precision=3, suppress=True)
+    
+    print("3×3 Zero-Field-Splitting Hamiltonian H3:\n", H3, "\n")
+    print("18×18 Block-diagonal Einbettung:\n", H18_block, "\n")
+    print("18×18 Tensorprodukt Einbettung:\n", H18_tensor)

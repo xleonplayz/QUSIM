@@ -13,7 +13,7 @@ from n14qu.n14 import H_Q_N14, extend_to_18
 from HHFC13.c13 import H_C13_in_18x18
 from strain.strain import H_strain_3x3
 from stark.stark import H_stark_3x3
-from MW.mw import H_MW
+# Old MW implementation removed - replaced by AWG system
 from LA.laser import H_laser
 from JahnTeller.jt_numpy import H_JT_18x18
 
@@ -25,10 +25,17 @@ class TotalHamiltonian:
         
         # Laser-Interface (wird von außen gesetzt)
         self.laser_interface = None
+        
+        # AWG-Interface (wird von außen gesetzt)
+        self.awg_interface = None
     
     def set_laser_interface(self, laser_interface):
         """Setzt das Laser-Interface"""
         self.laser_interface = laser_interface
+    
+    def set_awg_interface(self, awg_interface):
+        """Setzt das AWG-Interface für präzise MW-Pulssteuerung"""
+        self.awg_interface = awg_interface
     
     def build_hamiltonian(self, t=0.0):
         """Baut den Gesamt-Hamiltonian durch Addition aller aktivierten Terme"""
@@ -101,12 +108,13 @@ class TotalHamiltonian:
             
             H_total += H_c13
         
-        # Strain Term
+        # Strain Term - JAX-optimiert
         if self.config.get('Strain', {}).get('enabled', False):
             strain_params = self.config['Strain']
             r_um = np.array(strain_params.get('r_um', [0.0, 0.0, 0.5]))
             
-            # 3x3 Strain Matrix  
+            # Strain mit JAX-optimierter Implementierung
+            from strain.strain import H_strain_3x3
             H_strain = H_strain_3x3(t, r_um, S_ops=(self.Sx, self.Sy, self.Sz))
             
             # Erweitere auf 18x18 (Tensor-Produkt)
@@ -137,19 +145,10 @@ class TotalHamiltonian:
             
             H_total += H_stark_18x18
         
-        # MW (Mikrowellen) Term
-        if self.config.get('MW', {}).get('enabled', False):
-            mw_params = self.config['MW']
-            
-            # MW Parameter
-            Omegas = np.array(mw_params.get('Omegas', []))
-            Phis = np.array(mw_params.get('Phis', []))
-            T = mw_params.get('T', 1e-6)  # Pulsdauer
-            
-            # MW ist bereits 18x18
-            H_mw = H_MW(t, Omegas, Phis, T)
-            
-            H_total += H_mw
+        # AWG (Arbitrary Waveform Generator) für MW-Pulse
+        if self.awg_interface is not None:
+            H_awg = self.awg_interface.get_hamiltonian_contribution(t)
+            H_total += H_awg
         
         # Laser Term (aus system.json)
         if self.config.get('Laser', {}).get('enabled', False):
