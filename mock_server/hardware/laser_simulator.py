@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from enum import IntEnum
 from typing import List, FrozenSet, Dict
 
@@ -28,15 +28,16 @@ class LaserState(IntEnum):
 
 # - Pydantic Model for Laser Data - #
 class LaserModel(BaseModel):
-    power: float
-    power_setpoint: float
-    current: float
-    current_setpoint: float
-    control_mode: ControlMode
-    shutter_state: ShutterState
-    laser_state: LaserState
-    temperatures: Dict[str, float] 
-    
+    power: float =                   Field(..., ge=0, description="Current laser power in watts")
+    power_setpoint: float =          Field(..., ge=0, description="Desired laser power setpoint in watts")
+    current: float =                 Field(..., ge=0, description="Current laser current")
+    current_setpoint: float =        Field(..., ge=0, description="Desired laser current setpoint")
+    control_mode: ControlMode =      Field(...,       description="Current control mode of the laser")
+    shutter_state: ShutterState =    Field(...,       description="Current state of the laser shutter")
+    laser_state: LaserState =        Field(...,       description="Current state of the laser")
+    temperatures: Dict[str, float] = Field(...,       description="Temperatures of the laser components in degrees Celsius")
+
+
 ### --- FastAPI Application Setup --- ###
 router = APIRouter()
 
@@ -53,41 +54,41 @@ laser_data = LaserModel(
 )
 
 @router.get("/laser/init", response_model=LaserModel)
-def initialize_laser():
+def initialize_laser() -> LaserModel:
     """ Initialize the laser with default values. """
     return laser_data
 
 @router.get("/laser/status", response_model=LaserModel)
-def get_laser_status():
+def get_laser_status() -> LaserModel:
     """ Get the current status of the laser. """
     return laser_data
 
 @router.get("/laser/on_activate", response_model=LaserModel)
-def on_activate():
+def on_activate() -> LaserModel:
     """ Activate the laser and return its current state. """
     # Here you would typically perform activation logic
     return laser_data
 
 @router.get("/laser/on_deactivate", response_model=LaserModel)
-def on_deactivate():
+def on_deactivate() -> LaserModel:
     """ Deactivate the laser and return its current state. """
     # Here you would typically perform deactivation logic
     return laser_data
 
 @router.get("/laser/power/range", response_model=List[float])
-def get_power_range():
+def get_power_range() -> List[float]:
     """ Return the power range of the laser in watts. """
     return [0.0, 0.250]
 
 @router.get("/laser/power", response_model=float)
-def get_power():
+def get_power() -> float:
     """ Return the current power of the laser in watts. """
     # Simulate power reading with some noise
     laser_data.power = laser_data.power_setpoint * np.random.normal(1, 0.01)
     return laser_data.power
 
 @router.get("/laser/power/setpoint", response_model=float)
-def get_power_setpoint():
+def get_power_setpoint() -> float:
     """ Return the current power setpoint of the laser in watts. """
     return laser_data.power_setpoint
 
@@ -190,7 +191,6 @@ def set_laser_state(state: LaserState):
 @router.get("/laser/shutter/state", response_model=ShutterState)
 def get_shutter_state():
     """ Get the current state of the laser shutter. """
-    print(f"\t\t-> Set shutter state to {laser_data.shutter_state}")
     return laser_data.shutter_state
 
 @router.post("/laser/shutter/state", response_model=None)
