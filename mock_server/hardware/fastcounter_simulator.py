@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from pydantic import BaseModel, Field
 from enum import IntEnum
-from typing import List, Tuple, Dict
+from typing import List, Tuple
 
 import numpy as np
 
@@ -20,11 +20,11 @@ class Status(IntEnum):
 # - Pydantic Model for Fast COunter Data - #
 class FastCounterModel(BaseModel):
     status: Status =         Field(...,       description="Current status of the fast counter")
-    binwidth: int =          Field(..., ge=0, description="")
-    gateLength_bins: int =   Field(..., ge=0, description="Length of the gate in bins")
+    binwidth: int =          Field(..., ge=0, description="Number of clock cycles per bin")
+    gateLength_bins: int =   Field(..., ge=0, description="Length of one individual gate in bins")
     clock_frequency: float = Field(..., ge=0, description="Clock frequency in Hz")
     gated: bool =            Field(...,       description="Indicates if the fast counter is a gated counter (True) or not (False)")
-    number_of_gates: int =   Field(..., ge=0, description="Number of gates in the pulse sequence")
+    number_of_gates: int =   Field(..., ge=1, description="Number of gates in the pulse sequence")
     
 
 ### --- FastAPI Application Setup --- ###
@@ -41,30 +41,26 @@ fastcounter_data = FastCounterModel(
 )
 
 
-@router.get("/fastcounter/init", response_model=FastCounterModel)
-def initialize_fastcounter():
+@router.post("/fastcounter/init")
+def initialize_fastcounter(gated: bool = False):
     """ Initialize the fastcounter with default values. """
-    return fastcounter_data
+    # Here you would typically perform initialization logic
+    fastcounter_data.gated = gated
 
-@router.get("/fastcounter/status", response_model=FastCounterModel)
-def get_fastcounter_status() -> FastCounterModel:
-    """ Get the current status of the fastcounter. """
-    return fastcounter_data
-
-@router.get("/fastcounter/on_activate", response_model=FastCounterModel)
-def on_activate_fastcounter() -> FastCounterModel:
+@router.get("/fastcounter/on_activate")
+def on_activate():
     """ Activate the fastcounter and return its current state. """
     # Here you would typically perform activation logic
-    return fastcounter_data
+    pass
 
-@router.get("/fastcounter/on_deactivate", response_model=FastCounterModel)
-def on_deactivate() -> FastCounterModel:
+@router.get("/fastcounter/on_deactivate")
+def on_deactivate():
     """ Deactivate the fastcounter and return its current state. """
     # Here you would typically perform deactivation logic
-    return fastcounter_data
+    pass
 
 @router.get("/fastcounter/constraints", response_model=dict)
-def get_fastcounter_constraints() -> dict:
+def get_constraints() -> dict:
     """ Return the constraints of the fastcounter. """
     # Example for configuration with default values:
     constraints = dict()
@@ -81,10 +77,10 @@ def get_fastcounter_constraints() -> dict:
     return constraints
 
 @router.post("/fastcounter/configure", response_model=Tuple[float, float, int])
-def configure_fastcounter(bin_width_s, record_length_s, number_of_gates = 1) -> Tuple[float, float, int]:
+def configure(bin_width_s, record_length_s, number_of_gates = 1) -> Tuple[float, float, int]:
     """ Configuration of the fastcounter. """
     
-    print(f"Bin width: {bin_width_s}\nRecord Length: {record_length_s}\nNumber of Gates: {number_of_gates}")
+    # print(f"Bin width: {bin_width_s}\nRecord Length: {record_length_s}\nNumber of Gates: {number_of_gates}")
     
     bin_width_s = float(bin_width_s)
     record_length_s = float(record_length_s)
@@ -112,7 +108,7 @@ def configure_fastcounter(bin_width_s, record_length_s, number_of_gates = 1) -> 
     return binwidth_s, gate_length_s, number_of_gates
 
 @router.get("/fastcounter/get_status", response_model=int)
-def get_fastcounter_operating_status() -> int:
+def get_status() -> int:
     """ Receives the current status of the Fast Counter and outputs it as return value.
 
     0 = unconfigured
@@ -123,7 +119,7 @@ def get_fastcounter_operating_status() -> int:
     """
     return int(fastcounter_data.status)
 
-@router.post("/fastcounter/measure/start", response_model=None)
+@router.post("/fastcounter/measure/start")
 def start_measure():
     """ Start the fast counter. """
     if fastcounter_data.status == Status.IDLE:
@@ -133,7 +129,7 @@ def start_measure():
     else:
         raise ValueError("Fast Counter is not in IDLE state, cannot start measurement.")
 
-@router.post("/fastcounter/measure/pause", response_model=None)
+@router.post("/fastcounter/measure/pause")
 def pause_measure():
     """ Pauses the current measurement. """
     if fastcounter_data.status == Status.RUNNING:
@@ -142,15 +138,15 @@ def pause_measure():
         # In a real implementation, this would pause the hardware counting
     else:
         raise ValueError("Fast Counter is not RUNNING, cannot pause measurement.")
-    
-@router.post("/fastcounter/measure/stop", response_model=None)
+
+@router.post("/fastcounter/measure/stop")
 def stop_measure():
     """ Stop the fast counter. """
     fastcounter_data.status = Status.IDLE
     # Simulate stopping measurement logic
     # In a real implementation, this would stop the hardware counting
 
-@router.post("/fastcounter/measure/continue", response_model=None)
+@router.post("/fastcounter/measure/continue")
 def continue_measure():
     """ Continues the current measurement. """
     if fastcounter_data.status == Status.PAUSED:
@@ -170,7 +166,7 @@ def is_gated() -> bool:
     return fastcounter_data.gated
 
 @router.get("/fastcounter/get_binwidth_s", response_model=float)
-def get_binwidth_s() -> float:
+def get_binwidth() -> float:
     """ Returns the width of a single timebin in the timetrace in seconds.
 
     @return float: current length of a single bin in seconds (seconds/bin)
@@ -188,7 +184,6 @@ def get_data_trace() -> Tuple[List[int], dict]:
         # Simulate data trace retrieval logic
         # In a real implementation, this would fetch the data from the hardware
         data = __generateData()
-        print("data generated")
         info_dict = {'elapsed_sweeps': None, 'elapsed_time': None}
         return data, info_dict
     else:
