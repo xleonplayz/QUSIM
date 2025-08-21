@@ -2,3 +2,4 @@ mock_server/__pycache__/main.cpython-310.pyc
 mock_server/__pycache__/schemas.cpython-310.pyc
 mock_server/hardware/__pycache__/laser_simulator.cpython-310.pyc
 mock_server/hardware/__pycache__/fastcounter_simulator.cpython-310.pyc
+mock_server/hardware/__pycache__/pulser_simulator.cpython-310.pyc
