@@ -1,7 +1,7 @@
 from fastapi import APIRouter, WebSocket
 
 from pydantic import BaseModel, Field
-from enum import IntEnum
+from enum import IntEnum, Enum
 from typing import List, FrozenSet, Dict, Union, Set, Tuple
 
 import numpy as np
@@ -18,7 +18,7 @@ from qudi.interface.pulser_interface import PulserConstraints, SequenceOption
 
 ### --- Models for Pulser Control --- ###
 # - Enums from Interface class - #
-class ConnectStatus(IntEnum):
+class ConnectStatus(Enum):
     DISCONNECTED = False
     CONNECTED = True
 
@@ -34,35 +34,35 @@ class PulserStatus(IntEnum):
 # - Pydantic Model for Pulser Data - #
 class PulserModel(BaseModel):
     # Parameters
-    sample_rate: float = Field(...)
-    
+    sample_rate: float = Field(..., description="Sample rate of the pulser in Hz")
+
     # Status Variables
-    connected: ConnectStatus = Field(...)
-    current_status: PulserStatus = Field(...)
+    connected: ConnectStatus = Field(..., description="Connection status of the pulser")
+    current_status: PulserStatus = Field(..., description="Current status of the pulser")
     
     # Channel Configuration
-    amplitude_dict: Dict[str, float] = Field(...)
-    offset_dict: Dict[str, float] = Field(...)
+    amplitude_dict: Dict[str, float] = Field(..., description="Max Amplitude for analog channels in volts")
+    offset_dict: Dict[str, float] = Field(..., description="Offset for analog channels in volts")
     
-    digital_high_dict: Dict[str, float] = Field(...)
-    digital_low_dict: Dict[str, float] = Field(...)
+    digital_high_dict: Dict[str, float] = Field(..., description="Digital high values for digital channels in volts")
+    digital_low_dict: Dict[str, float] = Field(..., description="Digital low values for digital channels in volts")
     
-    activation_config: Dict[str, FrozenSet[str]] = Field(...)
+    activation_config: Dict[str, FrozenSet[str]] = Field(..., description="Configuration for active channels")
     
-    channel_states: Dict[str, bool] = Field(...)
-    current_loaded_assets: Dict[int, str] = Field(...)
+    channel_states: Dict[str, bool] = Field(..., description="States of the channels, True for active, False for inactive")
+    current_loaded_assets: Dict[int, str] = Field(..., description="Currently loaded assets for each channel, where key is channel number and value is waveform name")
     
     # Waveforms
-    waveform_set: Set[str] = Field(...)
+    waveform_set: Set[str] = Field(..., description="Set of all available waveform names")
     
     # Sequences
-    sequence_dict: Dict[str, str] = Field(...)
+    sequence_dict: Dict[str, str] = Field(..., description="Dictionary of sequences")
     
     # Other
-    interleave: bool = Field(...)
-    use_sequencer: bool = Field(...)
-    force_sequence_option: bool = Field(...)
-    save_samples: bool = Field(...)
+    interleave: bool = Field(..., description="Indicates if interleaving is used in sequences")
+    use_sequencer: bool = Field(..., description="Indicates if the sequencer is used for sequences")
+    force_sequence_option: bool = Field(...,  description="Force the use of sequence options even if not required")
+    save_samples: bool = Field(..., description="Indicates if samples should be saved to disk")
 
 
 ### --- FastAPI Application Setup --- ###

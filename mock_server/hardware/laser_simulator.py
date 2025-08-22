@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 
 from pydantic import BaseModel, Field
-from enum import IntEnum
 from typing import List, FrozenSet, Dict
 
 import numpy as np
@@ -10,17 +9,17 @@ from qudi.interface.simple_laser_interface import LaserState, ShutterState, Cont
 
 # - Pydantic Model for Laser Data - #
 class LaserModel(BaseModel):
-    power: float =                   Field(..., ge=0, description="Current laser power in watts")
-    power_setpoint: float =          Field(..., ge=0, description="Desired laser power setpoint in watts")
-    power_range: List[float] =       Field(..., min_items=2, max_items=2, description="Range of laser power in watts")
-    current: float =                 Field(..., ge=0, description="Current laser current")
-    current_setpoint: float =        Field(..., ge=0, description="Desired laser current setpoint")
-    current_range: List[float] =     Field(..., min_items=2, max_items=2, description="Range of laser current in laser current units")
+    power: float =                   Field(..., description="Current laser power in watts")
+    power_setpoint: float =          Field(..., description="Desired laser power setpoint in watts")
+    power_range: List[float] =       Field(..., description="Range of laser power in watts")
+    current: float =                 Field(..., description="Current laser current")
+    current_setpoint: float =        Field(..., description="Desired laser current setpoint")
+    current_range: List[float] =     Field(..., description="Range of laser current")
     current_unit: str =              Field(..., description="Unit of the laser current, e.g., '%'")
-    control_mode: ControlMode =      Field(...,       description="Current control mode of the laser")
-    shutter_state: ShutterState =    Field(...,       description="Current state of the laser shutter")
-    laser_state: LaserState =        Field(...,       description="Current state of the laser")
-    temperatures: Dict[str, float] = Field(...,       description="Temperatures of the laser components in degrees Celsius")
+    control_mode: ControlMode =      Field(..., description="Current control mode of the laser")
+    shutter_state: ShutterState =    Field(..., description="Current state of the laser shutter")
+    laser_state: LaserState =        Field(..., description="Current state of the laser")
+    temperatures: Dict[str, float] = Field(..., description="Temperatures of the laser components in degrees Celsius")
 
 
 ### --- FastAPI Application Setup --- ###

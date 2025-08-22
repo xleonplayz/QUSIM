@@ -19,12 +19,12 @@ class Status(IntEnum):
 
 # - Pydantic Model for Fast COunter Data - #
 class FastCounterModel(BaseModel):
-    status: Status =         Field(...,       description="Current status of the fast counter")
-    binwidth: int =          Field(..., ge=0, description="Number of clock cycles per bin")
-    gateLength_bins: int =   Field(..., ge=0, description="Length of one individual gate in bins")
-    clock_frequency: float = Field(..., ge=0, description="Clock frequency in Hz")
-    gated: bool =            Field(...,       description="Indicates if the fast counter is a gated counter (True) or not (False)")
-    number_of_gates: int =   Field(..., ge=1, description="Number of gates in the pulse sequence")
+    status: Status =         Field(..., description="Current status of the fast counter")
+    binwidth: int =          Field(..., description="Number of clock cycles per bin")
+    gateLength_bins: int =   Field(..., description="Length of one individual gate in bins")
+    clock_frequency: float = Field(..., description="Clock frequency in Hz")
+    gated: bool =            Field(..., description="Indicates if the fast counter is a gated counter (True) or not (False)")
+    number_of_gates: int =   Field(..., description="Number of gates in the pulse sequence")
     
 
 ### --- FastAPI Application Setup --- ###
