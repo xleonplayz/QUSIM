@@ -16,7 +16,7 @@ First we need to install the qudi-core package.
     >> python3.10 -m venv qudi-env
     >> source qudi-env/bin/activate
     >> python -m pip install qudi-core
-    >> qudi- install-kernel
+    >> qudi-install-kernel
 
 Then we need to install additional dependencies:
     >> python -m pip install numpy fastapi uvicorn asyncio websockets requests
@@ -27,11 +27,23 @@ Note: We install it here in developer mode, so we can edit the modules
     >> git clone https://github.com/Ulm-IQO/qudi-iqo-modules.git
     >> cd qudi-iqo-modules
     >> python -m pip install -e .
+    >> cd ..
     
 Finally we install the mock server:
     >> git clone https://github.com/xleonplayz/QUSIM.git
+    >> git clone https://github.com/Felix-Hoffmann-KIT/QUSIM.git
     >> cd QUSIM/qudi-addon
     >> python -m pip install -e .
+    >> cd ..
+
+Now navigate to the mockserver and start everything:
+    >> cd mock_server
+    >> uvicorn main:app --reload --ws-max-size 1073741824 &
+    >> qudi
+    
+Now select in qudi the configuration file under
+    -> File -> Load Configuration
+    -> QUSIM -> qudi-addon -> src -> qudi -> default_API.cfg
 """
 
 
