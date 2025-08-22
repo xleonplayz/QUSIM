@@ -293,9 +293,7 @@ class PulserAPI(PulserInterface):
         """
         self.log.debug("Deleting waveform(s).")
         try:
-            response: List[str] = requests.get(f"{self.api_url}/delete_waveform", params={
-                    'waveform_name': waveform_name
-                }).json()
+            response: List[str] = requests.post(f"{self.api_url}/delete_waveform", json=waveform_name).json()
             return response
         except Exception as e:
             self.log.error(f"Error retrieving sequence names: {e}")
@@ -311,7 +309,7 @@ class PulserAPI(PulserInterface):
         """
         self.log.debug("Deleting sequence(s).")
         try:
-            response: List[str] = requests.get(f"{self.api_url}/delete_sequence", params={
+            response: List[str] = requests.post(f"{self.api_url}/delete_sequence", params={
                     'sequence_name': sequence_name
                 }).json()
             return response
