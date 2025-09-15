@@ -6,6 +6,15 @@ from typing import List, Tuple
 
 import numpy as np
 
+# Import NV Simulator Backend
+try:
+    from .nv_simulator_integration import nv_backend
+    NV_BACKEND_AVAILABLE = True
+    print("NV Simulator backend loaded successfully")
+except ImportError as e:
+    print(f"Warning: Could not load NV Simulator backend: {e}")
+    NV_BACKEND_AVAILABLE = False
+
 
 ### --- Models for Fast Counter Control --- ###
 # - Enums from Interface class - #
@@ -25,6 +34,12 @@ class FastCounterModel(BaseModel):
     clock_frequency: float = Field(..., description="Clock frequency in Hz")
     gated: bool =            Field(..., description="Indicates if the fast counter is a gated counter (True) or not (False)")
     number_of_gates: int =   Field(..., description="Number of gates in the pulse sequence")
+
+    # NV Simulator specific parameters
+    mw_frequency: float =    Field(default=2.87e9, description="Microwave frequency in Hz")
+    mw_power: float =        Field(default=8e6, description="Microwave power in Hz (Rabi frequency)")
+    mw_duration: float =     Field(default=60e-9, description="Microwave pulse duration in seconds")
+    mw_amplitude: float =    Field(default=1.0, description="Microwave amplitude (0-1)")
     
 
 ### --- FastAPI Application Setup --- ###
@@ -37,7 +52,12 @@ fastcounter_data = FastCounterModel(
     gateLength_bins=1024,               # in number of bins
     clock_frequency=950e6,              # in Hz
     gated=False,
-    number_of_gates=1
+    number_of_gates=1,
+    # NV specific defaults
+    mw_frequency=2.87e9,               # 2.87 GHz
+    mw_power=8e6,                      # 8 MHz Rabi frequency
+    mw_duration=60e-9,                 # 60 ns pulse
+    mw_amplitude=1.0                   # full amplitude
 )
 
 
@@ -79,13 +99,13 @@ def get_constraints() -> dict:
 @router.post("/fastcounter/configure", response_model=Tuple[float, float, int])
 def configure(bin_width_s, record_length_s, number_of_gates = 1) -> Tuple[float, float, int]:
     """ Configuration of the fastcounter. """
-    
+
     # print(f"Bin width: {bin_width_s}\nRecord Length: {record_length_s}\nNumber of Gates: {number_of_gates}")
-    
+
     bin_width_s = float(bin_width_s)
     record_length_s = float(record_length_s)
     number_of_gates = int(number_of_gates)
-    
+
     # Do nothing if fastcounter is running
     if fastcounter_data.status == Status.RUNNING or fastcounter_data.status == Status.PAUSED:
         binwidth_s = fastcounter_data.binwidth / fastcounter_data.clock_frequency
@@ -102,6 +122,25 @@ def configure(bin_width_s, record_length_s, number_of_gates = 1) -> Tuple[float,
     gate_length_s = fastcounter_data.gateLength_bins * binwidth_s
 
     fastcounter_data.number_of_gates = number_of_gates
+
+    # Configure NV Simulator Backend
+    if NV_BACKEND_AVAILABLE:
+        try:
+            mw_params = {
+                'frequency': fastcounter_data.mw_frequency,
+                'power': fastcounter_data.mw_power,
+                'duration': fastcounter_data.mw_duration,
+                'amplitude': fastcounter_data.mw_amplitude
+            }
+            nv_backend.configure_measurement(
+                bin_width_s=binwidth_s,
+                record_length_s=gate_length_s,
+                number_of_gates=number_of_gates,
+                mw_params=mw_params
+            )
+            print(f"NV Backend configured: bin={binwidth_s*1e9:.1f}ns, record={gate_length_s*1e6:.1f}μs")
+        except Exception as e:
+            print(f"Warning: Could not configure NV backend: {e}")
 
     fastcounter_data.status = Status.IDLE
 
@@ -194,13 +233,103 @@ def get_frequency() -> float:
     """ Get the clock frequency of the fast counter in Hz. """
     return fastcounter_data.clock_frequency
 
+# === NV Simulator specific endpoints ===
+
+@router.get("/fastcounter/mw/frequency", response_model=float)
+def get_mw_frequency() -> float:
+    """ Get the microwave frequency in Hz. """
+    return fastcounter_data.mw_frequency
+
+@router.post("/fastcounter/mw/frequency")
+def set_mw_frequency(frequency: float):
+    """ Set the microwave frequency in Hz. """
+    fastcounter_data.mw_frequency = float(frequency)
+    if NV_BACKEND_AVAILABLE:
+        nv_backend.update_mw_parameters(frequency_hz=frequency)
+    print(f"MW frequency set to {frequency/1e9:.3f} GHz")
+
+@router.get("/fastcounter/mw/power", response_model=float)
+def get_mw_power() -> float:
+    """ Get the microwave power (Rabi frequency) in Hz. """
+    return fastcounter_data.mw_power
+
+@router.post("/fastcounter/mw/power")
+def set_mw_power(power: float):
+    """ Set the microwave power (Rabi frequency) in Hz. """
+    fastcounter_data.mw_power = float(power)
+    if NV_BACKEND_AVAILABLE:
+        nv_backend.update_mw_parameters(power_hz=power)
+    print(f"MW power set to {power/1e6:.1f} MHz")
+
+@router.get("/fastcounter/mw/duration", response_model=float)
+def get_mw_duration() -> float:
+    """ Get the microwave pulse duration in seconds. """
+    return fastcounter_data.mw_duration
+
+@router.post("/fastcounter/mw/duration")
+def set_mw_duration(duration: float):
+    """ Set the microwave pulse duration in seconds. """
+    fastcounter_data.mw_duration = float(duration)
+    if NV_BACKEND_AVAILABLE:
+        nv_backend.update_mw_parameters(duration_s=duration)
+    print(f"MW duration set to {duration*1e9:.1f} ns")
+
+@router.get("/fastcounter/mw/amplitude", response_model=float)
+def get_mw_amplitude() -> float:
+    """ Get the microwave amplitude (0-1). """
+    return fastcounter_data.mw_amplitude
+
+@router.post("/fastcounter/mw/amplitude")
+def set_mw_amplitude(amplitude: float):
+    """ Set the microwave amplitude (0-1). """
+    if amplitude < 0 or amplitude > 1:
+        raise ValueError("Amplitude must be between 0 and 1")
+    fastcounter_data.mw_amplitude = float(amplitude)
+    if NV_BACKEND_AVAILABLE:
+        nv_backend.update_mw_parameters(amplitude=amplitude)
+    print(f"MW amplitude set to {amplitude:.2f}")
+
+@router.get("/fastcounter/nv/info", response_model=dict)
+def get_nv_info() -> dict:
+    """ Get information about the last NV simulation. """
+    if NV_BACKEND_AVAILABLE:
+        return nv_backend.get_measurement_info()
+    else:
+        return {"error": "NV Simulator backend not available"}
+
 
 ### --- Helper Function to Simulate Data Generation --- ###
 def __generateData() -> List[int]:
-    """ Simulate data generation for the fast counter. """
-    # This function would typically interface with the hardware to get real data.
-    # Here we simulate it by generating random data.
-    import os
-    path = os.path.expanduser('~/Desktop/KIT/SS25/DiamondBaby/QUSIM/mock_server/hardware/FastComTec_demo_timetrace.asc')
-    data = np.loadtxt(path, dtype='int64').tolist()
-    return data
+    """ Generate data using NV Simulator or fallback to dummy data. """
+    if NV_BACKEND_AVAILABLE:
+        try:
+            # Use NV Simulator backend to generate realistic data
+            data = nv_backend.run_measurement()
+            print(f"Generated {len(data)} data points using NV Simulator")
+            return data
+        except Exception as e:
+            print(f"Error in NV simulation, using fallback: {e}")
+
+    # Fallback: Load original dummy data or generate random data
+    try:
+        import os
+        # Try multiple possible paths for the dummy data
+        possible_paths = [
+            os.path.join(os.path.dirname(__file__), 'FastComTec_demo_timetrace.asc'),
+            os.path.expanduser('~/Desktop/KIT/SS25/DiamondBaby/QUSIM/mock_server/hardware/FastComTec_demo_timetrace.asc'),
+        ]
+
+        for path in possible_paths:
+            if os.path.exists(path):
+                data = np.loadtxt(path, dtype='int64').tolist()
+                print(f"Using dummy data from {path}")
+                return data
+
+        # If no dummy file found, generate random data
+        print("No dummy data file found, generating random data")
+        data = np.random.poisson(1.2, 1000).tolist()  # Poisson distributed counts
+        return data
+
+    except Exception as e:
+        print(f"Error loading dummy data: {e}, generating minimal fallback")
+        return [1, 0, 2, 1, 0, 1] * 100  # Simple repeating pattern
