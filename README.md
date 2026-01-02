@@ -12,6 +12,9 @@
   <a href="https://xleonplayz.github.io/QUSIM/">
     <img src="https://img.shields.io/badge/docs-GitHub%20Pages-green" alt="Documentation">
   </a>
+  <a href="https://github.com/xleonplayz/QUSIM/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-orange" alt="MIT License">
+  </a>
 </p>
 
 ---
@@ -109,7 +112,6 @@ QUSIM/
 
 <p align="center">
   <sub>
-    This software is provided for scientific and educational purposes.<br>
-    Free to use, modify, and distribute with attribution.
+    Licensed under the <a href="LICENSE">MIT License</a> - free to use, modify, and distribute with attribution.
   </sub>
 </p>
