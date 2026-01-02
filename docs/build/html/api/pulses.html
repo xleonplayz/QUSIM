@@ -1,0 +1,1360 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Interfaces Module" href="interfaces.html"><link rel="prev" title="States Module" href="states.html">
+
+    <!-- Generated with Sphinx 7.3.7 and Furo 2025.12.19 -->
+        <title>Pulses Module - QUSIM Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=acfd86a5" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a1178322" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2962FF;
+  --color-brand-content: #2962FF;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #82B1FF;
+  --color-brand-content: #82B1FF;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #82B1FF;
+  --color-brand-content: #82B1FF;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">QUSIM Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">QUSIM Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Theory &amp; Physics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/nv_center.html">The Nitrogen-Vacancy Center</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/hamiltonian.html">Hamiltonian Terms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/lindblad.html">Open Quantum System Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/measurement.html">Measurement and Readout</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/odmr.html">ODMR Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/pulsed.html">Pulsed Experiments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hamiltonian.html">Hamiltonian Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dynamics.html">Dynamics Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="states.html">States Module</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Pulses Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces.html">Interfaces Module</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/api/pulses.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="pulses-module">
+<h1>Pulses Module<a class="headerlink" href="#pulses-module" title="Link to this heading">¶</a></h1>
+<p>The pulses module provides tools for creating microwave pulse sequences
+for coherent spin control.</p>
+<section id="module-sim.pulses.basic">
+<span id="basic-pulses"></span><h2>Basic Pulses<a class="headerlink" href="#module-sim.pulses.basic" title="Link to this heading">¶</a></h2>
+<p>Basic pulse definitions for NV center control.</p>
+<p>Provides π and π/2 pulses for standard quantum gates.</p>
+<section id="rotation-convention">
+<h3>Rotation Convention<a class="headerlink" href="#rotation-convention" title="Link to this heading">¶</a></h3>
+<p>A pulse with Rabi frequency Ω, duration τ, and phase φ performs
+the rotation:</p>
+<blockquote>
+<div><p>R_φ(θ) = exp(-i θ/2 (cos(φ)σ_x + sin(φ)σ_y))</p>
+</div></blockquote>
+<p>where θ = Ω τ is the rotation angle.</p>
+<dl class="simple">
+<dt>For resonant driving:</dt><dd><p>π-pulse: θ = π, causes spin flip <a href="#id1"><span class="problematic" id="id2">|</span></a>0⟩ ↔ <a href="#id3"><span class="problematic" id="id4">|</span></a>±1⟩
+π/2-pulse: θ = π/2, creates superposition</p>
+</dd>
+</dl>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="sim.pulses.basic.Pulse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sim.pulses.basic.</span></span><span class="sig-name descname"><span class="pre">Pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/basic.html#Pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.basic.Pulse" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Representation of a single MW pulse.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>amplitude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>phase</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.pulses.basic.Pulse.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#sim.pulses.basic.Pulse.shape" title="Link to this definition">¶</a></dt>
+<dd><p>Pulse shape: ‘rect’, ‘gauss’, ‘drag’, etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.pulses.basic.Pulse.amplitude">
+<span class="sig-name descname"><span class="pre">amplitude</span></span><a class="headerlink" href="#sim.pulses.basic.Pulse.amplitude" title="Link to this definition">¶</a></dt>
+<dd><p>Peak Rabi frequency in MHz</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.pulses.basic.Pulse.duration">
+<span class="sig-name descname"><span class="pre">duration</span></span><a class="headerlink" href="#sim.pulses.basic.Pulse.duration" title="Link to this definition">¶</a></dt>
+<dd><p>Pulse duration in seconds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.pulses.basic.Pulse.phase">
+<span class="sig-name descname"><span class="pre">phase</span></span><a class="headerlink" href="#sim.pulses.basic.Pulse.phase" title="Link to this definition">¶</a></dt>
+<dd><p>Pulse phase in radians</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.pulses.basic.Pulse.kwargs">
+<span class="sig-name descname"><span class="pre">kwargs</span></span><a class="headerlink" href="#sim.pulses.basic.Pulse.kwargs" title="Link to this definition">¶</a></dt>
+<dd><p>Additional shape-specific parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">amplitude</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#id5" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">duration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#id6" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">phase</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#id7" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id8" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.pulses.basic.Pulse.rotation_angle">
+<span class="sig-name descname"><span class="pre">rotation_angle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/basic.html#Pulse.rotation_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.basic.Pulse.rotation_angle" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate total rotation angle θ = Ω τ.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.pulses.basic.Pulse.axis_label">
+<span class="sig-name descname"><span class="pre">axis_label</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/basic.html#Pulse.axis_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.basic.Pulse.axis_label" title="Link to this definition">¶</a></dt>
+<dd><p>Get rotation axis label (X, Y, -X, -Y).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.pulses.basic.Pulse.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sim.pulses.basic.Pulse.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>amplitude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>phase</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.basic.pi_pulse">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.basic.</span></span><span class="sig-name descname"><span class="pre">pi_pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rabi_freq_mhz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'x'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rect'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/basic.html#pi_pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.basic.pi_pulse" title="Link to this definition">¶</a></dt>
+<dd><p>Create a π pulse (180° rotation).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rabi_freq_mhz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rabi frequency in MHz. Default: 1 MHz</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Rotation axis: ‘x’, ‘y’, ‘-x’, ‘-y’. Default: ‘x’</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Pulse shape: ‘rect’, ‘gauss’, etc. Default: ‘rect’</p></li>
+<li><p><strong>**kwargs</strong> – Additional shape parameters (sigma, beta, etc.)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>π pulse with calculated duration</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sim.pulses.basic.Pulse" title="sim.pulses.basic.Pulse">Pulse</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">pi_pulse</span><span class="p">(</span><span class="n">rabi_freq_mhz</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Duration: </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">duration</span><span class="o">*</span><span class="mf">1e9</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ns&quot;</span><span class="p">)</span>
+<span class="go">Duration: 50.0 ns</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Y-axis rotation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p_y</span> <span class="o">=</span> <span class="n">pi_pulse</span><span class="p">(</span><span class="n">rabi_freq_mhz</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.basic.pi_half_pulse">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.basic.</span></span><span class="sig-name descname"><span class="pre">pi_half_pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rabi_freq_mhz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'x'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rect'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/basic.html#pi_half_pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.basic.pi_half_pulse" title="Link to this definition">¶</a></dt>
+<dd><p>Create a π/2 pulse (90° rotation).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rabi_freq_mhz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rabi frequency in MHz. Default: 1 MHz</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Rotation axis: ‘x’, ‘y’, ‘-x’, ‘-y’. Default: ‘x’</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Pulse shape. Default: ‘rect’</p></li>
+<li><p><strong>**kwargs</strong> – Additional shape parameters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>π/2 pulse with calculated duration</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sim.pulses.basic.Pulse" title="sim.pulses.basic.Pulse">Pulse</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">pi_half_pulse</span><span class="p">(</span><span class="n">rabi_freq_mhz</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Duration: </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">duration</span><span class="o">*</span><span class="mf">1e9</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ns&quot;</span><span class="p">)</span>
+<span class="go">Duration: 25.0 ns</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.basic.arbitrary_rotation">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.basic.</span></span><span class="sig-name descname"><span class="pre">arbitrary_rotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabi_freq_mhz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rect'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/basic.html#arbitrary_rotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.basic.arbitrary_rotation" title="Link to this definition">¶</a></dt>
+<dd><p>Create a pulse for arbitrary rotation R_φ(θ).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>theta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rotation angle in radians</p></li>
+<li><p><strong>phi</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rotation axis azimuthal angle in radians. Default: 0 (X axis)</p></li>
+<li><p><strong>rabi_freq_mhz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rabi frequency in MHz. Default: 1 MHz</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Pulse shape. Default: ‘rect’</p></li>
+<li><p><strong>**kwargs</strong> – Additional shape parameters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Arbitrary rotation pulse</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sim.pulses.basic.Pulse" title="sim.pulses.basic.Pulse">Pulse</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># π/4 rotation around Y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">arbitrary_rotation</span><span class="p">(</span><span class="n">theta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.basic.composite_pi_pulse">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.basic.</span></span><span class="sig-name descname"><span class="pre">composite_pi_pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rabi_freq_mhz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pulse_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'BB1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rect'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/basic.html#composite_pi_pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.basic.composite_pi_pulse" title="Link to this definition">¶</a></dt>
+<dd><p>Create a composite π pulse for error compensation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rabi_freq_mhz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rabi frequency in MHz</p></li>
+<li><p><strong>pulse_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Type of composite pulse:
+- ‘BB1’: Broadband 1 (robust to amplitude errors)
+- ‘CORPSE’: (robust to frequency errors)</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Pulse shape</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sequence of pulses comprising the composite pulse</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of <a class="reference internal" href="#sim.pulses.basic.Pulse" title="sim.pulses.basic.Pulse">Pulse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="pulse-class">
+<h3>Pulse Class<a class="headerlink" href="#pulse-class" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.pulses</span> <span class="kn">import</span> <span class="n">Pulse</span>
+
+<span class="c1"># Create a pulse</span>
+<span class="n">pulse</span> <span class="o">=</span> <span class="n">Pulse</span><span class="p">(</span>
+    <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">,</span>      <span class="c1"># Envelope shape</span>
+    <span class="n">amplitude</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>          <span class="c1"># Rabi frequency in MHz</span>
+    <span class="n">duration</span><span class="o">=</span><span class="mf">50e-9</span><span class="p">,</span>        <span class="c1"># Duration in seconds</span>
+    <span class="n">phase</span><span class="o">=</span><span class="mi">0</span>                <span class="c1"># Phase in radians</span>
+<span class="p">)</span>
+
+<span class="c1"># Access properties</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pulse</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>          <span class="c1"># Rotation angle (rad)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pulse</span><span class="o">.</span><span class="n">is_pi_pulse</span><span class="p">)</span>   <span class="c1"># True if area ≈ π</span>
+</pre></div>
+</div>
+</section>
+<section id="standard-pulses">
+<h3>Standard Pulses<a class="headerlink" href="#standard-pulses" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.pulses</span> <span class="kn">import</span> <span class="n">pi_pulse</span><span class="p">,</span> <span class="n">pi_half_pulse</span>
+
+<span class="c1"># π-pulse (180° rotation)</span>
+<span class="n">pi</span> <span class="o">=</span> <span class="n">pi_pulse</span><span class="p">(</span><span class="n">rabi_freq_mhz</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span>
+
+<span class="c1"># π/2-pulse (90° rotation)</span>
+<span class="n">pi2</span> <span class="o">=</span> <span class="n">pi_half_pulse</span><span class="p">(</span><span class="n">rabi_freq_mhz</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="module-sim.pulses.shapes">
+<span id="pulse-shapes"></span><h2>Pulse Shapes<a class="headerlink" href="#module-sim.pulses.shapes" title="Link to this heading">¶</a></h2>
+<p>Pulse envelope shapes for NV center control.</p>
+<p>All shape functions return normalized envelopes (max = 1).
+The actual amplitude is set when creating the pulse.</p>
+<section id="available-shapes">
+<h3>Available Shapes<a class="headerlink" href="#available-shapes" title="Link to this heading">¶</a></h3>
+<p>rectangular : Constant amplitude, sharp edges
+gaussian : Smooth Gaussian envelope
+sinc : Sin(x)/x for broadband excitation
+blackman : Window function with low side lobes
+drag : DRAG pulse for leakage reduction
+hermite : Hermite-Gaussian shapes</p>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.shapes.rectangular">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.shapes.</span></span><span class="sig-name descname"><span class="pre">rectangular</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/shapes.html#rectangular"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.shapes.rectangular" title="Link to this definition">¶</a></dt>
+<dd><p>Rectangular (square) pulse envelope.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<em>np.ndarray</em>) – Time array in seconds</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Pulse duration in seconds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Envelope values (1 inside pulse, 0 outside)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.shapes.gaussian">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.shapes.</span></span><span class="sig-name descname"><span class="pre">gaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/shapes.html#gaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.shapes.gaussian" title="Link to this definition">¶</a></dt>
+<dd><p>Gaussian pulse envelope.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<em>np.ndarray</em>) – Time array in seconds</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Total pulse duration in seconds</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>optional</em>) – Standard deviation. Default: duration/6 (3σ truncation each side)</p></li>
+<li><p><strong>truncate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Truncation in units of sigma. Default: 3</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Gaussian envelope (normalized to max 1)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.shapes.sinc_pulse">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.shapes.</span></span><span class="sig-name descname"><span class="pre">sinc_pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zero_crossings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/shapes.html#sinc_pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.shapes.sinc_pulse" title="Link to this definition">¶</a></dt>
+<dd><p>Sinc pulse envelope (sin(x)/x).</p>
+<p>Good for broadband excitation with controlled frequency profile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<em>np.ndarray</em>) – Time array in seconds</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Total pulse duration in seconds</p></li>
+<li><p><strong>zero_crossings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of zero crossings on each side. Default: 3</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sinc envelope (normalized to max 1)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.shapes.blackman">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.shapes.</span></span><span class="sig-name descname"><span class="pre">blackman</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/shapes.html#blackman"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.shapes.blackman" title="Link to this definition">¶</a></dt>
+<dd><p>Blackman window pulse envelope.</p>
+<p>Very low side lobes, good for frequency selectivity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<em>np.ndarray</em>) – Time array in seconds</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Total pulse duration in seconds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Blackman envelope (normalized to max 1)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.shapes.drag">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.shapes.</span></span><span class="sig-name descname"><span class="pre">drag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/shapes.html#drag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.shapes.drag" title="Link to this definition">¶</a></dt>
+<dd><p>DRAG (Derivative Removal by Adiabatic Gating) pulse.</p>
+<p>Reduces leakage to non-computational states by adding
+a derivative component in quadrature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<em>np.ndarray</em>) – Time array in seconds</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Total pulse duration in seconds</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>optional</em>) – Gaussian width. Default: duration/6</p></li>
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – DRAG coefficient. Default: 0.5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(I_component, Q_component) arrays</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>I channel: Gaussian
+Q channel: Derivative of Gaussian (scaled by beta)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.shapes.hermite">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.shapes.</span></span><span class="sig-name descname"><span class="pre">hermite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/shapes.html#hermite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.shapes.hermite" title="Link to this definition">¶</a></dt>
+<dd><p>Hermite-Gaussian pulse envelope.</p>
+<p>Higher orders have more oscillations and are useful for
+selective excitation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<em>np.ndarray</em>) – Time array in seconds</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Total pulse duration in seconds</p></li>
+<li><p><strong>order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Hermite polynomial order. Default: 0 (Gaussian)</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>optional</em>) – Gaussian width. Default: duration/6</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Hermite-Gaussian envelope (normalized to max 1)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.shapes.cosine">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.shapes.</span></span><span class="sig-name descname"><span class="pre">cosine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/shapes.html#cosine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.shapes.cosine" title="Link to this definition">¶</a></dt>
+<dd><p>Cosine (Hann) window pulse envelope.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<em>np.ndarray</em>) – Time array in seconds</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Total pulse duration in seconds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cosine envelope</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.shapes.tanh_edges">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.shapes.</span></span><span class="sig-name descname"><span class="pre">tanh_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rise_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/shapes.html#tanh_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.shapes.tanh_edges" title="Link to this definition">¶</a></dt>
+<dd><p>Pulse with smooth tanh rise and fall.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<em>np.ndarray</em>) – Time array in seconds</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Total pulse duration in seconds</p></li>
+<li><p><strong>rise_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rise/fall time as fraction of duration. Default: 0.1</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tanh-edged envelope</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="id9">
+<h3>Available Shapes<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;rect&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;rectangular&quot;</span></code>: Square pulse</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;gaussian&quot;</span></code>: Gaussian envelope</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;drag&quot;</span></code>: DRAG pulse (derivative removal by adiabatic gate)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;blackman&quot;</span></code>: Blackman window</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;flattop&quot;</span></code>: Flat top with smooth edges</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.pulses.shapes</span> <span class="kn">import</span> <span class="n">get_envelope</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">100e-9</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># Gaussian envelope</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">get_envelope</span><span class="p">(</span><span class="s2">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">50e-9</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">10e-9</span><span class="p">)</span>
+
+<span class="c1"># DRAG correction</span>
+<span class="n">env_drag</span> <span class="o">=</span> <span class="n">get_envelope</span><span class="p">(</span><span class="s2">&quot;drag&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">50e-9</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="module-sim.pulses.sequences">
+<span id="pulse-sequences"></span><h2>Pulse Sequences<a class="headerlink" href="#module-sim.pulses.sequences" title="Link to this heading">¶</a></h2>
+<p>Standard pulse sequences for NV center experiments.</p>
+<p>Implements common sequences for coherence measurements and
+dynamical decoupling.</p>
+<section id="sequence-types">
+<h3>Sequence Types<a class="headerlink" href="#sequence-types" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>Ramsey: Free induction decay (T2*)</dt><dd><p>π/2 - τ - π/2</p>
+</dd>
+<dt>Spin Echo: Hahn echo (T2)</dt><dd><p>π/2 - τ/2 - π - τ/2 - π/2</p>
+</dd>
+<dt>CPMG: Carr-Purcell-Meiboom-Gill (extended coherence)</dt><dd><p>π/2 - [τ/2 - π_Y - τ/2]^N - π/2</p>
+</dd>
+<dt>XY4/XY8: Dynamical decoupling (robust to pulse errors)</dt><dd><p>π/2 - [τ - π_X - τ - π_Y - τ - π_X - τ - π_Y]^N - π/2</p>
+</dd>
+</dl>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="sim.pulses.sequences.PulseSequence">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sim.pulses.sequences.</span></span><span class="sig-name descname"><span class="pre">PulseSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pulses=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delays=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/sequences.html#PulseSequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.sequences.PulseSequence" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Collection of pulses with timing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pulses</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><em>List</em></a><em>[</em><a class="reference internal" href="#sim.pulses.basic.Pulse" title="sim.pulses.basic.Pulse"><em>Pulse</em></a><em>]</em>)</p></li>
+<li><p><strong>delays</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.pulses.sequences.PulseSequence.pulses">
+<span class="sig-name descname"><span class="pre">pulses</span></span><a class="headerlink" href="#sim.pulses.sequences.PulseSequence.pulses" title="Link to this definition">¶</a></dt>
+<dd><p>List of pulses in the sequence</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of <a class="reference internal" href="#sim.pulses.basic.Pulse" title="sim.pulses.basic.Pulse">Pulse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.pulses.sequences.PulseSequence.delays">
+<span class="sig-name descname"><span class="pre">delays</span></span><a class="headerlink" href="#sim.pulses.sequences.PulseSequence.delays" title="Link to this definition">¶</a></dt>
+<dd><p>Delay after each pulse in seconds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seq</span> <span class="o">=</span> <span class="n">PulseSequence</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seq</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span><span class="n">pi_half_pulse</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">delay</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seq</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span><span class="n">pi_pulse</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">delay</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seq</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span><span class="n">pi_half_pulse</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total duration: </span><span class="si">{</span><span class="n">seq</span><span class="o">.</span><span class="n">total_duration</span><span class="p">()</span><span class="o">*</span><span class="mf">1e6</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> μs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">pulses</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#sim.pulses.basic.Pulse" title="sim.pulses.basic.Pulse"><span class="pre">Pulse</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id10" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">delays</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id11" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.pulses.sequences.PulseSequence.add_pulse">
+<span class="sig-name descname"><span class="pre">add_pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pulse</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/sequences.html#PulseSequence.add_pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.sequences.PulseSequence.add_pulse" title="Link to this definition">¶</a></dt>
+<dd><p>Add a pulse to the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pulse</strong> (<a class="reference internal" href="#sim.pulses.basic.Pulse" title="sim.pulses.basic.Pulse"><em>Pulse</em></a>) – Pulse to add</p></li>
+<li><p><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Delay after the pulse in seconds. Default: 0</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.pulses.sequences.PulseSequence.add_delay">
+<span class="sig-name descname"><span class="pre">add_delay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delay</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/sequences.html#PulseSequence.add_delay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.sequences.PulseSequence.add_delay" title="Link to this definition">¶</a></dt>
+<dd><p>Add a delay without a pulse.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.pulses.sequences.PulseSequence.total_duration">
+<span class="sig-name descname"><span class="pre">total_duration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/sequences.html#PulseSequence.total_duration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.sequences.PulseSequence.total_duration" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate total sequence duration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.pulses.sequences.PulseSequence.to_awg">
+<span class="sig-name descname"><span class="pre">to_awg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">awg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/sequences.html#PulseSequence.to_awg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.sequences.PulseSequence.to_awg" title="Link to this definition">¶</a></dt>
+<dd><p>Load the sequence into an AWG interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>awg</strong> (<a class="reference internal" href="interfaces.html#sim.interfaces.awg.AWGInterface" title="sim.interfaces.awg.AWGInterface"><em>AWGInterface</em></a>) – AWG interface to load into</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.pulses.sequences.PulseSequence.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pulses=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delays=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sim.pulses.sequences.PulseSequence.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pulses</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><em>List</em></a><em>[</em><a class="reference internal" href="#sim.pulses.basic.Pulse" title="sim.pulses.basic.Pulse"><em>Pulse</em></a><em>]</em>)</p></li>
+<li><p><strong>delays</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.sequences.ramsey_sequence">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.sequences.</span></span><span class="sig-name descname"><span class="pre">ramsey_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabi_freq_mhz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">final_phase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rect'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/sequences.html#ramsey_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.sequences.ramsey_sequence" title="Link to this definition">¶</a></dt>
+<dd><p>Create a Ramsey sequence: π/2 - τ - π/2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Free evolution time in seconds</p></li>
+<li><p><strong>rabi_freq_mhz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rabi frequency for the pulses. Default: 1 MHz</p></li>
+<li><p><strong>final_phase</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Phase of the final π/2 pulse in radians. Default: 0</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Pulse shape. Default: ‘rect’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Ramsey sequence</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sim.pulses.sequences.PulseSequence" title="sim.pulses.sequences.PulseSequence">PulseSequence</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seq</span> <span class="o">=</span> <span class="n">ramsey_sequence</span><span class="p">(</span><span class="n">tau</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">rabi_freq_mhz</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">seq</span><span class="o">.</span><span class="n">total_duration</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.sequences.spin_echo_sequence">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.sequences.</span></span><span class="sig-name descname"><span class="pre">spin_echo_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabi_freq_mhz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rect'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/sequences.html#spin_echo_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.sequences.spin_echo_sequence" title="Link to this definition">¶</a></dt>
+<dd><p>Create a spin echo (Hahn echo) sequence: π/2 - τ/2 - π - τ/2 - π/2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Total free evolution time in seconds</p></li>
+<li><p><strong>rabi_freq_mhz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rabi frequency for the pulses. Default: 1 MHz</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Pulse shape. Default: ‘rect’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Spin echo sequence</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sim.pulses.sequences.PulseSequence" title="sim.pulses.sequences.PulseSequence">PulseSequence</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.sequences.cpmg_sequence">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.sequences.</span></span><span class="sig-name descname"><span class="pre">cpmg_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_pulses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabi_freq_mhz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rect'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/sequences.html#cpmg_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.sequences.cpmg_sequence" title="Link to this definition">¶</a></dt>
+<dd><p>Create a CPMG sequence: π/2 - [τ - π_Y - τ]^N - π/2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Delay between refocusing pulses in seconds</p></li>
+<li><p><strong>n_pulses</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of refocusing π pulses</p></li>
+<li><p><strong>rabi_freq_mhz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rabi frequency. Default: 1 MHz</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Pulse shape. Default: ‘rect’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>CPMG sequence</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sim.pulses.sequences.PulseSequence" title="sim.pulses.sequences.PulseSequence">PulseSequence</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.sequences.xy4_sequence">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.sequences.</span></span><span class="sig-name descname"><span class="pre">xy4_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_cycles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabi_freq_mhz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rect'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/sequences.html#xy4_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.sequences.xy4_sequence" title="Link to this definition">¶</a></dt>
+<dd><p>Create an XY4 dynamical decoupling sequence.</p>
+<p>Structure: π/2 - [τ - π_X - τ - π_Y - τ - π_X - τ - π_Y]^N - π/2</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Delay between pulses in seconds</p></li>
+<li><p><strong>n_cycles</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of XY4 cycles. Default: 1</p></li>
+<li><p><strong>rabi_freq_mhz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rabi frequency. Default: 1 MHz</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Pulse shape. Default: ‘rect’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>XY4 sequence</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sim.pulses.sequences.PulseSequence" title="sim.pulses.sequences.PulseSequence">PulseSequence</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>XY4 is robust to pulse flip-angle errors due to the
+alternating X and Y phases.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.sequences.xy8_sequence">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.sequences.</span></span><span class="sig-name descname"><span class="pre">xy8_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_cycles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabi_freq_mhz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rect'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/sequences.html#xy8_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.sequences.xy8_sequence" title="Link to this definition">¶</a></dt>
+<dd><p>Create an XY8 dynamical decoupling sequence.</p>
+<dl class="simple">
+<dt>Structure: π/2 - [τ - π_X - τ - π_Y - τ - π_X - τ - π_Y -</dt><dd><p>τ - π_Y - τ - π_X - τ - π_Y - τ - π_X]^N - π/2</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Delay between pulses in seconds</p></li>
+<li><p><strong>n_cycles</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of XY8 cycles. Default: 1</p></li>
+<li><p><strong>rabi_freq_mhz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rabi frequency. Default: 1 MHz</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Pulse shape. Default: ‘rect’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>XY8 sequence</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sim.pulses.sequences.PulseSequence" title="sim.pulses.sequences.PulseSequence">PulseSequence</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>XY8 is more robust than XY4 due to the symmetric phase pattern.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.pulses.sequences.rabi_sequence">
+<span class="sig-prename descclassname"><span class="pre">sim.pulses.sequences.</span></span><span class="sig-name descname"><span class="pre">rabi_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabi_freq_mhz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rect'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/pulses/sequences.html#rabi_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.pulses.sequences.rabi_sequence" title="Link to this definition">¶</a></dt>
+<dd><p>Create a Rabi oscillation sequence (single pulse of variable duration).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Pulse duration in seconds</p></li>
+<li><p><strong>rabi_freq_mhz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Rabi frequency in MHz</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Pulse shape</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Single-pulse Rabi sequence</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sim.pulses.sequences.PulseSequence" title="sim.pulses.sequences.PulseSequence">PulseSequence</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="pulsesequence-class">
+<h3>PulseSequence Class<a class="headerlink" href="#pulsesequence-class" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.pulses</span> <span class="kn">import</span> <span class="n">PulseSequence</span><span class="p">,</span> <span class="n">pi_pulse</span><span class="p">,</span> <span class="n">pi_half_pulse</span>
+
+<span class="n">seq</span> <span class="o">=</span> <span class="n">PulseSequence</span><span class="p">()</span>
+<span class="n">seq</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span><span class="n">pi_half_pulse</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">delay</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+<span class="n">seq</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span><span class="n">pi_pulse</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">delay</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+<span class="n">seq</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span><span class="n">pi_half_pulse</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">seq</span><span class="o">.</span><span class="n">total_duration</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="standard-sequences">
+<h3>Standard Sequences<a class="headerlink" href="#standard-sequences" title="Link to this heading">¶</a></h3>
+<section id="ramsey">
+<h4>Ramsey<a class="headerlink" href="#ramsey" title="Link to this heading">¶</a></h4>
+<p>Free induction decay (T₂* measurement):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.pulses.sequences</span> <span class="kn">import</span> <span class="n">ramsey_sequence</span>
+
+<span class="n">seq</span> <span class="o">=</span> <span class="n">ramsey_sequence</span><span class="p">(</span>
+    <span class="n">tau</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>              <span class="c1"># Free evolution time</span>
+    <span class="n">rabi_freq_mhz</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>      <span class="c1"># π/2 pulse Rabi frequency</span>
+    <span class="n">final_phase</span><span class="o">=</span><span class="mi">0</span>          <span class="c1"># Phase of final π/2</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\frac{\pi}{2}_x - \tau - \frac{\pi}{2}_\phi\]</div>
+</div>
+</section>
+<section id="spin-echo-hahn-echo">
+<h4>Spin Echo (Hahn Echo)<a class="headerlink" href="#spin-echo-hahn-echo" title="Link to this heading">¶</a></h4>
+<p>Refocuses static inhomogeneities (T₂ measurement):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.pulses.sequences</span> <span class="kn">import</span> <span class="n">spin_echo_sequence</span>
+
+<span class="n">seq</span> <span class="o">=</span> <span class="n">spin_echo_sequence</span><span class="p">(</span>
+    <span class="n">tau</span><span class="o">=</span><span class="mf">100e-6</span><span class="p">,</span>            <span class="c1"># Total evolution time</span>
+    <span class="n">rabi_freq_mhz</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\frac{\pi}{2}_x - \frac{\tau}{2} - \pi_y - \frac{\tau}{2} - \frac{\pi}{2}_x\]</div>
+</div>
+</section>
+<section id="cpmg">
+<h4>CPMG<a class="headerlink" href="#cpmg" title="Link to this heading">¶</a></h4>
+<p>Extended coherence with multiple refocusing pulses:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.pulses.sequences</span> <span class="kn">import</span> <span class="n">cpmg_sequence</span>
+
+<span class="n">seq</span> <span class="o">=</span> <span class="n">cpmg_sequence</span><span class="p">(</span>
+    <span class="n">tau</span><span class="o">=</span><span class="mf">10e-6</span><span class="p">,</span>             <span class="c1"># Inter-pulse delay</span>
+    <span class="n">n_pulses</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>            <span class="c1"># Number of π pulses</span>
+    <span class="n">rabi_freq_mhz</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\frac{\pi}{2}_x - \left[\frac{\tau}{2} - \pi_y - \frac{\tau}{2}\right]^N - \frac{\pi}{2}_x\]</div>
+</div>
+</section>
+<section id="xy4">
+<h4>XY4<a class="headerlink" href="#xy4" title="Link to this heading">¶</a></h4>
+<p>Dynamical decoupling robust to pulse errors:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.pulses.sequences</span> <span class="kn">import</span> <span class="n">xy4_sequence</span>
+
+<span class="n">seq</span> <span class="o">=</span> <span class="n">xy4_sequence</span><span class="p">(</span>
+    <span class="n">tau</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>              <span class="c1"># Inter-pulse delay</span>
+    <span class="n">n_cycles</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>            <span class="c1"># Number of XY4 cycles</span>
+    <span class="n">rabi_freq_mhz</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\frac{\pi}{2} - [\tau - \pi_x - \tau - \pi_y - \tau - \pi_x - \tau - \pi_y]^N - \frac{\pi}{2}\]</div>
+</div>
+</section>
+<section id="xy8">
+<h4>XY8<a class="headerlink" href="#xy8" title="Link to this heading">¶</a></h4>
+<p>More robust variant of XY4:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.pulses.sequences</span> <span class="kn">import</span> <span class="n">xy8_sequence</span>
+
+<span class="n">seq</span> <span class="o">=</span> <span class="n">xy8_sequence</span><span class="p">(</span>
+    <span class="n">tau</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>
+    <span class="n">n_cycles</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">rabi_freq_mhz</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="rabi-oscillation">
+<h4>Rabi Oscillation<a class="headerlink" href="#rabi-oscillation" title="Link to this heading">¶</a></h4>
+<p>Single pulse of variable duration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.pulses.sequences</span> <span class="kn">import</span> <span class="n">rabi_sequence</span>
+
+<span class="n">seq</span> <span class="o">=</span> <span class="n">rabi_sequence</span><span class="p">(</span>
+    <span class="n">duration</span><span class="o">=</span><span class="mf">100e-9</span><span class="p">,</span>       <span class="c1"># Pulse duration</span>
+    <span class="n">rabi_freq_mhz</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="custom-sequences">
+<h2>Custom Sequences<a class="headerlink" href="#custom-sequences" title="Link to this heading">¶</a></h2>
+<p>Build arbitrary sequences:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.pulses</span> <span class="kn">import</span> <span class="n">PulseSequence</span><span class="p">,</span> <span class="n">Pulse</span>
+
+<span class="k">def</span> <span class="nf">my_sequence</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">n_pulses</span><span class="p">,</span> <span class="n">rabi</span><span class="p">):</span>
+    <span class="n">seq</span> <span class="o">=</span> <span class="n">PulseSequence</span><span class="p">()</span>
+
+    <span class="c1"># Initial π/2</span>
+    <span class="n">seq</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span>
+        <span class="n">Pulse</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="n">rabi</span><span class="p">,</span>
+              <span class="n">duration</span><span class="o">=</span><span class="mf">25e-9</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+        <span class="n">delay</span><span class="o">=</span><span class="n">tau</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Refocusing pulses</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_pulses</span><span class="p">):</span>
+        <span class="n">phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">seq</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span>
+            <span class="n">Pulse</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="n">rabi</span><span class="p">,</span>
+                  <span class="n">duration</span><span class="o">=</span><span class="mf">50e-9</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="n">phase</span><span class="p">),</span>
+            <span class="n">delay</span><span class="o">=</span><span class="n">tau</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Final π/2</span>
+    <span class="n">seq</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span>
+        <span class="n">Pulse</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="n">rabi</span><span class="p">,</span>
+              <span class="n">duration</span><span class="o">=</span><span class="mf">25e-9</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">seq</span>
+</pre></div>
+</div>
+</section>
+<section id="awg-integration">
+<h2>AWG Integration<a class="headerlink" href="#awg-integration" title="Link to this heading">¶</a></h2>
+<p>Load sequences into an AWG interface:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.interfaces</span> <span class="kn">import</span> <span class="n">AWGInterface</span>
+
+<span class="n">awg</span> <span class="o">=</span> <span class="n">AWGInterface</span><span class="p">(</span><span class="n">sample_rate</span><span class="o">=</span><span class="mf">1e9</span><span class="p">)</span>
+<span class="n">seq</span><span class="o">.</span><span class="n">to_awg</span><span class="p">(</span><span class="n">awg</span><span class="p">)</span>
+<span class="n">waveform</span> <span class="o">=</span> <span class="n">awg</span><span class="o">.</span><span class="n">get_waveform</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="interfaces.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Interfaces Module</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="states.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">States Module</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024-2025, Leon Kaiser, MSQC Goethe University Frankfurt
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Pulses Module</a><ul>
+<li><a class="reference internal" href="#module-sim.pulses.basic">Basic Pulses</a><ul>
+<li><a class="reference internal" href="#rotation-convention">Rotation Convention</a></li>
+<li><a class="reference internal" href="#sim.pulses.basic.Pulse"><code class="docutils literal notranslate"><span class="pre">Pulse</span></code></a><ul>
+<li><a class="reference internal" href="#sim.pulses.basic.Pulse.shape"><code class="docutils literal notranslate"><span class="pre">Pulse.shape</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.basic.Pulse.amplitude"><code class="docutils literal notranslate"><span class="pre">Pulse.amplitude</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.basic.Pulse.duration"><code class="docutils literal notranslate"><span class="pre">Pulse.duration</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.basic.Pulse.phase"><code class="docutils literal notranslate"><span class="pre">Pulse.phase</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.basic.Pulse.kwargs"><code class="docutils literal notranslate"><span class="pre">Pulse.kwargs</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Pulse.shape</span></code></a></li>
+<li><a class="reference internal" href="#id5"><code class="docutils literal notranslate"><span class="pre">Pulse.amplitude</span></code></a></li>
+<li><a class="reference internal" href="#id6"><code class="docutils literal notranslate"><span class="pre">Pulse.duration</span></code></a></li>
+<li><a class="reference internal" href="#id7"><code class="docutils literal notranslate"><span class="pre">Pulse.phase</span></code></a></li>
+<li><a class="reference internal" href="#id8"><code class="docutils literal notranslate"><span class="pre">Pulse.kwargs</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.basic.Pulse.rotation_angle"><code class="docutils literal notranslate"><span class="pre">Pulse.rotation_angle()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.basic.Pulse.axis_label"><code class="docutils literal notranslate"><span class="pre">Pulse.axis_label()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.basic.Pulse.__init__"><code class="docutils literal notranslate"><span class="pre">Pulse.__init__()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sim.pulses.basic.pi_pulse"><code class="docutils literal notranslate"><span class="pre">pi_pulse()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.basic.pi_half_pulse"><code class="docutils literal notranslate"><span class="pre">pi_half_pulse()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.basic.arbitrary_rotation"><code class="docutils literal notranslate"><span class="pre">arbitrary_rotation()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.basic.composite_pi_pulse"><code class="docutils literal notranslate"><span class="pre">composite_pi_pulse()</span></code></a></li>
+<li><a class="reference internal" href="#pulse-class">Pulse Class</a></li>
+<li><a class="reference internal" href="#standard-pulses">Standard Pulses</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sim.pulses.shapes">Pulse Shapes</a><ul>
+<li><a class="reference internal" href="#available-shapes">Available Shapes</a></li>
+<li><a class="reference internal" href="#sim.pulses.shapes.rectangular"><code class="docutils literal notranslate"><span class="pre">rectangular()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.shapes.gaussian"><code class="docutils literal notranslate"><span class="pre">gaussian()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.shapes.sinc_pulse"><code class="docutils literal notranslate"><span class="pre">sinc_pulse()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.shapes.blackman"><code class="docutils literal notranslate"><span class="pre">blackman()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.shapes.drag"><code class="docutils literal notranslate"><span class="pre">drag()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.shapes.hermite"><code class="docutils literal notranslate"><span class="pre">hermite()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.shapes.cosine"><code class="docutils literal notranslate"><span class="pre">cosine()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.shapes.tanh_edges"><code class="docutils literal notranslate"><span class="pre">tanh_edges()</span></code></a></li>
+<li><a class="reference internal" href="#id9">Available Shapes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sim.pulses.sequences">Pulse Sequences</a><ul>
+<li><a class="reference internal" href="#sequence-types">Sequence Types</a></li>
+<li><a class="reference internal" href="#sim.pulses.sequences.PulseSequence"><code class="docutils literal notranslate"><span class="pre">PulseSequence</span></code></a><ul>
+<li><a class="reference internal" href="#sim.pulses.sequences.PulseSequence.pulses"><code class="docutils literal notranslate"><span class="pre">PulseSequence.pulses</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.sequences.PulseSequence.delays"><code class="docutils literal notranslate"><span class="pre">PulseSequence.delays</span></code></a></li>
+<li><a class="reference internal" href="#id10"><code class="docutils literal notranslate"><span class="pre">PulseSequence.pulses</span></code></a></li>
+<li><a class="reference internal" href="#id11"><code class="docutils literal notranslate"><span class="pre">PulseSequence.delays</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.sequences.PulseSequence.add_pulse"><code class="docutils literal notranslate"><span class="pre">PulseSequence.add_pulse()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.sequences.PulseSequence.add_delay"><code class="docutils literal notranslate"><span class="pre">PulseSequence.add_delay()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.sequences.PulseSequence.total_duration"><code class="docutils literal notranslate"><span class="pre">PulseSequence.total_duration()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.sequences.PulseSequence.to_awg"><code class="docutils literal notranslate"><span class="pre">PulseSequence.to_awg()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.sequences.PulseSequence.__init__"><code class="docutils literal notranslate"><span class="pre">PulseSequence.__init__()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sim.pulses.sequences.ramsey_sequence"><code class="docutils literal notranslate"><span class="pre">ramsey_sequence()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.sequences.spin_echo_sequence"><code class="docutils literal notranslate"><span class="pre">spin_echo_sequence()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.sequences.cpmg_sequence"><code class="docutils literal notranslate"><span class="pre">cpmg_sequence()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.sequences.xy4_sequence"><code class="docutils literal notranslate"><span class="pre">xy4_sequence()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.sequences.xy8_sequence"><code class="docutils literal notranslate"><span class="pre">xy8_sequence()</span></code></a></li>
+<li><a class="reference internal" href="#sim.pulses.sequences.rabi_sequence"><code class="docutils literal notranslate"><span class="pre">rabi_sequence()</span></code></a></li>
+<li><a class="reference internal" href="#pulsesequence-class">PulseSequence Class</a></li>
+<li><a class="reference internal" href="#standard-sequences">Standard Sequences</a><ul>
+<li><a class="reference internal" href="#ramsey">Ramsey</a></li>
+<li><a class="reference internal" href="#spin-echo-hahn-echo">Spin Echo (Hahn Echo)</a></li>
+<li><a class="reference internal" href="#cpmg">CPMG</a></li>
+<li><a class="reference internal" href="#xy4">XY4</a></li>
+<li><a class="reference internal" href="#xy8">XY8</a></li>
+<li><a class="reference internal" href="#rabi-oscillation">Rabi Oscillation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#custom-sequences">Custom Sequences</a></li>
+<li><a class="reference internal" href="#awg-integration">AWG Integration</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script>window.MathJax = {"tex": {"macros": {"ket": ["\\left| #1 \\right\\rangle", 1], "bra": ["\\left\\langle #1 \\right|", 1], "braket": ["\\left\\langle #1 | #2 \\right\\rangle", 2], "expect": ["\\left\\langle #1 \\right\\rangle", 1], "comm": ["\\left[ #1, #2 \\right]", 2], "anticomm": ["\\left\\{ #1, #2 \\right\\}", 2], "tr": "\\mathrm{Tr}", "Tr": "\\mathrm{Tr}", "rho": "\\rho", "hbar": "\\hbar", "dagger": "\\dagger"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

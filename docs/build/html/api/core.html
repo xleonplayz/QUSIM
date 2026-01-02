@@ -1,0 +1,1512 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Hamiltonian Module" href="hamiltonian.html"><link rel="prev" title="Pulsed Experiments" href="../tutorials/pulsed.html">
+
+    <!-- Generated with Sphinx 7.3.7 and Furo 2025.12.19 -->
+        <title>Core Module - QUSIM Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=acfd86a5" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a1178322" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2962FF;
+  --color-brand-content: #2962FF;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #82B1FF;
+  --color-brand-content: #82B1FF;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #82B1FF;
+  --color-brand-content: #82B1FF;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">QUSIM Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">QUSIM Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Theory &amp; Physics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/nv_center.html">The Nitrogen-Vacancy Center</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/hamiltonian.html">Hamiltonian Terms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/lindblad.html">Open Quantum System Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/measurement.html">Measurement and Readout</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/odmr.html">ODMR Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/pulsed.html">Pulsed Experiments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Core Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hamiltonian.html">Hamiltonian Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dynamics.html">Dynamics Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="states.html">States Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces.html">Interfaces Module</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/api/core.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="core-module">
+<h1>Core Module<a class="headerlink" href="#core-module" title="Link to this heading">¶</a></h1>
+<p>The core module provides fundamental constants and operators for NV center simulation.</p>
+<section id="module-sim.core.constants">
+<span id="physical-constants"></span><h2>Physical Constants<a class="headerlink" href="#module-sim.core.constants" title="Link to this heading">¶</a></h2>
+<p>Physical constants and unit conversions for NV center simulation.</p>
+<section id="unit-convention">
+<h3>Unit Convention<a class="headerlink" href="#unit-convention" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>This library uses <strong>practical laboratory units</strong> for the API:</dt><dd><ul class="simple">
+<li><p>Frequencies: GHz, MHz, kHz (not Hz)</p></li>
+<li><p>Magnetic fields: mT (not Tesla)</p></li>
+<li><p>Lengths: µm, nm (not meters)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Internally, all values are converted to <strong>rad/s</strong> for the Hamiltonian.</p>
+</section>
+<section id="why-rad-s">
+<h3>Why rad/s?<a class="headerlink" href="#why-rad-s" title="Link to this heading">¶</a></h3>
+<p>The Hamiltonian H has units of energy. In quantum mechanics we work
+with ℏ=1, so that energy = frequency × 2π.</p>
+<blockquote>
+<div><p>E = ℏω = ω  (for ℏ=1)</p>
+</div></blockquote>
+<p>Therefore, the Hamiltonian matrix elements are in rad/s.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sim.core.constants</span> <span class="kn">import</span> <span class="n">GHZ</span><span class="p">,</span> <span class="n">MHZ</span><span class="p">,</span> <span class="n">MT</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span> <span class="o">=</span> <span class="mf">2.87</span> <span class="o">*</span> <span class="n">GHZ</span>  <span class="c1"># ZFS in rad/s</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">MT</span>     <span class="c1"># 10 mT in Tesla</span>
+</pre></div>
+</div>
+</section>
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.GHZ">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">GHZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6283185307.179586</span></em><a class="headerlink" href="#sim.core.constants.GHZ" title="Link to this definition">¶</a></dt>
+<dd><p>D = 2.87 * GHZ</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1 GHz in rad/s. Usage</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.MHZ">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">MHZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6283185.307179586</span></em><a class="headerlink" href="#sim.core.constants.MHZ" title="Link to this definition">¶</a></dt>
+<dd><p>A = 2.14 * MHZ</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1 MHz in rad/s. Usage</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.KHZ">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">KHZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6283.185307179586</span></em><a class="headerlink" href="#sim.core.constants.KHZ" title="Link to this definition">¶</a></dt>
+<dd><p>1 kHz in rad/s.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.HZ">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">HZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6.283185307179586</span></em><a class="headerlink" href="#sim.core.constants.HZ" title="Link to this definition">¶</a></dt>
+<dd><p>1 Hz in rad/s.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.MT">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">MT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.001</span></em><a class="headerlink" href="#sim.core.constants.MT" title="Link to this definition">¶</a></dt>
+<dd><p>B = 10 * MT</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1 millitesla in Tesla. Usage</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.UT">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">UT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1e-06</span></em><a class="headerlink" href="#sim.core.constants.UT" title="Link to this definition">¶</a></dt>
+<dd><p>1 microtesla in Tesla.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.GAUSS">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">GAUSS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0001</span></em><a class="headerlink" href="#sim.core.constants.GAUSS" title="Link to this definition">¶</a></dt>
+<dd><p>1 Gauss in Tesla (CGS unit, sometimes still used).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.UM">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">UM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1e-06</span></em><a class="headerlink" href="#sim.core.constants.UM" title="Link to this definition">¶</a></dt>
+<dd><p>1 micrometer in meters.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.NM">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">NM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1e-09</span></em><a class="headerlink" href="#sim.core.constants.NM" title="Link to this definition">¶</a></dt>
+<dd><p>1 nanometer in meters.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.ANGSTROM">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">ANGSTROM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1e-10</span></em><a class="headerlink" href="#sim.core.constants.ANGSTROM" title="Link to this definition">¶</a></dt>
+<dd><p>1 Ångström in meters.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.HBAR">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">HBAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.054571817e-34</span></em><a class="headerlink" href="#sim.core.constants.HBAR" title="Link to this definition">¶</a></dt>
+<dd><p>Reduced Planck constant ℏ = h/(2π) in J·s.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.H_PLANCK">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">H_PLANCK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6.62607015e-34</span></em><a class="headerlink" href="#sim.core.constants.H_PLANCK" title="Link to this definition">¶</a></dt>
+<dd><p>Planck constant h in J·s.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.MU_B">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">MU_B</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9.274010078e-24</span></em><a class="headerlink" href="#sim.core.constants.MU_B" title="Link to this definition">¶</a></dt>
+<dd><p>Bohr magneton μ_B = eℏ/(2m_e) in J/T.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.MU_N">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">MU_N</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5.050783746e-27</span></em><a class="headerlink" href="#sim.core.constants.MU_N" title="Link to this definition">¶</a></dt>
+<dd><p>Nuclear magneton μ_N = eℏ/(2m_p) in J/T.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.KB">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">KB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.380649e-23</span></em><a class="headerlink" href="#sim.core.constants.KB" title="Link to this definition">¶</a></dt>
+<dd><p>Boltzmann constant k_B in J/K.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.E_CHARGE">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">E_CHARGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.602176634e-19</span></em><a class="headerlink" href="#sim.core.constants.E_CHARGE" title="Link to this definition">¶</a></dt>
+<dd><p>Elementary charge e in Coulomb.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.G_E">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">G_E</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2.0028</span></em><a class="headerlink" href="#sim.core.constants.G_E" title="Link to this definition">¶</a></dt>
+<dd><p>Electron g-factor for NV center (close to free electron g≈2.002).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.G_N14">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">G_N14</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.4038</span></em><a class="headerlink" href="#sim.core.constants.G_N14" title="Link to this definition">¶</a></dt>
+<dd><p>N14 nuclear g-factor.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.G_C13">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">G_C13</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.4048</span></em><a class="headerlink" href="#sim.core.constants.G_C13" title="Link to this definition">¶</a></dt>
+<dd><p>C13 nuclear g-factor.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.GAMMA_E">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">GAMMA_E</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">176128235979.76355</span></em><a class="headerlink" href="#sim.core.constants.GAMMA_E" title="Link to this definition">¶</a></dt>
+<dd><p>Electron gyromagnetic ratio γ_e in rad/(s·T).</p>
+<dl class="simple">
+<dt>For a magnetic field B, the Larmor frequency is:</dt><dd><p>ω_L = γ_e * B</p>
+</dd>
+<dt>At B = 1 mT:</dt><dd><p>ω_L = 1.761e11 * 1e-3 = 1.761e8 rad/s ≈ 28 MHz</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.GAMMA_N14">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">GAMMA_N14</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">19339664.153330963</span></em><a class="headerlink" href="#sim.core.constants.GAMMA_N14" title="Link to this definition">¶</a></dt>
+<dd><p>N14 nuclear gyromagnetic ratio in rad/(s·T).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.GAMMA_C13">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">GAMMA_C13</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">67281724.1272891</span></em><a class="headerlink" href="#sim.core.constants.GAMMA_C13" title="Link to this definition">¶</a></dt>
+<dd><p>C13 nuclear gyromagnetic ratio in rad/(s·T).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.D_GS">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">D_GS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">18032741831.605415</span></em><a class="headerlink" href="#sim.core.constants.D_GS" title="Link to this definition">¶</a></dt>
+<dd><p>2.87 GHz (in rad/s).</p>
+<p>This is the energy difference between ms=0 and ms=±1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ZFS D-parameter in ground state</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.D_ES">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">D_ES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8922123136.195013</span></em><a class="headerlink" href="#sim.core.constants.D_ES" title="Link to this definition">¶</a></dt>
+<dd><p>1.42 GHz (in rad/s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ZFS D-parameter in excited state</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.A_PARALLEL_N14">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">A_PARALLEL_N14</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-13446016.557364315</span></em><a class="headerlink" href="#sim.core.constants.A_PARALLEL_N14" title="Link to this definition">¶</a></dt>
+<dd><p>-2.14 MHz (in rad/s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Parallel hyperfine coupling for N14</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.A_PERP_N14">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">A_PERP_N14</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-16964600.329384882</span></em><a class="headerlink" href="#sim.core.constants.A_PERP_N14" title="Link to this definition">¶</a></dt>
+<dd><p>-2.70 MHz (in rad/s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Perpendicular hyperfine coupling for N14</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sim.core.constants.P_N14">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">P_N14</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-31415926.53589793</span></em><a class="headerlink" href="#sim.core.constants.P_N14" title="Link to this definition">¶</a></dt>
+<dd><p>-5.0 MHz (in rad/s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>N14 quadrupole parameter</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.constants.ghz_to_rads">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">ghz_to_rads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">freq_ghz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/constants.html#ghz_to_rads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.constants.ghz_to_rads" title="Link to this definition">¶</a></dt>
+<dd><p>Convert frequency from GHz to rad/s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>freq_ghz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Frequency in GHz</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Frequency in rad/s</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ghz_to_rads</span><span class="p">(</span><span class="mf">2.87</span><span class="p">)</span>  <span class="c1"># ZFS</span>
+<span class="go">18032327871.53...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.constants.mhz_to_rads">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">mhz_to_rads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">freq_mhz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/constants.html#mhz_to_rads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.constants.mhz_to_rads" title="Link to this definition">¶</a></dt>
+<dd><p>Convert frequency from MHz to rad/s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>freq_mhz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Frequency in MHz</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Frequency in rad/s</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.constants.rads_to_ghz">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">rads_to_ghz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omega</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/constants.html#rads_to_ghz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.constants.rads_to_ghz" title="Link to this definition">¶</a></dt>
+<dd><p>Convert rad/s back to GHz.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>omega</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Angular frequency in rad/s</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Frequency in GHz</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.constants.rads_to_mhz">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">rads_to_mhz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omega</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/constants.html#rads_to_mhz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.constants.rads_to_mhz" title="Link to this definition">¶</a></dt>
+<dd><p>Convert rad/s back to MHz.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>omega</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Angular frequency in rad/s</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Frequency in MHz</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.constants.mt_to_tesla">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">mt_to_tesla</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_mt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/constants.html#mt_to_tesla"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.constants.mt_to_tesla" title="Link to this definition">¶</a></dt>
+<dd><p>Convert magnetic field from mT to Tesla.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>field_mt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Magnetic field in mT</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Magnetic field in Tesla</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.constants.zeeman_splitting_mhz">
+<span class="sig-prename descclassname"><span class="pre">sim.core.constants.</span></span><span class="sig-name descname"><span class="pre">zeeman_splitting_mhz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B_mt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0028</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/constants.html#zeeman_splitting_mhz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.constants.zeeman_splitting_mhz" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the Zeeman splitting in MHz for a given B-field.</p>
+<dl class="simple">
+<dt>The splitting between ms=+1 and ms=-1 is:</dt><dd><p>Δf = 2 * γ * B / (2π) = 2 * g * μ_B * B / h</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>B_mt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Magnetic field in mT</p></li>
+<li><p><strong>g</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – g-factor (default: 2.0028 for NV)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Splitting in MHz</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zeeman_splitting_mhz</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># 10 mT</span>
+<span class="go">560.6...  # approximately 56 MHz/mT * 10 mT</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<section id="unit-conversions">
+<h3>Unit Conversions<a class="headerlink" href="#unit-conversions" title="Link to this heading">¶</a></h3>
+<p>The library uses practical laboratory units for the API:</p>
+<ul class="simple">
+<li><p>Frequencies: GHz, MHz, kHz</p></li>
+<li><p>Magnetic fields: mT</p></li>
+<li><p>Lengths: μm, nm</p></li>
+</ul>
+<p>Internally, all values are converted to <strong>rad/s</strong> (with ℏ=1).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.core.constants</span> <span class="kn">import</span> <span class="n">GHZ</span><span class="p">,</span> <span class="n">MHZ</span><span class="p">,</span> <span class="n">MT</span>
+
+<span class="n">D</span> <span class="o">=</span> <span class="mf">2.87</span> <span class="o">*</span> <span class="n">GHZ</span>    <span class="c1"># ZFS in rad/s</span>
+<span class="n">B</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">MT</span>       <span class="c1"># 10 mT in Tesla</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mf">2.14</span> <span class="o">*</span> <span class="n">MHZ</span>    <span class="c1"># Hyperfine in rad/s</span>
+</pre></div>
+</div>
+</section>
+<section id="available-constants">
+<h3>Available Constants<a class="headerlink" href="#available-constants" title="Link to this heading">¶</a></h3>
+<p><strong>Unit Conversions:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GHZ</span></code>: 1 GHz in rad/s (≈ 6.28×10⁹)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MHZ</span></code>: 1 MHz in rad/s (≈ 6.28×10⁶)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KHZ</span></code>: 1 kHz in rad/s</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MT</span></code>: 1 mT in Tesla (10⁻³)</p></li>
+</ul>
+<p><strong>Fundamental Constants:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">HBAR</span></code>: Reduced Planck constant (1.055×10⁻³⁴ J·s)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MU_B</span></code>: Bohr magneton (9.274×10⁻²⁴ J/T)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KB</span></code>: Boltzmann constant (1.381×10⁻²³ J/K)</p></li>
+</ul>
+<p><strong>NV-Specific:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">D_GS</span></code>: Ground state ZFS (2.87 GHz)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">D_ES</span></code>: Excited state ZFS (1.42 GHz)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GAMMA_E</span></code>: Electron gyromagnetic ratio</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">A_PARALLEL_N14</span></code>, <code class="docutils literal notranslate"><span class="pre">A_PERP_N14</span></code>: N14 hyperfine couplings</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">P_N14</span></code>: N14 quadrupole parameter</p></li>
+</ul>
+</section>
+</section>
+<section id="module-sim.core.operators">
+<span id="spin-operators"></span><h2>Spin Operators<a class="headerlink" href="#module-sim.core.operators" title="Link to this heading">¶</a></h2>
+<p>Spin-1 operators for NV center simulation.</p>
+<p>This module provides the spin-1 matrices required for describing
+the electron spin (S=1) and N14 nuclear spin (I=1) in the NV center.</p>
+<section id="physical-background">
+<h3>Physical Background<a class="headerlink" href="#physical-background" title="Link to this heading">¶</a></h3>
+<p>The NV center ground state is a spin triplet (S=1) with states
+<a href="#id1"><span class="problematic" id="id2">|</span></a>ms=+1&gt;, <a href="#id3"><span class="problematic" id="id4">|</span></a>ms=0&gt;, <a href="#id5"><span class="problematic" id="id6">|</span></a>ms=-1&gt;. The spin operators satisfy the standard
+commutation relations:</p>
+<blockquote>
+<div><p>[Sx, Sy] = i*Sz  (and cyclic permutations)
+S² = S(S+1) = 2  for S=1</p>
+</div></blockquote>
+</section>
+<section id="basis-convention">
+<h3>Basis Convention<a class="headerlink" href="#basis-convention" title="Link to this heading">¶</a></h3>
+<p>All matrices are represented in the {<a href="#id7"><span class="problematic" id="id8">|</span></a>+1&gt;, <a href="#id9"><span class="problematic" id="id10">|</span></a>0&gt;, <a href="#id11"><span class="problematic" id="id12">|</span></a>-1&gt;} basis, where
+Sz is diagonal with eigenvalues +1, 0, -1 on the diagonal.</p>
+</section>
+<section id="dimensional-hilbert-space">
+<h3>18-Dimensional Hilbert Space<a class="headerlink" href="#dimensional-hilbert-space" title="Link to this heading">¶</a></h3>
+<p>The full NV center Hilbert space is the tensor product:</p>
+<blockquote>
+<div><p><a href="#id13"><span class="problematic" id="id14">|</span></a>ψ&gt; = <a href="#id15"><span class="problematic" id="id16">|</span></a>g/e&gt; ⊗ <a href="#id17"><span class="problematic" id="id18">|</span></a>ms&gt; ⊗ <a href="#id19"><span class="problematic" id="id20">|</span></a>mI&gt;</p>
+<ul class="simple">
+<li><p><a href="#id21"><span class="problematic" id="id22">|</span></a>g/e&gt;: Ground/Excited state (2 dim)</p></li>
+<li><p><a href="#id23"><span class="problematic" id="id24">|</span></a>ms&gt;:  Electron spin ms ∈ {+1, 0, -1} (3 dim)</p></li>
+<li><p><a href="#id25"><span class="problematic" id="id26">|</span></a>mI&gt;:  N14 nuclear spin mI ∈ {+1, 0, -1} (3 dim)</p></li>
+</ul>
+<p>Total: 2 × 3 × 3 = 18 dimensions</p>
+</div></blockquote>
+<dl class="simple">
+<dt>The basis states are ordered as:</dt><dd><p><a href="#id27"><span class="problematic" id="id28">|</span></a>0&gt;  = <a href="#id29"><span class="problematic" id="id30">|</span></a>g, +1, +1&gt;
+<a href="#id31"><span class="problematic" id="id32">|</span></a>1&gt;  = <a href="#id33"><span class="problematic" id="id34">|</span></a>g, +1,  0&gt;
+<a href="#id35"><span class="problematic" id="id36">|</span></a>2&gt;  = <a href="#id37"><span class="problematic" id="id38">|</span></a>g, +1, -1&gt;
+<a href="#id39"><span class="problematic" id="id40">|</span></a>3&gt;  = <a href="#id41"><span class="problematic" id="id42">|</span></a>g,  0, +1&gt;
+…
+<a href="#id43"><span class="problematic" id="id44">|</span></a>17&gt; = <a href="#id45"><span class="problematic" id="id46">|</span></a>e, -1, -1&gt;</p>
+</dd>
+</dl>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="sim.core.operators.Spin1Ops">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sim.core.operators.</span></span><span class="sig-name descname"><span class="pre">Spin1Ops</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Sx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/operators.html#Spin1Ops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.operators.Spin1Ops" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Container for spin-1 operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Sx</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Sy</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Sz</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Sp</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Sm</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>I</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.core.operators.Spin1Ops.Sx">
+<span class="sig-name descname"><span class="pre">Sx</span></span><a class="headerlink" href="#sim.core.operators.Spin1Ops.Sx" title="Link to this definition">¶</a></dt>
+<dd><p>Spin-x operator (3×3 complex)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.core.operators.Spin1Ops.Sy">
+<span class="sig-name descname"><span class="pre">Sy</span></span><a class="headerlink" href="#sim.core.operators.Spin1Ops.Sy" title="Link to this definition">¶</a></dt>
+<dd><p>Spin-y operator (3×3 complex)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.core.operators.Spin1Ops.Sz">
+<span class="sig-name descname"><span class="pre">Sz</span></span><a class="headerlink" href="#sim.core.operators.Spin1Ops.Sz" title="Link to this definition">¶</a></dt>
+<dd><p>Spin-z operator (3×3 complex, diagonal)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.core.operators.Spin1Ops.Sp">
+<span class="sig-name descname"><span class="pre">Sp</span></span><a class="headerlink" href="#sim.core.operators.Spin1Ops.Sp" title="Link to this definition">¶</a></dt>
+<dd><p>Raising operator S+ = Sx + i*Sy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.core.operators.Spin1Ops.Sm">
+<span class="sig-name descname"><span class="pre">Sm</span></span><a class="headerlink" href="#sim.core.operators.Spin1Ops.Sm" title="Link to this definition">¶</a></dt>
+<dd><p>Lowering operator S- = Sx - i*Sy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.core.operators.Spin1Ops.I">
+<span class="sig-name descname"><span class="pre">I</span></span><a class="headerlink" href="#sim.core.operators.Spin1Ops.I" title="Link to this definition">¶</a></dt>
+<dd><p>Identity matrix (3×3)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">Sx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id47">
+<span class="sig-name descname"><span class="pre">Sy</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id47" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id48">
+<span class="sig-name descname"><span class="pre">Sz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id48" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id49">
+<span class="sig-name descname"><span class="pre">Sp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id49" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id50">
+<span class="sig-name descname"><span class="pre">Sm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id50" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id51">
+<span class="sig-name descname"><span class="pre">I</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id51" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.core.operators.Spin1Ops.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Sx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sim.core.operators.Spin1Ops.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Sx</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Sy</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Sz</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Sp</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Sm</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>I</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.operators.spin1_operators">
+<span class="sig-prename descclassname"><span class="pre">sim.core.operators.</span></span><span class="sig-name descname"><span class="pre">spin1_operators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/operators.html#spin1_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.operators.spin1_operators" title="Link to this definition">¶</a></dt>
+<dd><p>Create spin-1 operators in the {<a href="#id52"><span class="problematic" id="id53">|</span></a>+1&gt;, <a href="#id54"><span class="problematic" id="id55">|</span></a>0&gt;, <a href="#id56"><span class="problematic" id="id57">|</span></a>-1&gt;} basis.</p>
+<dl class="simple">
+<dt>The matrices satisfy:</dt><dd><ul class="simple">
+<li><p>[Sx, Sy] = i*Sz (and cyclic permutations)</p></li>
+<li><p>S² = Sx² + Sy² + Sz² = 2*I (for S=1)</p></li>
+<li><p>Sz|m&gt; = m|m&gt; for m ∈ {+1, 0, -1}</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dataclass containing Sx, Sy, Sz, S+, S-, and identity matrix</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#sim.core.operators.Spin1Ops" title="sim.core.operators.Spin1Ops">Spin1Ops</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ops</span> <span class="o">=</span> <span class="n">spin1_operators</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">ops</span><span class="o">.</span><span class="n">Sx</span> <span class="o">@</span> <span class="n">ops</span><span class="o">.</span><span class="n">Sy</span> <span class="o">-</span> <span class="n">ops</span><span class="o">.</span><span class="n">Sy</span> <span class="o">@</span> <span class="n">ops</span><span class="o">.</span><span class="n">Sx</span><span class="p">,</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">ops</span><span class="o">.</span><span class="n">Sz</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">ops</span><span class="o">.</span><span class="n">Sz</span><span class="p">)</span>
+<span class="go">array([-1.,  0.,  1.])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.operators.extend_to_18x18">
+<span class="sig-prename descclassname"><span class="pre">sim.core.operators.</span></span><span class="sig-name descname"><span class="pre">extend_to_18x18</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H_3x3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/operators.html#extend_to_18x18"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.operators.extend_to_18x18" title="Link to this definition">¶</a></dt>
+<dd><p>Extend a 3×3 electron spin Hamiltonian to the full 18×18 space.</p>
+<p>The operator acts on the electron spin in BOTH manifolds (ground
+and excited) and leaves the nuclear spin unchanged.</p>
+<dl class="simple">
+<dt>Mathematically:</dt><dd><p>H_18 = I_2 ⊗ H_3 ⊗ I_3</p>
+</dd>
+<dt>where:</dt><dd><ul class="simple">
+<li><p>I_2: Identity on <a href="#id58"><span class="problematic" id="id59">|</span></a>g/e&gt; (2×2)</p></li>
+<li><p>H_3: Electron spin operator (3×3)</p></li>
+<li><p>I_3: Identity on <a href="#id60"><span class="problematic" id="id61">|</span></a>mI&gt; (3×3)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>H_3x3</strong> (<em>np.ndarray</em>) – 3×3 Hamiltonian in the electron spin subspace</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>18×18 Hamiltonian in the full Hilbert space</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This extension is correct for terms like ZFS and Zeeman that
+act only on the electron spin and are identical in both electronic
+states (g and e).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sim.hamiltonian.terms</span> <span class="kn">import</span> <span class="n">ZFS</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zfs</span> <span class="o">=</span> <span class="n">ZFS</span><span class="p">(</span><span class="n">D</span><span class="o">=</span><span class="mf">2.87</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H_3</span> <span class="o">=</span> <span class="n">zfs</span><span class="o">.</span><span class="n">_build_3x3</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H_18</span> <span class="o">=</span> <span class="n">extend_to_18x18</span><span class="p">(</span><span class="n">H_3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H_18</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(18, 18)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.operators.extend_electron_only">
+<span class="sig-prename descclassname"><span class="pre">sim.core.operators.</span></span><span class="sig-name descname"><span class="pre">extend_electron_only</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H_3x3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ground'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/operators.html#extend_electron_only"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.operators.extend_electron_only" title="Link to this definition">¶</a></dt>
+<dd><p>Extend 3×3 to 18×18, acting only on ONE electronic manifold.</p>
+<p>Unlike extend_to_18x18(), this operator acts ONLY on the
+ground state (<a href="#id62"><span class="problematic" id="id63">|</span></a>g&gt;) OR the excited state (<a href="#id64"><span class="problematic" id="id65">|</span></a>e&gt;), not both.</p>
+<p>This is needed for terms that differ between g and e,
+e.g., different ZFS parameters in the excited state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>H_3x3</strong> (<em>np.ndarray</em>) – 3×3 electron spin Hamiltonian</p></li>
+<li><p><strong>manifold</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – “ground” for <a href="#id66"><span class="problematic" id="id67">|</span></a>g&gt; manifold (indices 0-8)
+“excited” for <a href="#id68"><span class="problematic" id="id69">|</span></a>e&gt; manifold (indices 9-17)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>18×18 Hamiltonian acting only on the chosen manifold</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># ZFS only in ground state</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H_gs</span> <span class="o">=</span> <span class="n">extend_electron_only</span><span class="p">(</span><span class="n">H_zfs_3x3</span><span class="p">,</span> <span class="n">manifold</span><span class="o">=</span><span class="s2">&quot;ground&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Different ZFS in excited state</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H_es</span> <span class="o">=</span> <span class="n">extend_electron_only</span><span class="p">(</span><span class="n">H_zfs_excited_3x3</span><span class="p">,</span> <span class="n">manifold</span><span class="o">=</span><span class="s2">&quot;excited&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H_total</span> <span class="o">=</span> <span class="n">H_gs</span> <span class="o">+</span> <span class="n">H_es</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<section id="spin-1-operators">
+<h3>Spin-1 Operators<a class="headerlink" href="#spin-1-operators" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">spin1_operators()</span></code> function returns a container with all standard spin-1 operators:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.core.operators</span> <span class="kn">import</span> <span class="n">spin1_operators</span>
+
+<span class="n">ops</span> <span class="o">=</span> <span class="n">spin1_operators</span><span class="p">()</span>
+<span class="n">Sx</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">Sx</span>  <span class="c1"># 3×3 spin-x matrix</span>
+<span class="n">Sy</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">Sy</span>  <span class="c1"># 3×3 spin-y matrix</span>
+<span class="n">Sz</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">Sz</span>  <span class="c1"># 3×3 spin-z matrix</span>
+<span class="n">Sp</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">Sp</span>  <span class="c1"># Raising operator S+</span>
+<span class="n">Sm</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">Sm</span>  <span class="c1"># Lowering operator S-</span>
+</pre></div>
+</div>
+<p><strong>Properties:</strong></p>
+<ul class="simple">
+<li><p>Basis: {<a href="#id70"><span class="problematic" id="id71">|</span></a>+1⟩, <a href="#id72"><span class="problematic" id="id73">|</span></a>0⟩, <a href="#id74"><span class="problematic" id="id75">|</span></a>-1⟩}</p></li>
+<li><p>Sz is diagonal with eigenvalues +1, 0, -1</p></li>
+<li><p>[Sx, Sy] = iSz (and cyclic)</p></li>
+<li><p>S² = 2𝟙 (for S=1)</p></li>
+</ul>
+</section>
+<section id="extending-to-1818">
+<h3>Extending to 18×18<a class="headerlink" href="#extending-to-1818" title="Link to this heading">¶</a></h3>
+<p>Operators can be extended to the full 18-dimensional Hilbert space:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.core.operators</span> <span class="kn">import</span> <span class="n">extend_to_18x18</span><span class="p">,</span> <span class="n">extend_electron_only</span>
+
+<span class="c1"># Acts on both g and e manifolds</span>
+<span class="n">H_18</span> <span class="o">=</span> <span class="n">extend_to_18x18</span><span class="p">(</span><span class="n">H_3x3</span><span class="p">)</span>
+
+<span class="c1"># Acts only on ground state</span>
+<span class="n">H_g</span> <span class="o">=</span> <span class="n">extend_electron_only</span><span class="p">(</span><span class="n">H_3x3</span><span class="p">,</span> <span class="n">manifold</span><span class="o">=</span><span class="s2">&quot;ground&quot;</span><span class="p">)</span>
+
+<span class="c1"># Acts only on excited state</span>
+<span class="n">H_e</span> <span class="o">=</span> <span class="n">extend_electron_only</span><span class="p">(</span><span class="n">H_3x3</span><span class="p">,</span> <span class="n">manifold</span><span class="o">=</span><span class="s2">&quot;excited&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="module-sim.core.nuclear_operators">
+<span id="nuclear-operators"></span><h2>Nuclear Operators<a class="headerlink" href="#module-sim.core.nuclear_operators" title="Link to this heading">¶</a></h2>
+<p>Nuclear spin operators for NV center simulation.</p>
+<p>This module provides spin-1/2 operators for C13 nuclear spins and
+utility functions for building tensor products in the extended
+Hilbert space.</p>
+<section id="hilbert-space-structure">
+<h3>Hilbert Space Structure<a class="headerlink" href="#hilbert-space-structure" title="Link to this heading">¶</a></h3>
+<p>The full NV center Hilbert space is:</p>
+<blockquote>
+<div><p><a href="#id76"><span class="problematic" id="id77">|</span></a>ψ⟩ = <a href="#id78"><span class="problematic" id="id79">|</span></a>g/e⟩ ⊗ <a href="#id80"><span class="problematic" id="id81">|</span></a>ms⟩ ⊗ <a href="#id82"><span class="problematic" id="id83">|</span></a>mI_N14⟩</p>
+<p>Dimensions: 2 × 3 × 3 = 18</p>
+</div></blockquote>
+<p>When including a C13 nuclear spin (I=1/2), this extends to:</p>
+<blockquote>
+<div><p><a href="#id84"><span class="problematic" id="id85">|</span></a>ψ⟩ = <a href="#id86"><span class="problematic" id="id87">|</span></a>g/e⟩ ⊗ <a href="#id88"><span class="problematic" id="id89">|</span></a>ms⟩ ⊗ <a href="#id90"><span class="problematic" id="id91">|</span></a>mI_N14⟩ ⊗ <a href="#id92"><span class="problematic" id="id93">|</span></a>mI_C13⟩</p>
+<p>Dimensions: 2 × 3 × 3 × 2 = 36</p>
+</div></blockquote>
+<p>However, for computational efficiency, C13 coupling is often
+treated in a block-diagonal approximation within the 18D space.</p>
+</section>
+<section id="spin-1-2-operators">
+<h3>Spin-1/2 Operators<a class="headerlink" href="#spin-1-2-operators" title="Link to this heading">¶</a></h3>
+<p>The Pauli matrices σ are related to spin operators by:</p>
+<blockquote>
+<div><p>Ix = σx/2,  Iy = σy/2,  Iz = σz/2</p>
+</div></blockquote>
+<p>The operators satisfy [Ii, Ij] = iε_ijk Ik.</p>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="sim.core.nuclear_operators.SpinHalfOps">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sim.core.nuclear_operators.</span></span><span class="sig-name descname"><span class="pre">SpinHalfOps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Ix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Iy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Iz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/nuclear_operators.html#SpinHalfOps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.nuclear_operators.SpinHalfOps" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Container for spin-1/2 operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Ix</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Iy</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Iz</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Ip</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Im</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>I</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.core.nuclear_operators.SpinHalfOps.Ix">
+<span class="sig-name descname"><span class="pre">Ix</span></span><a class="headerlink" href="#sim.core.nuclear_operators.SpinHalfOps.Ix" title="Link to this definition">¶</a></dt>
+<dd><p>Spin-x operator (2×2 complex)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.core.nuclear_operators.SpinHalfOps.Iy">
+<span class="sig-name descname"><span class="pre">Iy</span></span><a class="headerlink" href="#sim.core.nuclear_operators.SpinHalfOps.Iy" title="Link to this definition">¶</a></dt>
+<dd><p>Spin-y operator (2×2 complex)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.core.nuclear_operators.SpinHalfOps.Iz">
+<span class="sig-name descname"><span class="pre">Iz</span></span><a class="headerlink" href="#sim.core.nuclear_operators.SpinHalfOps.Iz" title="Link to this definition">¶</a></dt>
+<dd><p>Spin-z operator (2×2 complex, diagonal)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.core.nuclear_operators.SpinHalfOps.Ip">
+<span class="sig-name descname"><span class="pre">Ip</span></span><a class="headerlink" href="#sim.core.nuclear_operators.SpinHalfOps.Ip" title="Link to this definition">¶</a></dt>
+<dd><p>Raising operator I+ = Ix + i*Iy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.core.nuclear_operators.SpinHalfOps.Im">
+<span class="sig-name descname"><span class="pre">Im</span></span><a class="headerlink" href="#sim.core.nuclear_operators.SpinHalfOps.Im" title="Link to this definition">¶</a></dt>
+<dd><p>Lowering operator I- = Ix - i*Iy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.core.nuclear_operators.SpinHalfOps.I">
+<span class="sig-name descname"><span class="pre">I</span></span><a class="headerlink" href="#sim.core.nuclear_operators.SpinHalfOps.I" title="Link to this definition">¶</a></dt>
+<dd><p>Identity matrix (2×2)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ops</span> <span class="o">=</span> <span class="n">spin_half_operators</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">ops</span><span class="o">.</span><span class="n">Ix</span> <span class="o">@</span> <span class="n">ops</span><span class="o">.</span><span class="n">Iy</span> <span class="o">-</span> <span class="n">ops</span><span class="o">.</span><span class="n">Iy</span> <span class="o">@</span> <span class="n">ops</span><span class="o">.</span><span class="n">Ix</span><span class="p">,</span> <span class="mf">0.5</span><span class="n">j</span> <span class="o">*</span> <span class="n">ops</span><span class="o">.</span><span class="n">Iz</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">ops</span><span class="o">.</span><span class="n">Iz</span><span class="p">)</span>
+<span class="go">array([-0.5,  0.5])</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id94">
+<span class="sig-name descname"><span class="pre">Ix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id94" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id95">
+<span class="sig-name descname"><span class="pre">Iy</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id95" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id96">
+<span class="sig-name descname"><span class="pre">Iz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id96" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id97">
+<span class="sig-name descname"><span class="pre">Ip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id97" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id98">
+<span class="sig-name descname"><span class="pre">Im</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id98" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id99">
+<span class="sig-name descname"><span class="pre">I</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id99" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.core.nuclear_operators.SpinHalfOps.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Ix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Iy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Iz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sim.core.nuclear_operators.SpinHalfOps.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Ix</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Iy</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Iz</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Ip</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>Im</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>I</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.nuclear_operators.spin_half_operators">
+<span class="sig-prename descclassname"><span class="pre">sim.core.nuclear_operators.</span></span><span class="sig-name descname"><span class="pre">spin_half_operators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/nuclear_operators.html#spin_half_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.nuclear_operators.spin_half_operators" title="Link to this definition">¶</a></dt>
+<dd><p>Create spin-1/2 operators in the {<a href="#id100"><span class="problematic" id="id101">|</span></a>+1/2⟩, <a href="#id102"><span class="problematic" id="id103">|</span></a>-1/2⟩} basis.</p>
+<dl class="simple">
+<dt>The matrices are:</dt><dd><p>Ix = (1/2) * σx = (1/2) * [[0, 1], [1, 0]]
+Iy = (1/2) * σy = (1/2) * [[0, -i], [i, 0]]
+Iz = (1/2) * σz = (1/2) * [[1, 0], [0, -1]]</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dataclass containing Ix, Iy, Iz, I+, I-, and identity</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#sim.core.nuclear_operators.SpinHalfOps" title="sim.core.nuclear_operators.SpinHalfOps">SpinHalfOps</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ops</span> <span class="o">=</span> <span class="n">spin_half_operators</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Check commutation relation [Ix, Iy] = i*Iz/2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comm</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">Ix</span> <span class="o">@</span> <span class="n">ops</span><span class="o">.</span><span class="n">Iy</span> <span class="o">-</span> <span class="n">ops</span><span class="o">.</span><span class="n">Iy</span> <span class="o">@</span> <span class="n">ops</span><span class="o">.</span><span class="n">Ix</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span> <span class="mf">0.5</span><span class="n">j</span> <span class="o">*</span> <span class="n">ops</span><span class="o">.</span><span class="n">Iz</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Check I² = I(I+1) = 3/4 for I=1/2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I_squared</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">Ix</span> <span class="o">@</span> <span class="n">ops</span><span class="o">.</span><span class="n">Ix</span> <span class="o">+</span> <span class="n">ops</span><span class="o">.</span><span class="n">Iy</span> <span class="o">@</span> <span class="n">ops</span><span class="o">.</span><span class="n">Iy</span> <span class="o">+</span> <span class="n">ops</span><span class="o">.</span><span class="n">Iz</span> <span class="o">@</span> <span class="n">ops</span><span class="o">.</span><span class="n">Iz</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">I_squared</span><span class="p">,</span> <span class="mf">0.75</span> <span class="o">*</span> <span class="n">ops</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.nuclear_operators.extend_9x9_to_18x18">
+<span class="sig-prename descclassname"><span class="pre">sim.core.nuclear_operators.</span></span><span class="sig-name descname"><span class="pre">extend_9x9_to_18x18</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H_9x9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/nuclear_operators.html#extend_9x9_to_18x18"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.nuclear_operators.extend_9x9_to_18x18" title="Link to this definition">¶</a></dt>
+<dd><p>Extend 9×9 matrix (electron ⊗ N14) to 18×18 full space.</p>
+<p>The 9×9 operator acts on <a href="#id104"><span class="problematic" id="id105">|</span></a>ms⟩ ⊗ <a href="#id106"><span class="problematic" id="id107">|</span></a>mI_N14⟩ and is embedded in the
+full space as acting identically on both g and e manifolds.</p>
+<dl class="simple">
+<dt>Mathematically:</dt><dd><p>H_18 = I_2 ⊗ H_9</p>
+</dd>
+</dl>
+<p>where I_2 is the identity on <a href="#id108"><span class="problematic" id="id109">|</span></a>g/e⟩.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>H_9x9</strong> (<em>np.ndarray</em>) – 9×9 matrix in electron spin ⊗ N14 nuclear spin space</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>18×18 matrix in full Hilbert space</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This is the correct extension for terms like hyperfine coupling
+that are identical in ground and excited states.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H_9</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H_18</span> <span class="o">=</span> <span class="n">extend_9x9_to_18x18</span><span class="p">(</span><span class="n">H_9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H_18</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(18, 18)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">H_18</span><span class="p">[:</span><span class="mi">9</span><span class="p">,</span> <span class="p">:</span><span class="mi">9</span><span class="p">],</span> <span class="n">H_9</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">H_18</span><span class="p">[</span><span class="mi">9</span><span class="p">:,</span> <span class="mi">9</span><span class="p">:],</span> <span class="n">H_9</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.nuclear_operators.extend_9x9_to_18x18_manifold">
+<span class="sig-prename descclassname"><span class="pre">sim.core.nuclear_operators.</span></span><span class="sig-name descname"><span class="pre">extend_9x9_to_18x18_manifold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H_9x9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ground'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/nuclear_operators.html#extend_9x9_to_18x18_manifold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.nuclear_operators.extend_9x9_to_18x18_manifold" title="Link to this definition">¶</a></dt>
+<dd><p>Extend 9×9 matrix to 18×18, acting only on one manifold.</p>
+<p>Unlike extend_9x9_to_18x18(), this operator acts ONLY on
+the ground state OR excited state, not both.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>H_9x9</strong> (<em>np.ndarray</em>) – 9×9 matrix in electron spin ⊗ N14 space</p></li>
+<li><p><strong>manifold</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – “ground” for g manifold (indices 0-8)
+“excited” for e manifold (indices 9-17)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>18×18 matrix acting only on chosen manifold</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H_9</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H_g</span> <span class="o">=</span> <span class="n">extend_9x9_to_18x18_manifold</span><span class="p">(</span><span class="n">H_9</span><span class="p">,</span> <span class="s2">&quot;ground&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">H_g</span><span class="p">[:</span><span class="mi">9</span><span class="p">,</span> <span class="p">:</span><span class="mi">9</span><span class="p">],</span> <span class="n">H_9</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">H_g</span><span class="p">[</span><span class="mi">9</span><span class="p">:,</span> <span class="mi">9</span><span class="p">:],</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.nuclear_operators.build_spin_spin_coupling">
+<span class="sig-prename descclassname"><span class="pre">sim.core.nuclear_operators.</span></span><span class="sig-name descname"><span class="pre">build_spin_spin_coupling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S_ops</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I_ops</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A_tensor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/nuclear_operators.html#build_spin_spin_coupling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.nuclear_operators.build_spin_spin_coupling" title="Link to this definition">¶</a></dt>
+<dd><p>Build spin-spin coupling Hamiltonian H = S·A·I.</p>
+<dl class="simple">
+<dt>Computes the tensor product:</dt><dd><p>H = Σ_ij A_ij (S_i ⊗ I_j)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>S_ops</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a>) – Tuple of (Sx, Sy, Sz) electron spin operators (3×3 each)</p></li>
+<li><p><strong>I_ops</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a>) – Tuple of (Ix, Iy, Iz) nuclear spin operators (2×2 or 3×3)</p></li>
+<li><p><strong>A_tensor</strong> (<em>np.ndarray</em>) – 3×3 hyperfine coupling tensor in rad/s</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Coupling Hamiltonian of dimension (3*dim_I) × (3*dim_I)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The tensor product S_i ⊗ I_j creates a matrix of size
+(3 × dim_I) × (3 × dim_I).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sim.core.operators</span> <span class="kn">import</span> <span class="n">spin1_operators</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="n">spin1_operators</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">spin_half_operators</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mf">2e6</span><span class="p">])</span>  <span class="c1"># Axial tensor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">build_spin_spin_coupling</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">Sx</span><span class="p">,</span> <span class="n">S</span><span class="o">.</span><span class="n">Sy</span><span class="p">,</span> <span class="n">S</span><span class="o">.</span><span class="n">Sz</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="n">I</span><span class="o">.</span><span class="n">Ix</span><span class="p">,</span> <span class="n">I</span><span class="o">.</span><span class="n">Iy</span><span class="p">,</span> <span class="n">I</span><span class="o">.</span><span class="n">Iz</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">A</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(6, 6)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.core.nuclear_operators.dipolar_tensor">
+<span class="sig-prename descclassname"><span class="pre">sim.core.nuclear_operators.</span></span><span class="sig-name descname"><span class="pre">dipolar_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_vec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/core/nuclear_operators.html#dipolar_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.core.nuclear_operators.dipolar_tensor" title="Link to this definition">¶</a></dt>
+<dd><p>Compute dipolar coupling tensor between two spins.</p>
+<p>The dipolar interaction tensor is:</p>
+<blockquote>
+<div><p>A_dip = (μ₀/4π) × (γ₁γ₂ℏ²/r³) × (I - 3r̂r̂ᵀ)</p>
+</div></blockquote>
+<p>In frequency units (rad/s):</p>
+<blockquote>
+<div><p>A_dip = (μ₀γ₁γ₂ℏ)/(4πr³) × (I - 3r̂r̂ᵀ)</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r_vec</strong> (<em>np.ndarray</em>) – Position vector from spin 1 to spin 2, in meters</p></li>
+<li><p><strong>gamma_1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Gyromagnetic ratio of spin 1 in rad/(s·T)</p></li>
+<li><p><strong>gamma_2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Gyromagnetic ratio of spin 2 in rad/(s·T)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>3×3 dipolar tensor in rad/s</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The tensor is traceless and symmetric.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sim.core.constants</span> <span class="kn">import</span> <span class="n">GAMMA_E</span><span class="p">,</span> <span class="n">GAMMA_C13</span><span class="p">,</span> <span class="n">NM</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.154</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">NM</span>  <span class="c1"># C-C bond length</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">dipolar_tensor</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">GAMMA_E</span><span class="p">,</span> <span class="n">GAMMA_C13</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># Traceless</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># Symmetric</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>The nuclear operators module provides spin-1/2 operators for C13 and utilities
+for calculating dipolar hyperfine tensors.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="hamiltonian.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Hamiltonian Module</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../tutorials/pulsed.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Pulsed Experiments</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024-2025, Leon Kaiser, MSQC Goethe University Frankfurt
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Core Module</a><ul>
+<li><a class="reference internal" href="#module-sim.core.constants">Physical Constants</a><ul>
+<li><a class="reference internal" href="#unit-convention">Unit Convention</a></li>
+<li><a class="reference internal" href="#why-rad-s">Why rad/s?</a></li>
+<li><a class="reference internal" href="#sim.core.constants.GHZ"><code class="docutils literal notranslate"><span class="pre">GHZ</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.MHZ"><code class="docutils literal notranslate"><span class="pre">MHZ</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.KHZ"><code class="docutils literal notranslate"><span class="pre">KHZ</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.HZ"><code class="docutils literal notranslate"><span class="pre">HZ</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.MT"><code class="docutils literal notranslate"><span class="pre">MT</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.UT"><code class="docutils literal notranslate"><span class="pre">UT</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.GAUSS"><code class="docutils literal notranslate"><span class="pre">GAUSS</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.UM"><code class="docutils literal notranslate"><span class="pre">UM</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.NM"><code class="docutils literal notranslate"><span class="pre">NM</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.ANGSTROM"><code class="docutils literal notranslate"><span class="pre">ANGSTROM</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.HBAR"><code class="docutils literal notranslate"><span class="pre">HBAR</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.H_PLANCK"><code class="docutils literal notranslate"><span class="pre">H_PLANCK</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.MU_B"><code class="docutils literal notranslate"><span class="pre">MU_B</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.MU_N"><code class="docutils literal notranslate"><span class="pre">MU_N</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.KB"><code class="docutils literal notranslate"><span class="pre">KB</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.E_CHARGE"><code class="docutils literal notranslate"><span class="pre">E_CHARGE</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.G_E"><code class="docutils literal notranslate"><span class="pre">G_E</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.G_N14"><code class="docutils literal notranslate"><span class="pre">G_N14</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.G_C13"><code class="docutils literal notranslate"><span class="pre">G_C13</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.GAMMA_E"><code class="docutils literal notranslate"><span class="pre">GAMMA_E</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.GAMMA_N14"><code class="docutils literal notranslate"><span class="pre">GAMMA_N14</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.GAMMA_C13"><code class="docutils literal notranslate"><span class="pre">GAMMA_C13</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.D_GS"><code class="docutils literal notranslate"><span class="pre">D_GS</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.D_ES"><code class="docutils literal notranslate"><span class="pre">D_ES</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.A_PARALLEL_N14"><code class="docutils literal notranslate"><span class="pre">A_PARALLEL_N14</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.A_PERP_N14"><code class="docutils literal notranslate"><span class="pre">A_PERP_N14</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.P_N14"><code class="docutils literal notranslate"><span class="pre">P_N14</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.ghz_to_rads"><code class="docutils literal notranslate"><span class="pre">ghz_to_rads()</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.mhz_to_rads"><code class="docutils literal notranslate"><span class="pre">mhz_to_rads()</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.rads_to_ghz"><code class="docutils literal notranslate"><span class="pre">rads_to_ghz()</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.rads_to_mhz"><code class="docutils literal notranslate"><span class="pre">rads_to_mhz()</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.mt_to_tesla"><code class="docutils literal notranslate"><span class="pre">mt_to_tesla()</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.constants.zeeman_splitting_mhz"><code class="docutils literal notranslate"><span class="pre">zeeman_splitting_mhz()</span></code></a></li>
+<li><a class="reference internal" href="#unit-conversions">Unit Conversions</a></li>
+<li><a class="reference internal" href="#available-constants">Available Constants</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sim.core.operators">Spin Operators</a><ul>
+<li><a class="reference internal" href="#physical-background">Physical Background</a></li>
+<li><a class="reference internal" href="#basis-convention">Basis Convention</a></li>
+<li><a class="reference internal" href="#dimensional-hilbert-space">18-Dimensional Hilbert Space</a></li>
+<li><a class="reference internal" href="#sim.core.operators.Spin1Ops"><code class="docutils literal notranslate"><span class="pre">Spin1Ops</span></code></a><ul>
+<li><a class="reference internal" href="#sim.core.operators.Spin1Ops.Sx"><code class="docutils literal notranslate"><span class="pre">Spin1Ops.Sx</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.operators.Spin1Ops.Sy"><code class="docutils literal notranslate"><span class="pre">Spin1Ops.Sy</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.operators.Spin1Ops.Sz"><code class="docutils literal notranslate"><span class="pre">Spin1Ops.Sz</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.operators.Spin1Ops.Sp"><code class="docutils literal notranslate"><span class="pre">Spin1Ops.Sp</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.operators.Spin1Ops.Sm"><code class="docutils literal notranslate"><span class="pre">Spin1Ops.Sm</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.operators.Spin1Ops.I"><code class="docutils literal notranslate"><span class="pre">Spin1Ops.I</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Spin1Ops.Sx</span></code></a></li>
+<li><a class="reference internal" href="#id47"><code class="docutils literal notranslate"><span class="pre">Spin1Ops.Sy</span></code></a></li>
+<li><a class="reference internal" href="#id48"><code class="docutils literal notranslate"><span class="pre">Spin1Ops.Sz</span></code></a></li>
+<li><a class="reference internal" href="#id49"><code class="docutils literal notranslate"><span class="pre">Spin1Ops.Sp</span></code></a></li>
+<li><a class="reference internal" href="#id50"><code class="docutils literal notranslate"><span class="pre">Spin1Ops.Sm</span></code></a></li>
+<li><a class="reference internal" href="#id51"><code class="docutils literal notranslate"><span class="pre">Spin1Ops.I</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.operators.Spin1Ops.__init__"><code class="docutils literal notranslate"><span class="pre">Spin1Ops.__init__()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sim.core.operators.spin1_operators"><code class="docutils literal notranslate"><span class="pre">spin1_operators()</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.operators.extend_to_18x18"><code class="docutils literal notranslate"><span class="pre">extend_to_18x18()</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.operators.extend_electron_only"><code class="docutils literal notranslate"><span class="pre">extend_electron_only()</span></code></a></li>
+<li><a class="reference internal" href="#spin-1-operators">Spin-1 Operators</a></li>
+<li><a class="reference internal" href="#extending-to-1818">Extending to 18×18</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sim.core.nuclear_operators">Nuclear Operators</a><ul>
+<li><a class="reference internal" href="#hilbert-space-structure">Hilbert Space Structure</a></li>
+<li><a class="reference internal" href="#spin-1-2-operators">Spin-1/2 Operators</a></li>
+<li><a class="reference internal" href="#sim.core.nuclear_operators.SpinHalfOps"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps</span></code></a><ul>
+<li><a class="reference internal" href="#sim.core.nuclear_operators.SpinHalfOps.Ix"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps.Ix</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.nuclear_operators.SpinHalfOps.Iy"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps.Iy</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.nuclear_operators.SpinHalfOps.Iz"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps.Iz</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.nuclear_operators.SpinHalfOps.Ip"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps.Ip</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.nuclear_operators.SpinHalfOps.Im"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps.Im</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.nuclear_operators.SpinHalfOps.I"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps.I</span></code></a></li>
+<li><a class="reference internal" href="#id94"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps.Ix</span></code></a></li>
+<li><a class="reference internal" href="#id95"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps.Iy</span></code></a></li>
+<li><a class="reference internal" href="#id96"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps.Iz</span></code></a></li>
+<li><a class="reference internal" href="#id97"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps.Ip</span></code></a></li>
+<li><a class="reference internal" href="#id98"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps.Im</span></code></a></li>
+<li><a class="reference internal" href="#id99"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps.I</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.nuclear_operators.SpinHalfOps.__init__"><code class="docutils literal notranslate"><span class="pre">SpinHalfOps.__init__()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sim.core.nuclear_operators.spin_half_operators"><code class="docutils literal notranslate"><span class="pre">spin_half_operators()</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.nuclear_operators.extend_9x9_to_18x18"><code class="docutils literal notranslate"><span class="pre">extend_9x9_to_18x18()</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.nuclear_operators.extend_9x9_to_18x18_manifold"><code class="docutils literal notranslate"><span class="pre">extend_9x9_to_18x18_manifold()</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.nuclear_operators.build_spin_spin_coupling"><code class="docutils literal notranslate"><span class="pre">build_spin_spin_coupling()</span></code></a></li>
+<li><a class="reference internal" href="#sim.core.nuclear_operators.dipolar_tensor"><code class="docutils literal notranslate"><span class="pre">dipolar_tensor()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

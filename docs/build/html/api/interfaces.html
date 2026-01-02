@@ -1,0 +1,1363 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="prev" title="Pulses Module" href="pulses.html">
+
+    <!-- Generated with Sphinx 7.3.7 and Furo 2025.12.19 -->
+        <title>Interfaces Module - QUSIM Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=acfd86a5" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a1178322" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2962FF;
+  --color-brand-content: #2962FF;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #82B1FF;
+  --color-brand-content: #82B1FF;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #82B1FF;
+  --color-brand-content: #82B1FF;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">QUSIM Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">QUSIM Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Theory &amp; Physics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/nv_center.html">The Nitrogen-Vacancy Center</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/hamiltonian.html">Hamiltonian Terms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/lindblad.html">Open Quantum System Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/measurement.html">Measurement and Readout</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/odmr.html">ODMR Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/pulsed.html">Pulsed Experiments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hamiltonian.html">Hamiltonian Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dynamics.html">Dynamics Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="states.html">States Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses Module</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Interfaces Module</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/api/interfaces.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="interfaces-module">
+<h1>Interfaces Module<a class="headerlink" href="#interfaces-module" title="Link to this heading">¶</a></h1>
+<p>The interfaces module provides hardware abstraction layers for
+experimental control, with realistic noise models.</p>
+<section id="module-sim.interfaces.awg">
+<span id="awg-interface"></span><h2>AWG Interface<a class="headerlink" href="#module-sim.interfaces.awg" title="Link to this heading">¶</a></h2>
+<p>Arbitrary Waveform Generator (AWG) interface.</p>
+<p>The AWG generates time-dependent microwave waveforms for spin control.
+It stores amplitude Ω(t), phase φ(t), and detuning Δ(t) as arrays
+and provides interpolation for arbitrary time points.</p>
+<section id="waveform-structure">
+<h3>Waveform Structure<a class="headerlink" href="#waveform-structure" title="Link to this heading">¶</a></h3>
+<p>The MW field in the rotating frame is characterized by:
+- Amplitude (Rabi frequency) Ω(t) in MHz
+- Phase φ(t) in radians
+- Detuning Δ(t) in MHz (optional)</p>
+<dl class="simple">
+<dt>The resulting Hamiltonian is:</dt><dd><p>H_MW = (Ω/2)(S₊ e^(-iφ) + S₋ e^(iφ)) + Δ Sz</p>
+</dd>
+</dl>
+</section>
+<section id="pulse-shapes">
+<h3>Pulse Shapes<a class="headerlink" href="#pulse-shapes" title="Link to this heading">¶</a></h3>
+<p>Supported envelope shapes:
+- rect: Rectangular (constant amplitude)
+- gauss: Gaussian envelope
+- sinc: Sinc function (sin(x)/x)
+- blackman: Blackman window
+- hermite: Hermite-Gaussian
+- drag: DRAG pulse for leakage reduction</p>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="sim.interfaces.awg.AWGInterface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sim.interfaces.awg.</span></span><span class="sig-name descname"><span class="pre">AWGInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_rate=1000000000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_amplitude=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_phase=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_detuning=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/awg.html#AWGInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.awg.AWGInterface" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Arbitrary Waveform Generator for microwave pulse control.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Sampling rate in Hz. Default: 1e9 (1 GS/s)</p></li>
+<li><p><strong>_amplitude</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>_phase</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>_detuning</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.awg.AWGInterface.sample_rate">
+<span class="sig-name descname"><span class="pre">sample_rate</span></span><a class="headerlink" href="#sim.interfaces.awg.AWGInterface.sample_rate" title="Link to this definition">¶</a></dt>
+<dd><p>AWG sample rate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.awg.AWGInterface.dt">
+<span class="sig-name descname"><span class="pre">dt</span></span><a class="headerlink" href="#sim.interfaces.awg.AWGInterface.dt" title="Link to this definition">¶</a></dt>
+<dd><p>Time step between samples</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.awg.AWGInterface.duration">
+<span class="sig-name descname"><span class="pre">duration</span></span><a class="headerlink" href="#sim.interfaces.awg.AWGInterface.duration" title="Link to this definition">¶</a></dt>
+<dd><p>Total waveform duration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">awg</span> <span class="o">=</span> <span class="n">AWGInterface</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">awg</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span><span class="s2">&quot;gauss&quot;</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">100e-9</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">awg</span><span class="o">.</span><span class="n">add_delay</span><span class="p">(</span><span class="mf">500e-9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">awg</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span><span class="s2">&quot;gauss&quot;</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">100e-9</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get Rabi frequency at t=50 ns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">omega</span> <span class="o">=</span> <span class="n">awg</span><span class="o">.</span><span class="n">get_omega</span><span class="p">(</span><span class="mf">50e-9</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">sample_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1000000000.0</span></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.awg.AWGInterface.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/awg.html#AWGInterface.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.awg.AWGInterface.clear" title="Link to this definition">¶</a></dt>
+<dd><p>Clear all waveform data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.awg.AWGInterface.add_pulse">
+<span class="sig-name descname"><span class="pre">add_pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detuning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/awg.html#AWGInterface.add_pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.awg.AWGInterface.add_pulse" title="Link to this definition">¶</a></dt>
+<dd><p>Add a pulse to the waveform.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Pulse shape: ‘rect’, ‘gauss’, ‘sinc’, ‘blackman’, ‘hermite’, ‘drag’</p></li>
+<li><p><strong>amplitude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Peak Rabi frequency in MHz</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Pulse duration in seconds</p></li>
+<li><p><strong>phase</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Pulse phase in radians. Default: 0</p></li>
+<li><p><strong>detuning</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Frequency detuning in MHz. Default: 0</p></li>
+<li><p><strong>**kwargs</strong> – Shape-specific parameters:
+- sigma: Gaussian width (default: duration/6)
+- beta: DRAG coefficient (default: 0.5)
+- order: Hermite order (default: 0)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.awg.AWGInterface.add_delay">
+<span class="sig-name descname"><span class="pre">add_delay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/awg.html#AWGInterface.add_delay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.awg.AWGInterface.add_delay" title="Link to this definition">¶</a></dt>
+<dd><p>Add a delay (zero amplitude) segment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Delay duration in seconds</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.awg.AWGInterface.get_omega">
+<span class="sig-name descname"><span class="pre">get_omega</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/awg.html#AWGInterface.get_omega"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.awg.AWGInterface.get_omega" title="Link to this definition">¶</a></dt>
+<dd><p>Get Rabi frequency at time t.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Time in seconds</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Rabi frequency in MHz</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.awg.AWGInterface.get_phase">
+<span class="sig-name descname"><span class="pre">get_phase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/awg.html#AWGInterface.get_phase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.awg.AWGInterface.get_phase" title="Link to this definition">¶</a></dt>
+<dd><p>Get phase at time t.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Time in seconds</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Phase in radians</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.awg.AWGInterface.get_detuning">
+<span class="sig-name descname"><span class="pre">get_detuning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/awg.html#AWGInterface.get_detuning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.awg.AWGInterface.get_detuning" title="Link to this definition">¶</a></dt>
+<dd><p>Get detuning at time t.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Time in seconds</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Detuning in MHz</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.awg.AWGInterface.to_mw_drive">
+<span class="sig-name descname"><span class="pre">to_mw_drive</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/awg.html#AWGInterface.to_mw_drive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.awg.AWGInterface.to_mw_drive" title="Link to this definition">¶</a></dt>
+<dd><p>Create a MicrowaveDrive term from this AWG waveform.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Hamiltonian term with this waveform</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="hamiltonian.html#sim.hamiltonian.terms.mw_drive.MicrowaveDrive" title="sim.hamiltonian.terms.mw_drive.MicrowaveDrive">MicrowaveDrive</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.awg.AWGInterface.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/awg.html#AWGInterface.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.awg.AWGInterface.plot" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the waveform.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ax</strong> (<em>matplotlib axis</em><em>, </em><em>optional</em>) – Axis to plot on. If None, creates new figure.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.awg.AWGInterface.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_rate=1000000000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_amplitude=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_phase=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_detuning=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sim.interfaces.awg.AWGInterface.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>_amplitude</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>_phase</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>_detuning</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>The AWG (Arbitrary Waveform Generator) interface simulates a programmable
+pulse generator:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.interfaces</span> <span class="kn">import</span> <span class="n">AWGInterface</span>
+
+<span class="c1"># Create AWG with 1 GS/s sample rate</span>
+<span class="n">awg</span> <span class="o">=</span> <span class="n">AWGInterface</span><span class="p">(</span><span class="n">sample_rate</span><span class="o">=</span><span class="mf">1e9</span><span class="p">)</span>
+
+<span class="c1"># Add pulses</span>
+<span class="n">awg</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span>
+    <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">,</span>
+    <span class="n">amplitude</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>          <span class="c1"># Normalized amplitude</span>
+    <span class="n">duration</span><span class="o">=</span><span class="mf">50e-9</span><span class="p">,</span>         <span class="c1"># 50 ns</span>
+    <span class="n">phase</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+<span class="n">awg</span><span class="o">.</span><span class="n">add_delay</span><span class="p">(</span><span class="mf">100e-9</span><span class="p">)</span>       <span class="c1"># 100 ns delay</span>
+<span class="n">awg</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span>
+    <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;rect&quot;</span><span class="p">,</span>
+    <span class="n">amplitude</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">duration</span><span class="o">=</span><span class="mf">100e-9</span><span class="p">,</span>
+    <span class="n">phase</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span>
+<span class="p">)</span>
+
+<span class="c1"># Get waveform</span>
+<span class="n">t</span><span class="p">,</span> <span class="n">waveform</span> <span class="o">=</span> <span class="n">awg</span><span class="o">.</span><span class="n">get_waveform</span><span class="p">()</span>
+
+<span class="c1"># Plot</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">,</span> <span class="n">waveform</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (ns)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="waveform-generation">
+<h3>Waveform Generation<a class="headerlink" href="#waveform-generation" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate IQ waveforms</span>
+<span class="n">I</span><span class="p">,</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">awg</span><span class="o">.</span><span class="n">get_iq_waveform</span><span class="p">(</span><span class="n">carrier_freq</span><span class="o">=</span><span class="mf">2.87e9</span><span class="p">)</span>
+
+<span class="c1"># Export to file</span>
+<span class="n">awg</span><span class="o">.</span><span class="n">save_waveform</span><span class="p">(</span><span class="s2">&quot;sequence.npz&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="module-sim.interfaces.laser">
+<span id="laser-interface"></span><h2>Laser Interface<a class="headerlink" href="#module-sim.interfaces.laser" title="Link to this heading">¶</a></h2>
+<p>Laser interface for optical control.</p>
+<p>The laser provides optical excitation for:
+- Spin initialization (optical pumping)
+- Spin readout (fluorescence detection)
+- Coherent optical control (Rabi oscillations)</p>
+<section id="laser-parameters">
+<h3>Laser Parameters<a class="headerlink" href="#laser-parameters" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Wavelength: 532 nm (green) or 637 nm (ZPL)</p></li>
+<li><p>Power: Typically 0.1-10 mW</p></li>
+<li><p>Rabi frequency: Depends on power and beam waist</p></li>
+</ul>
+<dl class="simple">
+<dt>The optical Rabi frequency is related to laser power by:</dt><dd><p>Ω_L = d·E₀/ℏ = d·√(2P/(ε₀cπw₀²))/ℏ</p>
+</dd>
+</dl>
+<p>where d is the dipole moment and w₀ is the beam waist.</p>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserPulse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sim.interfaces.laser.</span></span><span class="sig-name descname"><span class="pre">LaserPulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rect'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/laser.html#LaserPulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.laser.LaserPulse" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Single laser pulse.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserPulse.start">
+<span class="sig-name descname"><span class="pre">start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#sim.interfaces.laser.LaserPulse.start" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserPulse.duration">
+<span class="sig-name descname"><span class="pre">duration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#sim.interfaces.laser.LaserPulse.duration" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserPulse.power">
+<span class="sig-name descname"><span class="pre">power</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#sim.interfaces.laser.LaserPulse.power" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserPulse.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'rect'</span></em><a class="headerlink" href="#sim.interfaces.laser.LaserPulse.shape" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserPulse.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rect'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sim.interfaces.laser.LaserPulse.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sim.interfaces.laser.</span></span><span class="sig-name descname"><span class="pre">LaserInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength=532.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power_to_rabi=10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_pulses=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/laser.html#LaserInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.laser.LaserInterface" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Laser interface for optical control.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wavelength</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Laser wavelength in nm. Default: 532 (green)</p></li>
+<li><p><strong>power_to_rabi</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Conversion factor from mW to MHz. Default: 10 MHz/mW</p></li>
+<li><p><strong>linewidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>_pulses</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><em>List</em></a><em>[</em><a class="reference internal" href="#sim.interfaces.laser.LaserPulse" title="sim.interfaces.laser.LaserPulse"><em>LaserPulse</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.wavelength">
+<span class="sig-name descname"><span class="pre">wavelength</span></span><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.wavelength" title="Link to this definition">¶</a></dt>
+<dd><p>Laser wavelength in nm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.pulses">
+<span class="sig-name descname"><span class="pre">pulses</span></span><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.pulses" title="Link to this definition">¶</a></dt>
+<dd><p>List of scheduled laser pulses</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">laser</span> <span class="o">=</span> <span class="n">LaserInterface</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">laser</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">laser</span><span class="o">.</span><span class="n">add_pulse</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">2e-6</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">100e-9</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get power at specific time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">get_power</span><span class="p">(</span><span class="mf">500e-9</span><span class="p">)</span>  <span class="c1"># 1.0 mW</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">wavelength</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">532.0</span></em><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.power_to_rabi">
+<span class="sig-name descname"><span class="pre">power_to_rabi</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10.0</span></em><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.power_to_rabi" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.linewidth">
+<span class="sig-name descname"><span class="pre">linewidth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.linewidth" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id2">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pulses</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#sim.interfaces.laser.LaserPulse" title="sim.interfaces.laser.LaserPulse"><span class="pre">LaserPulse</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id2" title="Link to this definition">¶</a></dt>
+<dd><p>List of scheduled pulses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/laser.html#LaserInterface.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.clear" title="Link to this definition">¶</a></dt>
+<dd><p>Clear all pulses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.add_pulse">
+<span class="sig-name descname"><span class="pre">add_pulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rect'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/laser.html#LaserInterface.add_pulse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.add_pulse" title="Link to this definition">¶</a></dt>
+<dd><p>Add a laser pulse.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Start time in seconds</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Pulse duration in seconds</p></li>
+<li><p><strong>power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Laser power in mW</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Pulse shape: ‘rect’, ‘gauss’. Default: ‘rect’</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.add_cw">
+<span class="sig-name descname"><span class="pre">add_cw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">power</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/laser.html#LaserInterface.add_cw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.add_cw" title="Link to this definition">¶</a></dt>
+<dd><p>Add continuous wave operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – CW power in mW</p></li>
+<li><p><strong>t_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Start time. Default: 0</p></li>
+<li><p><strong>t_end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – End time. Default: 1 ms</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.get_power">
+<span class="sig-name descname"><span class="pre">get_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/laser.html#LaserInterface.get_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.get_power" title="Link to this definition">¶</a></dt>
+<dd><p>Get laser power at time t.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Time in seconds</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Power in mW (0 if laser is off)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.get_rabi">
+<span class="sig-name descname"><span class="pre">get_rabi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/laser.html#LaserInterface.get_rabi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.get_rabi" title="Link to this definition">¶</a></dt>
+<dd><p>Get optical Rabi frequency at time t.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Time in seconds</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Rabi frequency in MHz</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.is_on">
+<span class="sig-name descname"><span class="pre">is_on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/laser.html#LaserInterface.is_on"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.is_on" title="Link to this definition">¶</a></dt>
+<dd><p>Check if laser is on at time t.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.to_optical_coupling">
+<span class="sig-name descname"><span class="pre">to_optical_coupling</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/laser.html#LaserInterface.to_optical_coupling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.to_optical_coupling" title="Link to this definition">¶</a></dt>
+<dd><p>Create an OpticalCoupling term from this laser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Hamiltonian term with this laser waveform</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="hamiltonian.html#sim.hamiltonian.terms.optical.OpticalCoupling" title="sim.hamiltonian.terms.optical.OpticalCoupling">OpticalCoupling</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.schedule_initialization">
+<span class="sig-name descname"><span class="pre">schedule_initialization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/laser.html#LaserInterface.schedule_initialization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.schedule_initialization" title="Link to this definition">¶</a></dt>
+<dd><p>Schedule an initialization pulse.</p>
+<p>Typical initialization uses a few microseconds of green light
+to optically pump into ms=0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Start time in seconds</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Pulse duration in seconds. Default: 1 μs</p></li>
+<li><p><strong>power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Laser power in mW. Default: 1 mW</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.schedule_readout">
+<span class="sig-name descname"><span class="pre">schedule_readout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/laser.html#LaserInterface.schedule_readout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.schedule_readout" title="Link to this definition">¶</a></dt>
+<dd><p>Schedule a readout pulse.</p>
+<p>Readout typically uses a short pulse (~300 ns) to measure
+fluorescence before spin flips occur.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Start time in seconds</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Pulse duration. Default: 300 ns</p></li>
+<li><p><strong>power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Laser power in mW. Default: 1 mW</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.laser.LaserInterface.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength=532.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power_to_rabi=10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_pulses=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sim.interfaces.laser.LaserInterface.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wavelength</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>power_to_rabi</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>linewidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>_pulses</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><em>List</em></a><em>[</em><a class="reference internal" href="#sim.interfaces.laser.LaserPulse" title="sim.interfaces.laser.LaserPulse"><em>LaserPulse</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>The laser interface simulates optical excitation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.interfaces</span> <span class="kn">import</span> <span class="n">LaserInterface</span>
+
+<span class="c1"># Create laser (532 nm green)</span>
+<span class="n">laser</span> <span class="o">=</span> <span class="n">LaserInterface</span><span class="p">(</span><span class="n">wavelength</span><span class="o">=</span><span class="mf">532e-9</span><span class="p">)</span>
+
+<span class="c1"># Set power</span>
+<span class="n">laser</span><span class="o">.</span><span class="n">set_power</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">)</span>  <span class="c1"># 1 mW</span>
+
+<span class="c1"># Convert to Rabi frequency</span>
+<span class="n">rabi</span> <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">power_to_rabi</span><span class="p">(</span><span class="n">power</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+
+<span class="c1"># Pulse timing</span>
+<span class="n">laser</span><span class="o">.</span><span class="n">pulse</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="module-sim.interfaces.photon_counter">
+<span id="photon-counter"></span><h2>Photon Counter<a class="headerlink" href="#module-sim.interfaces.photon_counter" title="Link to this heading">¶</a></h2>
+<p>Photon counter interface for fluorescence detection.</p>
+<p>Models realistic single-photon detection including:
+- Detection efficiency
+- Dark counts
+- Dead time
+- Timing jitter
+- Afterpulsing</p>
+<section id="detector-characteristics">
+<h3>Detector Characteristics<a class="headerlink" href="#detector-characteristics" title="Link to this heading">¶</a></h3>
+<p>Typical APD (Avalanche Photodiode) parameters:
+- Detection efficiency: 5-20%
+- Dark count rate: 10-1000 Hz
+- Dead time: 20-100 ns
+- Timing jitter: 0.3-1 ns
+- Afterpulsing probability: 0.1-5%</p>
+<p>SNSPD (Superconducting Nanowire):
+- Detection efficiency: 70-95%
+- Dark count rate: &lt;1 Hz
+- Dead time: 10-50 ns
+- Timing jitter: &lt;100 ps</p>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sim.interfaces.photon_counter.</span></span><span class="sig-name descname"><span class="pre">PhotonCounter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">efficiency=0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dark_count_rate=100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dead_time=5e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timing_jitter=5e-10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">afterpulsing_prob=0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">afterpulsing_delay=1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_total_counts=0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_detection_times=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_last_detection=-1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_current_time=0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/photon_counter.html#PhotonCounter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Realistic photon counter for fluorescence detection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>efficiency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Detection efficiency (0-1). Default: 0.1 (10%)</p></li>
+<li><p><strong>dark_count_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Dark count rate in Hz. Default: 100</p></li>
+<li><p><strong>dead_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Dead time in seconds. Default: 50e-9 (50 ns)</p></li>
+<li><p><strong>timing_jitter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Timing jitter (std dev) in seconds. Default: 0.5e-9</p></li>
+<li><p><strong>afterpulsing_prob</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Afterpulsing probability. Default: 0.01 (1%)</p></li>
+<li><p><strong>afterpulsing_delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>_total_counts</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>_detection_times</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>]</em>)</p></li>
+<li><p><strong>_last_detection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>_current_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.total_counts">
+<span class="sig-name descname"><span class="pre">total_counts</span></span><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.total_counts" title="Link to this definition">¶</a></dt>
+<dd><p>Total detected photons</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.detection_times">
+<span class="sig-name descname"><span class="pre">detection_times</span></span><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.detection_times" title="Link to this definition">¶</a></dt>
+<dd><p>List of photon arrival times</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">counter</span> <span class="o">=</span> <span class="n">PhotonCounter</span><span class="p">(</span><span class="n">efficiency</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Simulate detection from excited state population</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">rho</span> <span class="ow">in</span> <span class="n">rho_trajectory</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">8e7</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total photons: </span><span class="si">{</span><span class="n">counter</span><span class="o">.</span><span class="n">total_counts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.efficiency">
+<span class="sig-name descname"><span class="pre">efficiency</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.1</span></em><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.efficiency" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.dark_count_rate">
+<span class="sig-name descname"><span class="pre">dark_count_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100.0</span></em><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.dark_count_rate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.dead_time">
+<span class="sig-name descname"><span class="pre">dead_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5e-08</span></em><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.dead_time" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.timing_jitter">
+<span class="sig-name descname"><span class="pre">timing_jitter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5e-10</span></em><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.timing_jitter" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.afterpulsing_prob">
+<span class="sig-name descname"><span class="pre">afterpulsing_prob</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.01</span></em><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.afterpulsing_prob" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.afterpulsing_delay">
+<span class="sig-name descname"><span class="pre">afterpulsing_delay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1e-07</span></em><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.afterpulsing_delay" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id3">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">total_counts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#id3" title="Link to this definition">¶</a></dt>
+<dd><p>Total number of detected photons.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id4">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">detection_times</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id4" title="Link to this definition">¶</a></dt>
+<dd><p>List of photon detection times.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/photon_counter.html#PhotonCounter.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.reset" title="Link to this definition">¶</a></dt>
+<dd><p>Reset all counters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.count">
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/photon_counter.html#PhotonCounter.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.count" title="Link to this definition">¶</a></dt>
+<dd><p>Simulate photon detection from the current state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rho</strong> (<em>np.ndarray</em>) – 18×18 density matrix</p></li>
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Time step in seconds</p></li>
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Spontaneous emission rate in Hz (~8×10⁷ for NV)</p></li>
+<li><p><strong>current_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>optional</em>) – Current time. If None, auto-incremented.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Detection result with keys:
+- ‘detected’: Number of photons detected in this step
+- ‘expected’: Expected number of photons
+- ‘pop_excited’: Excited state population</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.count_rate">
+<span class="sig-name descname"><span class="pre">count_rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/photon_counter.html#PhotonCounter.count_rate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.count_rate" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate count rate over a time window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>window</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Time window in seconds</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Count rate in Hz</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.histogram">
+<span class="sig-name descname"><span class="pre">histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-09</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/photon_counter.html#PhotonCounter.histogram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.histogram" title="Link to this definition">¶</a></dt>
+<dd><p>Create histogram of detection times.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bin_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Bin width in seconds</p></li>
+<li><p><strong>t_range</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>, </em><em>optional</em>) – (t_min, t_max) time range</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(counts, bin_edges)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.calculate_g2">
+<span class="sig-name descname"><span class="pre">calculate_g2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/photon_counter.html#PhotonCounter.calculate_g2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.calculate_g2" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate g²(τ) autocorrelation function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tau_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Maximum delay time in seconds</p></li>
+<li><p><strong>n_bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of delay bins</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(tau, g2) arrays</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>g²(0) &lt; 1 indicates antibunching (single photon source)
+g²(0) &gt; 1 indicates bunching (thermal light)
+g²(0) = 1 for coherent light</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.fano_factor">
+<span class="sig-name descname"><span class="pre">fano_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/interfaces/photon_counter.html#PhotonCounter.fano_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.fano_factor" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate Fano factor F = Var(n)/⟨n⟩.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>window</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Counting window in seconds</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Fano factor (F&lt;1: sub-Poissonian, F=1: Poissonian, F&gt;1: super-Poissonian)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.interfaces.photon_counter.PhotonCounter.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">efficiency=0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dark_count_rate=100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dead_time=5e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timing_jitter=5e-10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">afterpulsing_prob=0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">afterpulsing_delay=1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_total_counts=0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_detection_times=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_last_detection=-1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_current_time=0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sim.interfaces.photon_counter.PhotonCounter.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>efficiency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>dark_count_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>dead_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>timing_jitter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>afterpulsing_prob</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>afterpulsing_delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>_total_counts</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>_detection_times</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>]</em>)</p></li>
+<li><p><strong>_last_detection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>_current_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>The photon counter simulates realistic single-photon detection:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.interfaces</span> <span class="kn">import</span> <span class="n">PhotonCounter</span>
+
+<span class="c1"># Create APD-like detector</span>
+<span class="n">counter</span> <span class="o">=</span> <span class="n">PhotonCounter</span><span class="p">(</span>
+    <span class="n">efficiency</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>           <span class="c1"># 10% detection efficiency</span>
+    <span class="n">dark_count_rate</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>      <span class="c1"># 100 Hz dark counts</span>
+    <span class="n">dead_time</span><span class="o">=</span><span class="mf">50e-9</span><span class="p">,</span>          <span class="c1"># 50 ns dead time</span>
+    <span class="n">timing_jitter</span><span class="o">=</span><span class="mf">0.5e-9</span><span class="p">,</span>     <span class="c1"># 500 ps jitter</span>
+    <span class="n">afterpulsing_prob</span><span class="o">=</span><span class="mf">0.01</span>    <span class="c1"># 1% afterpulsing</span>
+<span class="p">)</span>
+
+<span class="c1"># Reset counters</span>
+<span class="n">counter</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+<span class="c1"># Count photons from density matrix</span>
+<span class="k">for</span> <span class="n">rho</span> <span class="ow">in</span> <span class="n">trajectory</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">count</span><span class="p">(</span>
+        <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">,</span>
+        <span class="n">dt</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span>              <span class="c1"># 1 ns time step</span>
+        <span class="n">gamma</span><span class="o">=</span><span class="mf">8e7</span>             <span class="c1"># Emission rate</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;detected&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get total counts</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total: </span><span class="si">{</span><span class="n">counter</span><span class="o">.</span><span class="n">total_counts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="detector-types">
+<h3>Detector Types<a class="headerlink" href="#detector-types" title="Link to this heading">¶</a></h3>
+<p><strong>APD (Avalanche Photodiode)</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">apd</span> <span class="o">=</span> <span class="n">PhotonCounter</span><span class="p">(</span>
+    <span class="n">efficiency</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">dark_count_rate</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">dead_time</span><span class="o">=</span><span class="mf">50e-9</span><span class="p">,</span>
+    <span class="n">timing_jitter</span><span class="o">=</span><span class="mf">0.5e-9</span><span class="p">,</span>
+    <span class="n">afterpulsing_prob</span><span class="o">=</span><span class="mf">0.01</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>SNSPD (Superconducting Nanowire)</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">snspd</span> <span class="o">=</span> <span class="n">PhotonCounter</span><span class="p">(</span>
+    <span class="n">efficiency</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+    <span class="n">dark_count_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">dead_time</span><span class="o">=</span><span class="mf">20e-9</span><span class="p">,</span>
+    <span class="n">timing_jitter</span><span class="o">=</span><span class="mf">50e-12</span><span class="p">,</span>
+    <span class="n">afterpulsing_prob</span><span class="o">=</span><span class="mf">0.001</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="analysis-functions">
+<h3>Analysis Functions<a class="headerlink" href="#analysis-functions" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Count rate</span>
+<span class="n">rate</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">count_rate</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>  <span class="c1"># Hz</span>
+
+<span class="c1"># Histogram of detection times</span>
+<span class="n">counts</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
+    <span class="n">bin_width</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span>
+    <span class="n">t_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># g²(τ) autocorrelation</span>
+<span class="n">tau</span><span class="p">,</span> <span class="n">g2</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">calculate_g2</span><span class="p">(</span>
+    <span class="n">tau_max</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>
+    <span class="n">n_bins</span><span class="o">=</span><span class="mi">100</span>
+<span class="p">)</span>
+
+<span class="c1"># Fano factor</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">fano_factor</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="complete-measurement">
+<h2>Complete Measurement<a class="headerlink" href="#complete-measurement" title="Link to this heading">¶</a></h2>
+<p>Example: ODMR measurement with all interfaces:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim</span> <span class="kn">import</span> <span class="n">HamiltonianBuilder</span><span class="p">,</span> <span class="n">LindbladSolver</span>
+<span class="kn">from</span> <span class="nn">sim.hamiltonian.terms</span> <span class="kn">import</span> <span class="n">ZFS</span><span class="p">,</span> <span class="n">Zeeman</span><span class="p">,</span> <span class="n">MicrowaveDrive</span>
+<span class="kn">from</span> <span class="nn">sim.states</span> <span class="kn">import</span> <span class="n">ground_state</span><span class="p">,</span> <span class="n">projector_excited</span>
+<span class="kn">from</span> <span class="nn">sim.interfaces</span> <span class="kn">import</span> <span class="n">LaserInterface</span><span class="p">,</span> <span class="n">PhotonCounter</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Setup</span>
+<span class="n">laser</span> <span class="o">=</span> <span class="n">LaserInterface</span><span class="p">(</span><span class="n">wavelength</span><span class="o">=</span><span class="mf">532e-9</span><span class="p">)</span>
+<span class="n">counter</span> <span class="o">=</span> <span class="n">PhotonCounter</span><span class="p">(</span><span class="n">efficiency</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Sweep MW frequency</span>
+<span class="n">freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">2.8</span><span class="p">,</span> <span class="mf">2.94</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># GHz</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">freqs</span><span class="p">:</span>
+    <span class="c1"># Build Hamiltonian</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">HamiltonianBuilder</span><span class="p">()</span>
+    <span class="n">H</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ZFS</span><span class="p">(</span><span class="n">D</span><span class="o">=</span><span class="mf">2.87</span><span class="p">))</span>
+    <span class="n">H</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Zeeman</span><span class="p">(</span><span class="n">B</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+    <span class="n">H</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MicrowaveDrive</span><span class="p">(</span><span class="n">omega</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">detuning</span><span class="o">=</span><span class="n">f</span><span class="o">-</span><span class="mf">2.87</span><span class="p">))</span>
+
+    <span class="c1"># Simulate</span>
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">LindbladSolver</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+    <span class="n">solver</span><span class="o">.</span><span class="n">add_t2_dephasing</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">1e6</span><span class="p">)</span>
+    <span class="n">solver</span><span class="o">.</span><span class="n">add_optical_decay</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">8e7</span><span class="p">)</span>
+
+    <span class="n">rho0</span> <span class="o">=</span> <span class="n">ground_state</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">),</span> <span class="n">n_steps</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="c1"># Count photons</span>
+    <span class="n">counter</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">rho</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">rho_t</span><span class="p">:</span>
+        <span class="n">counter</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">10e-9</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">8e7</span><span class="p">)</span>
+
+    <span class="n">counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">total_counts</span><span class="p">)</span>
+
+<span class="c1"># Plot ODMR spectrum</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">freqs</span><span class="p">,</span> <span class="n">counts</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;MW Frequency (GHz)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Photon Counts&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          <a class="prev-page" href="pulses.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Pulses Module</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024-2025, Leon Kaiser, MSQC Goethe University Frankfurt
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Interfaces Module</a><ul>
+<li><a class="reference internal" href="#module-sim.interfaces.awg">AWG Interface</a><ul>
+<li><a class="reference internal" href="#waveform-structure">Waveform Structure</a></li>
+<li><a class="reference internal" href="#pulse-shapes">Pulse Shapes</a></li>
+<li><a class="reference internal" href="#sim.interfaces.awg.AWGInterface"><code class="docutils literal notranslate"><span class="pre">AWGInterface</span></code></a><ul>
+<li><a class="reference internal" href="#sim.interfaces.awg.AWGInterface.sample_rate"><code class="docutils literal notranslate"><span class="pre">AWGInterface.sample_rate</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.awg.AWGInterface.dt"><code class="docutils literal notranslate"><span class="pre">AWGInterface.dt</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.awg.AWGInterface.duration"><code class="docutils literal notranslate"><span class="pre">AWGInterface.duration</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">AWGInterface.sample_rate</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.awg.AWGInterface.clear"><code class="docutils literal notranslate"><span class="pre">AWGInterface.clear()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.awg.AWGInterface.add_pulse"><code class="docutils literal notranslate"><span class="pre">AWGInterface.add_pulse()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.awg.AWGInterface.add_delay"><code class="docutils literal notranslate"><span class="pre">AWGInterface.add_delay()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.awg.AWGInterface.get_omega"><code class="docutils literal notranslate"><span class="pre">AWGInterface.get_omega()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.awg.AWGInterface.get_phase"><code class="docutils literal notranslate"><span class="pre">AWGInterface.get_phase()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.awg.AWGInterface.get_detuning"><code class="docutils literal notranslate"><span class="pre">AWGInterface.get_detuning()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.awg.AWGInterface.to_mw_drive"><code class="docutils literal notranslate"><span class="pre">AWGInterface.to_mw_drive()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.awg.AWGInterface.plot"><code class="docutils literal notranslate"><span class="pre">AWGInterface.plot()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.awg.AWGInterface.__init__"><code class="docutils literal notranslate"><span class="pre">AWGInterface.__init__()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#waveform-generation">Waveform Generation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sim.interfaces.laser">Laser Interface</a><ul>
+<li><a class="reference internal" href="#laser-parameters">Laser Parameters</a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserPulse"><code class="docutils literal notranslate"><span class="pre">LaserPulse</span></code></a><ul>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserPulse.start"><code class="docutils literal notranslate"><span class="pre">LaserPulse.start</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserPulse.duration"><code class="docutils literal notranslate"><span class="pre">LaserPulse.duration</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserPulse.power"><code class="docutils literal notranslate"><span class="pre">LaserPulse.power</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserPulse.shape"><code class="docutils literal notranslate"><span class="pre">LaserPulse.shape</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserPulse.__init__"><code class="docutils literal notranslate"><span class="pre">LaserPulse.__init__()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface"><code class="docutils literal notranslate"><span class="pre">LaserInterface</span></code></a><ul>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.wavelength"><code class="docutils literal notranslate"><span class="pre">LaserInterface.wavelength</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.pulses"><code class="docutils literal notranslate"><span class="pre">LaserInterface.pulses</span></code></a></li>
+<li><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">LaserInterface.wavelength</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.power_to_rabi"><code class="docutils literal notranslate"><span class="pre">LaserInterface.power_to_rabi</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.linewidth"><code class="docutils literal notranslate"><span class="pre">LaserInterface.linewidth</span></code></a></li>
+<li><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">LaserInterface.pulses</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.clear"><code class="docutils literal notranslate"><span class="pre">LaserInterface.clear()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.add_pulse"><code class="docutils literal notranslate"><span class="pre">LaserInterface.add_pulse()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.add_cw"><code class="docutils literal notranslate"><span class="pre">LaserInterface.add_cw()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.get_power"><code class="docutils literal notranslate"><span class="pre">LaserInterface.get_power()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.get_rabi"><code class="docutils literal notranslate"><span class="pre">LaserInterface.get_rabi()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.is_on"><code class="docutils literal notranslate"><span class="pre">LaserInterface.is_on()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.to_optical_coupling"><code class="docutils literal notranslate"><span class="pre">LaserInterface.to_optical_coupling()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.schedule_initialization"><code class="docutils literal notranslate"><span class="pre">LaserInterface.schedule_initialization()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.schedule_readout"><code class="docutils literal notranslate"><span class="pre">LaserInterface.schedule_readout()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.laser.LaserInterface.__init__"><code class="docutils literal notranslate"><span class="pre">LaserInterface.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sim.interfaces.photon_counter">Photon Counter</a><ul>
+<li><a class="reference internal" href="#detector-characteristics">Detector Characteristics</a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter"><code class="docutils literal notranslate"><span class="pre">PhotonCounter</span></code></a><ul>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.total_counts"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.total_counts</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.detection_times"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.detection_times</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.efficiency"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.efficiency</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.dark_count_rate"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.dark_count_rate</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.dead_time"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.dead_time</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.timing_jitter"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.timing_jitter</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.afterpulsing_prob"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.afterpulsing_prob</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.afterpulsing_delay"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.afterpulsing_delay</span></code></a></li>
+<li><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.total_counts</span></code></a></li>
+<li><a class="reference internal" href="#id4"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.detection_times</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.reset"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.reset()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.count"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.count()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.count_rate"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.count_rate()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.histogram"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.histogram()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.calculate_g2"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.calculate_g2()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.fano_factor"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.fano_factor()</span></code></a></li>
+<li><a class="reference internal" href="#sim.interfaces.photon_counter.PhotonCounter.__init__"><code class="docutils literal notranslate"><span class="pre">PhotonCounter.__init__()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#detector-types">Detector Types</a></li>
+<li><a class="reference internal" href="#analysis-functions">Analysis Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#complete-measurement">Complete Measurement</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

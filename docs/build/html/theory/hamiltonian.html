@@ -1,0 +1,803 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Open Quantum System Dynamics" href="lindblad.html"><link rel="prev" title="The Nitrogen-Vacancy Center" href="nv_center.html">
+
+    <!-- Generated with Sphinx 7.3.7 and Furo 2025.12.19 -->
+        <title>Hamiltonian Terms - QUSIM Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=acfd86a5" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a1178322" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2962FF;
+  --color-brand-content: #2962FF;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #82B1FF;
+  --color-brand-content: #82B1FF;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #82B1FF;
+  --color-brand-content: #82B1FF;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">QUSIM Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">QUSIM Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Theory &amp; Physics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="nv_center.html">The Nitrogen-Vacancy Center</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Hamiltonian Terms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lindblad.html">Open Quantum System Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="measurement.html">Measurement and Readout</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/odmr.html">ODMR Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/pulsed.html">Pulsed Experiments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/core.html">Core Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/hamiltonian.html">Hamiltonian Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/dynamics.html">Dynamics Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/states.html">States Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/pulses.html">Pulses Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/interfaces.html">Interfaces Module</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/theory/hamiltonian.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="hamiltonian-terms">
+<h1>Hamiltonian Terms<a class="headerlink" href="#hamiltonian-terms" title="Link to this heading">¶</a></h1>
+<p>The total NV center Hamiltonian is composed of several terms:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H} = \hat{H}_{\text{ZFS}} + \hat{H}_{\text{Zeeman}} + \hat{H}_{\text{HF}} +
+          \hat{H}_{\text{MW}} + \hat{H}_{\text{optical}} + \hat{H}_{\text{Stark}} +
+          \hat{H}_{\text{strain}} + \hat{H}_{\text{JT}}\]</div>
+</div>
+<p>Each term is implemented as an 18×18 matrix in the full Hilbert space.</p>
+<section id="zero-field-splitting-zfs">
+<h2>Zero-Field Splitting (ZFS)<a class="headerlink" href="#zero-field-splitting-zfs" title="Link to this heading">¶</a></h2>
+<section id="physical-origin">
+<h3>Physical Origin<a class="headerlink" href="#physical-origin" title="Link to this heading">¶</a></h3>
+<p>The zero-field splitting arises from spin-spin dipolar interaction between the
+two unpaired electrons in the NV center. This creates an energy splitting even
+in the absence of external magnetic fields.</p>
+</section>
+<section id="mathematical-form">
+<h3>Mathematical Form<a class="headerlink" href="#mathematical-form" title="Link to this heading">¶</a></h3>
+<p>The ZFS Hamiltonian is:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{ZFS}} = D \hat{S}_z^2 + E(\hat{S}_x^2 - \hat{S}_y^2)\]</div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(D\)</span>: Axial ZFS parameter (splitting between <span class="math notranslate nohighlight">\(m_s=0\)</span> and <span class="math notranslate nohighlight">\(m_s=\pm 1\)</span>)</p></li>
+<li><p><span class="math notranslate nohighlight">\(E\)</span>: Transverse ZFS parameter (strain-induced splitting of <span class="math notranslate nohighlight">\(m_s=\pm 1\)</span>)</p></li>
+</ul>
+<p><strong>Typical values:</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(D_{\text{gs}} = 2.87\,\text{GHz}\)</span> (ground state at 300 K)</p></li>
+<li><p><span class="math notranslate nohighlight">\(D_{\text{es}} = 1.42\,\text{GHz}\)</span> (excited state)</p></li>
+<li><p><span class="math notranslate nohighlight">\(E = 0\)</span> to <span class="math notranslate nohighlight">\(\sim 10\,\text{MHz}\)</span> (depends on local strain)</p></li>
+</ul>
+</section>
+<section id="energy-levels">
+<h3>Energy Levels<a class="headerlink" href="#energy-levels" title="Link to this heading">¶</a></h3>
+<p>For <span class="math notranslate nohighlight">\(E = 0\)</span>:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}E(m_s = 0) &amp;= 0 \\
+E(m_s = \pm 1) &amp;= D\end{split}\]</div>
+</div>
+<p>For <span class="math notranslate nohighlight">\(E \neq 0\)</span>:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}E(m_s = 0) &amp;= 0 \\
+E(m_s = +1) &amp;= D + E \\
+E(m_s = -1) &amp;= D - E\end{split}\]</div>
+</div>
+<p>The <span class="math notranslate nohighlight">\(E\)</span> term lifts the degeneracy between <span class="math notranslate nohighlight">\(m_s = +1\)</span> and <span class="math notranslate nohighlight">\(m_s = -1\)</span>.</p>
+</section>
+<section id="matrix-representation">
+<h3>Matrix Representation<a class="headerlink" href="#matrix-representation" title="Link to this heading">¶</a></h3>
+<p>In the <span class="math notranslate nohighlight">\(\{|+1\rangle, |0\rangle, |-1\rangle\}\)</span> basis:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{S}_z^2 = \begin{pmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{pmatrix}\end{split}\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{S}_x^2 - \hat{S}_y^2 = \begin{pmatrix} 0 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 0 \end{pmatrix}\end{split}\]</div>
+</div>
+<p>Therefore:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{H}_{\text{ZFS}} = \begin{pmatrix} D &amp; 0 &amp; E \\ 0 &amp; 0 &amp; 0 \\ E &amp; 0 &amp; D \end{pmatrix}\end{split}\]</div>
+</div>
+</section>
+<section id="temperature-dependence">
+<h3>Temperature Dependence<a class="headerlink" href="#temperature-dependence" title="Link to this heading">¶</a></h3>
+<p>The D parameter has a temperature dependence:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[D(T) \approx D_0 + \alpha (T - 300\,\text{K})\]</div>
+</div>
+<p>with <span class="math notranslate nohighlight">\(\alpha \approx -74\,\text{kHz/K}\)</span>. This enables NV-based thermometry.</p>
+</section>
+</section>
+<section id="zeeman-effect">
+<h2>Zeeman Effect<a class="headerlink" href="#zeeman-effect" title="Link to this heading">¶</a></h2>
+<section id="id1">
+<h3>Physical Origin<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p>The Zeeman effect describes the interaction between the electron spin magnetic
+moment and an external magnetic field.</p>
+</section>
+<section id="id2">
+<h3>Mathematical Form<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{Zeeman}} = \gamma_e \vec{B} \cdot \hat{\vec{S}} =
+\gamma_e (B_x \hat{S}_x + B_y \hat{S}_y + B_z \hat{S}_z)\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(\gamma_e = g_e \mu_B / \hbar \approx 1.76 \times 10^{11}\,\text{rad/(s·T)}\)</span>.</p>
+</section>
+<section id="energy-shifts">
+<h3>Energy Shifts<a class="headerlink" href="#energy-shifts" title="Link to this heading">¶</a></h3>
+<p>For a field <span class="math notranslate nohighlight">\(\vec{B} = B_z \hat{z}\)</span> along the NV axis:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[E(m_s) = \gamma_e B_z m_s\]</div>
+</div>
+<p>The splitting between adjacent <span class="math notranslate nohighlight">\(m_s\)</span> levels:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\Delta E = \gamma_e B_z \approx 28\,\text{MHz/mT} \cdot B[\text{mT}]\]</div>
+</div>
+<p>The splitting between <span class="math notranslate nohighlight">\(m_s = +1\)</span> and <span class="math notranslate nohighlight">\(m_s = -1\)</span>:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\Delta E_{\pm 1} = 2\gamma_e B_z \approx 56\,\text{MHz/mT} \cdot B[\text{mT}]\]</div>
+</div>
+</section>
+<section id="combined-with-zfs">
+<h3>Combined with ZFS<a class="headerlink" href="#combined-with-zfs" title="Link to this heading">¶</a></h3>
+<p>The full energy levels with ZFS and Zeeman:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}E(m_s = 0) &amp;= 0 \\
+E(m_s = +1) &amp;= D + \gamma_e B_z \\
+E(m_s = -1) &amp;= D - \gamma_e B_z\end{split}\]</div>
+</div>
+<p>This creates two distinct ODMR frequencies:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}f_+ &amp;= D + \gamma_e B_z / (2\pi) \\
+f_- &amp;= D - \gamma_e B_z / (2\pi)\end{split}\]</div>
+</div>
+</section>
+<section id="transverse-fields">
+<h3>Transverse Fields<a class="headerlink" href="#transverse-fields" title="Link to this heading">¶</a></h3>
+<p>For non-axial fields, <span class="math notranslate nohighlight">\(B_x, B_y \neq 0\)</span>, there is state mixing. The
+off-diagonal elements couple <span class="math notranslate nohighlight">\(m_s = 0\)</span> to <span class="math notranslate nohighlight">\(m_s = \pm 1\)</span>:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{H}_{\text{Zeeman}}^{\perp} = \frac{\gamma_e}{\sqrt{2}} \begin{pmatrix}
+0 &amp; B_x - iB_y &amp; 0 \\
+B_x + iB_y &amp; 0 &amp; B_x - iB_y \\
+0 &amp; B_x + iB_y &amp; 0
+\end{pmatrix}\end{split}\]</div>
+</div>
+</section>
+</section>
+<section id="n14-hyperfine-coupling">
+<h2>N14 Hyperfine Coupling<a class="headerlink" href="#n14-hyperfine-coupling" title="Link to this heading">¶</a></h2>
+<section id="id3">
+<h3>Physical Origin<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<p>The N14 nucleus (<span class="math notranslate nohighlight">\(I = 1\)</span>) at the vacancy site couples to the electron
+spin through:</p>
+<ol class="arabic simple">
+<li><p><strong>Fermi contact interaction</strong>: Isotropic coupling from electron density at nucleus</p></li>
+<li><p><strong>Dipolar interaction</strong>: Anisotropic coupling from magnetic dipole-dipole interaction</p></li>
+</ol>
+<p>Additionally, N14 has a nuclear electric quadrupole moment that interacts with
+the local electric field gradient.</p>
+</section>
+<section id="id4">
+<h3>Mathematical Form<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{HF}} = A_\parallel \hat{S}_z \hat{I}_z +
+                       A_\perp (\hat{S}_x \hat{I}_x + \hat{S}_y \hat{I}_y) +
+                       P \left(\hat{I}_z^2 - \frac{2}{3}\right)\]</div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(A_\parallel = -2.14\,\text{MHz}\)</span>: Parallel hyperfine coupling</p></li>
+<li><p><span class="math notranslate nohighlight">\(A_\perp = -2.70\,\text{MHz}\)</span>: Perpendicular hyperfine coupling</p></li>
+<li><p><span class="math notranslate nohighlight">\(P = -5.0\,\text{MHz}\)</span>: Nuclear quadrupole parameter</p></li>
+</ul>
+</section>
+<section id="hyperfine-tensor">
+<h3>Hyperfine Tensor<a class="headerlink" href="#hyperfine-tensor" title="Link to this heading">¶</a></h3>
+<p>The hyperfine interaction can be written as:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{HF}} = \hat{\vec{S}} \cdot \mathbf{A} \cdot \hat{\vec{I}}\]</div>
+</div>
+<p>where the hyperfine tensor (in the NV frame) is:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{A} = \begin{pmatrix}
+A_\perp &amp; 0 &amp; 0 \\
+0 &amp; A_\perp &amp; 0 \\
+0 &amp; 0 &amp; A_\parallel
+\end{pmatrix}\end{split}\]</div>
+</div>
+</section>
+<section id="id5">
+<h3>Energy Shifts<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p>For <span class="math notranslate nohighlight">\(m_s = 0\)</span> (only quadrupole contributes):</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[E(m_s=0, m_I) = P \left(m_I^2 - \frac{2}{3}\right)\]</div>
+</div>
+<p>For <span class="math notranslate nohighlight">\(m_s = \pm 1\)</span> (hyperfine + quadrupole):</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[E(m_s, m_I) = A_\parallel m_s m_I + P \left(m_I^2 - \frac{2}{3}\right)\]</div>
+</div>
+<p>This creates a characteristic triplet structure in ODMR spectra.</p>
+</section>
+<section id="matrix">
+<h3>9×9 Matrix<a class="headerlink" href="#matrix" title="Link to this heading">¶</a></h3>
+<p>In the <span class="math notranslate nohighlight">\(|m_s\rangle \otimes |m_I\rangle\)</span> basis (9-dimensional):</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{HF}} = A_\parallel (\hat{S}_z \otimes \hat{I}_z) +
+                       A_\perp (\hat{S}_x \otimes \hat{I}_x + \hat{S}_y \otimes \hat{I}_y) +
+                       P (\mathbb{1}_3 \otimes \hat{I}_z^2) - \frac{2P}{3}\mathbb{1}_9\]</div>
+</div>
+</section>
+</section>
+<section id="c13-hyperfine-coupling">
+<h2>C13 Hyperfine Coupling<a class="headerlink" href="#c13-hyperfine-coupling" title="Link to this heading">¶</a></h2>
+<section id="id6">
+<h3>Physical Origin<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<p>Carbon-13 nuclei (<span class="math notranslate nohighlight">\(I = 1/2\)</span>, 1.1% natural abundance) in the diamond lattice
+couple to the NV electron spin through dipolar interaction. The coupling strength
+depends on the distance and orientation to the NV center.</p>
+</section>
+<section id="id7">
+<h3>Mathematical Form<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<p>For a C13 nucleus at position <span class="math notranslate nohighlight">\(\vec{r}\)</span> from the NV:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{C13}} = \hat{\vec{S}} \cdot \mathbf{A}_{\text{dip}} \cdot \hat{\vec{I}}\]</div>
+</div>
+<p>The dipolar tensor:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[A_{\text{dip}}^{ij} = \frac{\mu_0}{4\pi} \frac{\gamma_e \gamma_{\text{C13}} \hbar}{r^3}
+\left(\delta_{ij} - 3\frac{r_i r_j}{r^2}\right)\]</div>
+</div>
+</section>
+<section id="secular-approximation">
+<h3>Secular Approximation<a class="headerlink" href="#secular-approximation" title="Link to this heading">¶</a></h3>
+<p>In the high-field limit (<span class="math notranslate nohighlight">\(B \gg A/\gamma_e\)</span>), only the secular terms survive:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{C13}}^{\text{sec}} = A_{zz} \hat{S}_z \hat{I}_z\]</div>
+</div>
+<p>where:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[A_{zz} = \frac{\mu_0}{4\pi} \frac{\gamma_e \gamma_{\text{C13}} \hbar}{r^3}
+(1 - 3\cos^2\theta)\]</div>
+</div>
+<p>with <span class="math notranslate nohighlight">\(\theta\)</span> the angle between <span class="math notranslate nohighlight">\(\vec{r}\)</span> and the NV axis.</p>
+</section>
+<section id="typical-coupling-strengths">
+<h3>Typical Coupling Strengths<a class="headerlink" href="#typical-coupling-strengths" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-given docutils container" id="id12">
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-text">C13 Hyperfine Couplings</span><a class="headerlink" href="#id12" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Position</p></th>
+<th class="head"><p>Distance</p></th>
+<th class="head"><p>Coupling</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Nearest neighbor</p></td>
+<td><p>1.54 Å</p></td>
+<td><p>~130 MHz</p></td>
+</tr>
+<tr class="row-odd"><td><p>2nd shell</p></td>
+<td><p>2.5 Å</p></td>
+<td><p>~15 MHz</p></td>
+</tr>
+<tr class="row-even"><td><p>3rd shell</p></td>
+<td><p>3.5 Å</p></td>
+<td><p>~3 MHz</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="microwave-drive">
+<h2>Microwave Drive<a class="headerlink" href="#microwave-drive" title="Link to this heading">¶</a></h2>
+<section id="id8">
+<h3>Physical Origin<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<p>Microwave radiation at frequencies near <span class="math notranslate nohighlight">\(D \pm \gamma_e B\)</span> drives transitions
+between <span class="math notranslate nohighlight">\(m_s = 0\)</span> and <span class="math notranslate nohighlight">\(m_s = \pm 1\)</span>.</p>
+</section>
+<section id="mathematical-form-rotating-frame">
+<h3>Mathematical Form (Rotating Frame)<a class="headerlink" href="#mathematical-form-rotating-frame" title="Link to this heading">¶</a></h3>
+<p>In the rotating wave approximation:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{MW}} = \frac{\Omega}{2} \left(\hat{S}_+ e^{-i\phi} + \hat{S}_- e^{i\phi}\right) + \Delta \hat{S}_z\]</div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\Omega\)</span>: Rabi frequency (proportional to MW amplitude)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\phi\)</span>: MW phase</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Delta = \omega_{\text{MW}} - \omega_0\)</span>: Detuning from resonance</p></li>
+</ul>
+</section>
+<section id="on-resonance-delta-0">
+<h3>On Resonance (<span class="math notranslate nohighlight">\(\Delta = 0\)</span>)<a class="headerlink" href="#on-resonance-delta-0" title="Link to this heading">¶</a></h3>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{MW}} = \frac{\Omega}{2} \left(\hat{S}_+ e^{-i\phi} + \hat{S}_- e^{i\phi}\right)\]</div>
+</div>
+<p>For <span class="math notranslate nohighlight">\(\phi = 0\)</span> (X rotation):</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{MW}} = \Omega \hat{S}_x\]</div>
+</div>
+<p>For <span class="math notranslate nohighlight">\(\phi = \pi/2\)</span> (Y rotation):</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{MW}} = \Omega \hat{S}_y\]</div>
+</div>
+</section>
+<section id="rabi-oscillations">
+<h3>Rabi Oscillations<a class="headerlink" href="#rabi-oscillations" title="Link to this heading">¶</a></h3>
+<p>Starting from <span class="math notranslate nohighlight">\(|m_s = 0\rangle\)</span>, the population in <span class="math notranslate nohighlight">\(|m_s = +1\rangle\)</span>:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[P_{+1}(t) = \sin^2\left(\frac{\Omega t}{2}\right)\]</div>
+</div>
+<p>For a <span class="math notranslate nohighlight">\(\pi\)</span>-pulse (<span class="math notranslate nohighlight">\(\Omega t = \pi\)</span>), full population transfer occurs.</p>
+</section>
+<section id="pulse-durations">
+<h3>Pulse Durations<a class="headerlink" href="#pulse-durations" title="Link to this heading">¶</a></h3>
+<p>For a given Rabi frequency <span class="math notranslate nohighlight">\(\Omega\)</span>:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}t_{\pi/2} &amp;= \frac{\pi}{2\Omega} \\
+t_{\pi} &amp;= \frac{\pi}{\Omega}\end{split}\]</div>
+</div>
+<p><strong>Example</strong>: For <span class="math notranslate nohighlight">\(\Omega = 2\pi \times 10\,\text{MHz}\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(t_{\pi/2} = 25\,\text{ns}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(t_{\pi} = 50\,\text{ns}\)</span></p></li>
+</ul>
+</section>
+</section>
+<section id="optical-coupling">
+<h2>Optical Coupling<a class="headerlink" href="#optical-coupling" title="Link to this heading">¶</a></h2>
+<section id="id9">
+<h3>Mathematical Form<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<p>The optical drive couples ground and excited states:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{opt}} = \frac{\Omega_{\text{opt}}}{2} \sum_{m_s, m_I}
+\left(|e, m_s, m_I\rangle \langle g, m_s, m_I| + \text{h.c.}\right)\]</div>
+</div>
+<p>For spin-conserving transitions. Spin-selective transitions can be achieved with
+polarization control.</p>
+</section>
+</section>
+<section id="stark-effect">
+<h2>Stark Effect<a class="headerlink" href="#stark-effect" title="Link to this heading">¶</a></h2>
+<section id="dc-stark-effect">
+<h3>DC Stark Effect<a class="headerlink" href="#dc-stark-effect" title="Link to this heading">¶</a></h3>
+<p>Electric fields shift the ZFS through:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{Stark}}^{\text{DC}} = d_\perp E_\perp (\hat{S}_x^2 - \hat{S}_y^2) + d_\parallel E_z \hat{S}_z^2\]</div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(d_\perp \approx 17\,\text{Hz/(V/m)}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(d_\parallel \approx 3.5\,\text{Hz/(V/m)}\)</span></p></li>
+</ul>
+</section>
+<section id="ac-stark-effect">
+<h3>AC Stark Effect<a class="headerlink" href="#ac-stark-effect" title="Link to this heading">¶</a></h3>
+<p>Off-resonant optical fields create effective spin Hamiltonians through the AC Stark shift.</p>
+</section>
+</section>
+<section id="strain">
+<h2>Strain<a class="headerlink" href="#strain" title="Link to this heading">¶</a></h2>
+<section id="id10">
+<h3>Physical Origin<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
+<p>Lattice strain from defects or external stress perturbs the NV electronic structure.</p>
+</section>
+<section id="id11">
+<h3>Mathematical Form<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{strain}} = \sum_{i,j} \varepsilon_{ij} \frac{\{\hat{S}_i, \hat{S}_j\}}{2}\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(\varepsilon_{ij}\)</span> is the strain tensor and <span class="math notranslate nohighlight">\(\{A, B\} = AB + BA\)</span>.</p>
+<p>The primary effect is through transverse strain <span class="math notranslate nohighlight">\(E_1, E_2\)</span>:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{strain}} \approx E_1 (\hat{S}_x^2 - \hat{S}_y^2) + E_2 (\hat{S}_x \hat{S}_y + \hat{S}_y \hat{S}_x)\]</div>
+</div>
+</section>
+</section>
+<section id="jahn-teller-effect">
+<h2>Jahn-Teller Effect<a class="headerlink" href="#jahn-teller-effect" title="Link to this heading">¶</a></h2>
+<p>In the excited state, the orbital degeneracy leads to vibronic coupling:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat{H}_{\text{JT}} = \lambda_{\text{JT}} \hat{Q} \cdot \hat{\sigma}\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{Q}\)</span> are phonon coordinates and <span class="math notranslate nohighlight">\(\hat{\sigma}\)</span> are pseudo-spin
+operators in the orbital space.</p>
+<p>This leads to dynamic averaging of the excited state ZFS at room temperature.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="lindblad.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Open Quantum System Dynamics</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="nv_center.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">The Nitrogen-Vacancy Center</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024-2025, Leon Kaiser, MSQC Goethe University Frankfurt
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Hamiltonian Terms</a><ul>
+<li><a class="reference internal" href="#zero-field-splitting-zfs">Zero-Field Splitting (ZFS)</a><ul>
+<li><a class="reference internal" href="#physical-origin">Physical Origin</a></li>
+<li><a class="reference internal" href="#mathematical-form">Mathematical Form</a></li>
+<li><a class="reference internal" href="#energy-levels">Energy Levels</a></li>
+<li><a class="reference internal" href="#matrix-representation">Matrix Representation</a></li>
+<li><a class="reference internal" href="#temperature-dependence">Temperature Dependence</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#zeeman-effect">Zeeman Effect</a><ul>
+<li><a class="reference internal" href="#id1">Physical Origin</a></li>
+<li><a class="reference internal" href="#id2">Mathematical Form</a></li>
+<li><a class="reference internal" href="#energy-shifts">Energy Shifts</a></li>
+<li><a class="reference internal" href="#combined-with-zfs">Combined with ZFS</a></li>
+<li><a class="reference internal" href="#transverse-fields">Transverse Fields</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#n14-hyperfine-coupling">N14 Hyperfine Coupling</a><ul>
+<li><a class="reference internal" href="#id3">Physical Origin</a></li>
+<li><a class="reference internal" href="#id4">Mathematical Form</a></li>
+<li><a class="reference internal" href="#hyperfine-tensor">Hyperfine Tensor</a></li>
+<li><a class="reference internal" href="#id5">Energy Shifts</a></li>
+<li><a class="reference internal" href="#matrix">9×9 Matrix</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#c13-hyperfine-coupling">C13 Hyperfine Coupling</a><ul>
+<li><a class="reference internal" href="#id6">Physical Origin</a></li>
+<li><a class="reference internal" href="#id7">Mathematical Form</a></li>
+<li><a class="reference internal" href="#secular-approximation">Secular Approximation</a></li>
+<li><a class="reference internal" href="#typical-coupling-strengths">Typical Coupling Strengths</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#microwave-drive">Microwave Drive</a><ul>
+<li><a class="reference internal" href="#id8">Physical Origin</a></li>
+<li><a class="reference internal" href="#mathematical-form-rotating-frame">Mathematical Form (Rotating Frame)</a></li>
+<li><a class="reference internal" href="#on-resonance-delta-0">On Resonance (<span class="math notranslate nohighlight">\(\Delta = 0\)</span>)</a></li>
+<li><a class="reference internal" href="#rabi-oscillations">Rabi Oscillations</a></li>
+<li><a class="reference internal" href="#pulse-durations">Pulse Durations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optical-coupling">Optical Coupling</a><ul>
+<li><a class="reference internal" href="#id9">Mathematical Form</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stark-effect">Stark Effect</a><ul>
+<li><a class="reference internal" href="#dc-stark-effect">DC Stark Effect</a></li>
+<li><a class="reference internal" href="#ac-stark-effect">AC Stark Effect</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#strain">Strain</a><ul>
+<li><a class="reference internal" href="#id10">Physical Origin</a></li>
+<li><a class="reference internal" href="#id11">Mathematical Form</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#jahn-teller-effect">Jahn-Teller Effect</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script>window.MathJax = {"tex": {"macros": {"ket": ["\\left| #1 \\right\\rangle", 1], "bra": ["\\left\\langle #1 \\right|", 1], "braket": ["\\left\\langle #1 | #2 \\right\\rangle", 2], "expect": ["\\left\\langle #1 \\right\\rangle", 1], "comm": ["\\left[ #1, #2 \\right]", 2], "anticomm": ["\\left\\{ #1, #2 \\right\\}", 2], "tr": "\\mathrm{Tr}", "Tr": "\\mathrm{Tr}", "rho": "\\rho", "hbar": "\\hbar", "dagger": "\\dagger"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

@@ -1,0 +1,1116 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="States Module" href="states.html"><link rel="prev" title="Hamiltonian Module" href="hamiltonian.html">
+
+    <!-- Generated with Sphinx 7.3.7 and Furo 2025.12.19 -->
+        <title>Dynamics Module - QUSIM Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=acfd86a5" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a1178322" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2962FF;
+  --color-brand-content: #2962FF;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #82B1FF;
+  --color-brand-content: #82B1FF;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #82B1FF;
+  --color-brand-content: #82B1FF;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">QUSIM Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">QUSIM Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Theory &amp; Physics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/nv_center.html">The Nitrogen-Vacancy Center</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/hamiltonian.html">Hamiltonian Terms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/lindblad.html">Open Quantum System Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/measurement.html">Measurement and Readout</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/odmr.html">ODMR Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/pulsed.html">Pulsed Experiments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hamiltonian.html">Hamiltonian Module</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Dynamics Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="states.html">States Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulses.html">Pulses Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces.html">Interfaces Module</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/api/dynamics.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="dynamics-module">
+<h1>Dynamics Module<a class="headerlink" href="#dynamics-module" title="Link to this heading">¶</a></h1>
+<p>The dynamics module provides solvers for open quantum system evolution
+using the Lindblad master equation.</p>
+<section id="module-sim.dynamics.lindblad">
+<span id="lindblad-solver"></span><h2>Lindblad Solver<a class="headerlink" href="#module-sim.dynamics.lindblad" title="Link to this heading">¶</a></h2>
+<p>Lindblad master equation solver for NV center dynamics.</p>
+<p>Solves the Lindblad master equation for open quantum systems:</p>
+<blockquote>
+<div><p>dρ/dt = -i[H(t), ρ] + Σ_k D[L_k](ρ)</p>
+</div></blockquote>
+<p>where the Lindblad dissipator is:</p>
+<blockquote>
+<div><p>D[L](ρ) = L ρ L† - ½{L†L, ρ}</p>
+</div></blockquote>
+<p>The solver uses scipy.integrate.solve_ivp with adaptive
+step size control (RK45 method by default).</p>
+<section id="vectorization">
+<h3>Vectorization<a class="headerlink" href="#vectorization" title="Link to this heading">¶</a></h3>
+<p>For numerical integration, the density matrix is vectorized:</p>
+<blockquote>
+<div><p>ρ (18×18) → ρ_vec (324)</p>
+</div></blockquote>
+<p>The Lindblad equation becomes:</p>
+<blockquote>
+<div><p>dρ_vec/dt = L ρ_vec</p>
+</div></blockquote>
+<p>where L is the Liouvillian superoperator (324×324).</p>
+<p>For time-dependent Hamiltonians, L is recomputed at each time step.</p>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.EvolutionResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sim.dynamics.lindblad.</span></span><span class="sig-name descname"><span class="pre">EvolutionResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">times</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">success</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#EvolutionResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.EvolutionResult" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Container for time evolution results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>times</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>rho_t</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><em>List</em></a><em>[</em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a><em>]</em>)</p></li>
+<li><p><strong>success</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.EvolutionResult.times">
+<span class="sig-name descname"><span class="pre">times</span></span><a class="headerlink" href="#sim.dynamics.lindblad.EvolutionResult.times" title="Link to this definition">¶</a></dt>
+<dd><p>Array of time points in seconds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.EvolutionResult.rho_t">
+<span class="sig-name descname"><span class="pre">rho_t</span></span><a class="headerlink" href="#sim.dynamics.lindblad.EvolutionResult.rho_t" title="Link to this definition">¶</a></dt>
+<dd><p>List of density matrices at each time point</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.EvolutionResult.success">
+<span class="sig-name descname"><span class="pre">success</span></span><a class="headerlink" href="#sim.dynamics.lindblad.EvolutionResult.success" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the integration succeeded</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.EvolutionResult.expectation">
+<span class="sig-name descname"><span class="pre">expectation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#EvolutionResult.expectation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.EvolutionResult.expectation" title="Link to this definition">¶</a></dt>
+<dd><p>Compute ⟨O⟩(t) for all times</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>operator</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.EvolutionResult.population">
+<span class="sig-name descname"><span class="pre">population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">projector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#EvolutionResult.population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.EvolutionResult.population" title="Link to this definition">¶</a></dt>
+<dd><p>Compute population for all times</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>projector</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.EvolutionResult.final_state">
+<span class="sig-name descname"><span class="pre">final_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#EvolutionResult.final_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.EvolutionResult.final_state" title="Link to this definition">¶</a></dt>
+<dd><p>Return the final density matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">times</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">rho_t</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">success</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#id2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">expectation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#EvolutionResult.expectation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition">¶</a></dt>
+<dd><p>Compute expectation value ⟨O⟩(t) for all times.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>operator</strong> (<em>np.ndarray</em>) – 18×18 operator matrix</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of expectation values (complex)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">projector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#EvolutionResult.population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition">¶</a></dt>
+<dd><p>Compute population Tr(P ρ) for all times.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>projector</strong> (<em>np.ndarray</em>) – 18×18 projector matrix</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of populations (real, in [0,1])</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">final_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#EvolutionResult.final_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition">¶</a></dt>
+<dd><p>Return the final density matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.EvolutionResult.purity">
+<span class="sig-name descname"><span class="pre">purity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#EvolutionResult.purity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.EvolutionResult.purity" title="Link to this definition">¶</a></dt>
+<dd><p>Compute purity Tr(ρ²) for all times.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.EvolutionResult.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">times</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">success</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sim.dynamics.lindblad.EvolutionResult.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>times</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>rho_t</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><em>List</em></a><em>[</em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>ndarray</em></a><em>]</em>)</p></li>
+<li><p><strong>success</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.LindbladSolver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sim.dynamics.lindblad.</span></span><span class="sig-name descname"><span class="pre">LindbladSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hamiltonian</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#LindbladSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.LindbladSolver" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Lindblad master equation solver.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hamiltonian</strong> (<a class="reference internal" href="hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder" title="sim.hamiltonian.builder.HamiltonianBuilder"><em>HamiltonianBuilder</em></a>) – The system Hamiltonian (can be time-dependent)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.LindbladSolver.hamiltonian">
+<span class="sig-name descname"><span class="pre">hamiltonian</span></span><a class="headerlink" href="#sim.dynamics.lindblad.LindbladSolver.hamiltonian" title="Link to this definition">¶</a></dt>
+<dd><p>The Hamiltonian builder</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder" title="sim.hamiltonian.builder.HamiltonianBuilder">HamiltonianBuilder</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.LindbladSolver.dissipators">
+<span class="sig-name descname"><span class="pre">dissipators</span></span><a class="headerlink" href="#sim.dynamics.lindblad.LindbladSolver.dissipators" title="Link to this definition">¶</a></dt>
+<dd><p>List of Lindblad operators</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sim</span> <span class="kn">import</span> <span class="n">HamiltonianBuilder</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sim.hamiltonian.terms</span> <span class="kn">import</span> <span class="n">ZFS</span><span class="p">,</span> <span class="n">Zeeman</span><span class="p">,</span> <span class="n">MicrowaveDrive</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sim.dynamics</span> <span class="kn">import</span> <span class="n">LindbladSolver</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sim.states</span> <span class="kn">import</span> <span class="n">ground_state</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Build time-dependent Hamiltonian</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">HamiltonianBuilder</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ZFS</span><span class="p">(</span><span class="n">D</span><span class="o">=</span><span class="mf">2.87</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Zeeman</span><span class="p">(</span><span class="n">B</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MicrowaveDrive</span><span class="p">(</span><span class="n">omega</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>  <span class="c1"># 10 MHz Rabi</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Setup solver with dissipation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span> <span class="o">=</span> <span class="n">LindbladSolver</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span><span class="o">.</span><span class="n">add_t1_relaxation</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">1e3</span><span class="p">)</span>    <span class="c1"># T1 = 1 ms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span><span class="o">.</span><span class="n">add_t2_dephasing</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">1e6</span><span class="p">)</span>     <span class="c1"># T2* = 1 μs</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Evolve from ground state</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rho0</span> <span class="o">=</span> <span class="n">ground_state</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">t_span</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">),</span> <span class="n">n_steps</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Analyze</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sim.states</span> <span class="kn">import</span> <span class="n">projector_ms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pop_ms0</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">population</span><span class="p">(</span><span class="n">projector_ms</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final ms=0 population: </span><span class="si">{</span><span class="n">pop_ms0</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.LindbladSolver.DIM">
+<span class="sig-name descname"><span class="pre">DIM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">18</span></em><a class="headerlink" href="#sim.dynamics.lindblad.LindbladSolver.DIM" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.LindbladSolver.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hamiltonian</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#LindbladSolver.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.LindbladSolver.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hamiltonian</strong> (<a class="reference internal" href="hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder" title="sim.hamiltonian.builder.HamiltonianBuilder"><em>HamiltonianBuilder</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id6">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dissipators</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id6" title="Link to this definition">¶</a></dt>
+<dd><p>List of Lindblad operators.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.LindbladSolver.add_dissipator">
+<span class="sig-name descname"><span class="pre">add_dissipator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#LindbladSolver.add_dissipator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.LindbladSolver.add_dissipator" title="Link to this definition">¶</a></dt>
+<dd><p>Add a Lindblad operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>L</strong> (<em>np.ndarray</em>) – 18×18 Lindblad operator (already includes √γ)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.LindbladSolver.add_t1_relaxation">
+<span class="sig-name descname"><span class="pre">add_t1_relaxation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ground'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#LindbladSolver.add_t1_relaxation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.LindbladSolver.add_t1_relaxation" title="Link to this definition">¶</a></dt>
+<dd><p>Add T1 spin-lattice relaxation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Relaxation rate 1/T1 in Hz</p></li>
+<li><p><strong>manifold</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – “ground”, “excited”, or “both”</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.LindbladSolver.add_t2_dephasing">
+<span class="sig-name descname"><span class="pre">add_t2_dephasing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ground'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#LindbladSolver.add_t2_dephasing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.LindbladSolver.add_t2_dephasing" title="Link to this definition">¶</a></dt>
+<dd><p>Add T2* pure dephasing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Dephasing rate 1/T2* in Hz</p></li>
+<li><p><strong>manifold</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – “ground”, “excited”, or “both”</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.LindbladSolver.add_optical_decay">
+<span class="sig-name descname"><span class="pre">add_optical_decay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#LindbladSolver.add_optical_decay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.LindbladSolver.add_optical_decay" title="Link to this definition">¶</a></dt>
+<dd><p>Add optical spontaneous emission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Emission rate in Hz (~8×10⁷ for NV)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.LindbladSolver.clear_dissipators">
+<span class="sig-name descname"><span class="pre">clear_dissipators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#LindbladSolver.clear_dissipators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.LindbladSolver.clear_dissipators" title="Link to this definition">¶</a></dt>
+<dd><p>Remove all dissipation channels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.LindbladSolver.evolve">
+<span class="sig-name descname"><span class="pre">evolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_span</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'RK45'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#LindbladSolver.evolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.LindbladSolver.evolve" title="Link to this definition">¶</a></dt>
+<dd><p>Evolve the density matrix in time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rho0</strong> (<em>np.ndarray</em>) – Initial density matrix (18×18)</p></li>
+<li><p><strong>t_span</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a>) – (t_start, t_end) in seconds</p></li>
+<li><p><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of output time points. Default: 100</p></li>
+<li><p><strong>method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – ODE solver method. Default: “RK45”</p></li>
+<li><p><strong>rtol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Relative tolerance. Default: 1e-8</p></li>
+<li><p><strong>atol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Absolute tolerance. Default: 1e-10</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Container with times and density matrices</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sim.dynamics.lindblad.EvolutionResult" title="sim.dynamics.lindblad.EvolutionResult">EvolutionResult</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sim.dynamics.lindblad.LindbladSolver.steady_state">
+<span class="sig-name descname"><span class="pre">steady_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/lindblad.html#LindbladSolver.steady_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.lindblad.LindbladSolver.steady_state" title="Link to this definition">¶</a></dt>
+<dd><p>Find the steady state by long-time evolution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Maximum evolution time in seconds</p></li>
+<li><p><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Convergence tolerance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Steady state density matrix, or None if not converged</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<section id="basic-usage">
+<h3>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim</span> <span class="kn">import</span> <span class="n">HamiltonianBuilder</span><span class="p">,</span> <span class="n">LindbladSolver</span>
+<span class="kn">from</span> <span class="nn">sim.hamiltonian.terms</span> <span class="kn">import</span> <span class="n">ZFS</span><span class="p">,</span> <span class="n">Zeeman</span>
+<span class="kn">from</span> <span class="nn">sim.states</span> <span class="kn">import</span> <span class="n">ground_state</span>
+
+<span class="c1"># Build Hamiltonian</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">HamiltonianBuilder</span><span class="p">()</span>
+<span class="n">H</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ZFS</span><span class="p">(</span><span class="n">D</span><span class="o">=</span><span class="mf">2.87</span><span class="p">))</span>
+<span class="n">H</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Zeeman</span><span class="p">(</span><span class="n">B</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Create solver</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">LindbladSolver</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+
+<span class="c1"># Add dissipation channels</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">add_t1_relaxation</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">1e3</span><span class="p">)</span>    <span class="c1"># T1 = 1 ms</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">add_t2_dephasing</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">1e6</span><span class="p">)</span>     <span class="c1"># T2* = 1 μs</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">add_optical_decay</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">8e7</span><span class="p">)</span>    <span class="c1"># τ = 12 ns</span>
+
+<span class="c1"># Initial state</span>
+<span class="n">rho0</span> <span class="o">=</span> <span class="n">ground_state</span><span class="p">()</span>
+
+<span class="c1"># Evolve</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span>
+    <span class="n">rho0</span><span class="p">,</span>
+    <span class="n">t_span</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">),</span>
+    <span class="n">n_steps</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;RK45&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="evolution-result">
+<h3>Evolution Result<a class="headerlink" href="#evolution-result" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">evolve()</span></code> method returns an <code class="docutils literal notranslate"><span class="pre">EvolutionResult</span></code> object:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Access time points</span>
+<span class="n">times</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">times</span>  <span class="c1"># Array of time values</span>
+
+<span class="c1"># Access density matrices</span>
+<span class="n">rho_t</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">rho_t</span>  <span class="c1"># List of 18×18 matrices</span>
+
+<span class="c1"># Get final state</span>
+<span class="n">rho_final</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">final_state</span><span class="p">()</span>
+
+<span class="c1"># Compute expectation values</span>
+<span class="kn">from</span> <span class="nn">sim.core.operators</span> <span class="kn">import</span> <span class="n">Sz</span>
+<span class="n">exp_Sz</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">expectation</span><span class="p">(</span><span class="n">Sz</span><span class="p">)</span>
+
+<span class="c1"># Compute populations</span>
+<span class="kn">from</span> <span class="nn">sim.states</span> <span class="kn">import</span> <span class="n">projector_ms</span>
+<span class="n">pop_ms0</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">population</span><span class="p">(</span><span class="n">projector_ms</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="c1"># Compute purity</span>
+<span class="n">purity</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">purity</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="steady-state">
+<h3>Steady State<a class="headerlink" href="#steady-state" title="Link to this heading">¶</a></h3>
+<p>Find the asymptotic steady state:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rho_ss</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">steady_state</span><span class="p">(</span><span class="n">t_max</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="module-sim.dynamics.dissipation">
+<span id="dissipation-operators"></span><h2>Dissipation Operators<a class="headerlink" href="#module-sim.dynamics.dissipation" title="Link to this heading">¶</a></h2>
+<p>Dissipation operators for Lindblad master equation.</p>
+<p>Lindblad operators describe irreversible processes like:
+- T1 relaxation (spin-lattice relaxation)
+- T2* dephasing (inhomogeneous broadening)
+- T2 pure dephasing (homogeneous)
+- Optical decay (spontaneous emission)</p>
+<section id="lindblad-form">
+<h3>Lindblad Form<a class="headerlink" href="#lindblad-form" title="Link to this heading">¶</a></h3>
+<p>Each dissipation channel is described by a Lindblad operator L_k
+that appears in the master equation as:</p>
+<blockquote>
+<div><p>D[ρ] = L ρ L† - ½{L†L, ρ}</p>
+</div></blockquote>
+<p>The rate is incorporated into the operator: L = √γ × (bare operator)</p>
+</section>
+<section id="time-scales-for-nv-centers">
+<h3>Time Scales for NV Centers<a class="headerlink" href="#time-scales-for-nv-centers" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>T1 (spin): 1-10 ms at room temperature</p></li>
+<li><p>T2* (inhomogeneous): 1-10 μs</p></li>
+<li><p>T2 (Hahn echo): 100-500 μs</p></li>
+<li><p>Optical T1: ~12 ns (excited state lifetime)</p></li>
+</ul>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.dynamics.dissipation.t1_operators">
+<span class="sig-prename descclassname"><span class="pre">sim.dynamics.dissipation.</span></span><span class="sig-name descname"><span class="pre">t1_operators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ground'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/dissipation.html#t1_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.dissipation.t1_operators" title="Link to this definition">¶</a></dt>
+<dd><p>Create T1 relaxation (spin-lattice) Lindblad operators.</p>
+<p>Models incoherent transitions between spin states, driving
+the system toward thermal equilibrium.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Relaxation rate 1/T1 in Hz</p></li>
+<li><p><strong>manifold</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Which manifold: “ground”, “excited”, or “both”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of 18×18 Lindblad operators [L_+, <a href="#id13"><span class="problematic" id="id14">L_</span></a>-]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<dl class="simple">
+<dt>For spin-1 systems, we use:</dt><dd><p>L_+ = √γ · S_+  (excitation)
+<a href="#id15"><span class="problematic" id="id16">L_</span></a>- = √γ · <a href="#id17"><span class="problematic" id="id18">S_</span></a>-  (relaxation)</p>
+</dd>
+</dl>
+<p>At T=0, only <a href="#id19"><span class="problematic" id="id20">L_</span></a>- contributes (pure decay).
+At finite T, both contribute with rates determined by
+detailed balance.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ops</span> <span class="o">=</span> <span class="n">t1_operators</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">1e3</span><span class="p">)</span>  <span class="c1"># T1 = 1 ms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">ops</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.dynamics.dissipation.t2_dephasing_operator">
+<span class="sig-prename descclassname"><span class="pre">sim.dynamics.dissipation.</span></span><span class="sig-name descname"><span class="pre">t2_dephasing_operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ground'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/dissipation.html#t2_dephasing_operator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.dissipation.t2_dephasing_operator" title="Link to this definition">¶</a></dt>
+<dd><p>Create T2* dephasing Lindblad operator.</p>
+<p>Models pure dephasing that destroys coherences without
+changing populations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Dephasing rate 1/T2* in Hz</p></li>
+<li><p><strong>manifold</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Which manifold: “ground”, “excited”, or “both”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>18×18 Lindblad operator</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The dephasing operator is L = √γ · Sz.</p>
+<p>This causes decay of off-diagonal elements (coherences)
+at rate γ, while diagonal elements (populations) are unchanged.</p>
+<dl class="simple">
+<dt>The total dephasing rate is:</dt><dd><p>1/T2* = 1/(2T1) + 1/T_φ</p>
+</dd>
+</dl>
+<p>where T_φ is the pure dephasing time.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="n">t2_dephasing_operator</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">1e7</span><span class="p">)</span>  <span class="c1"># T2* = 100 ns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(18, 18)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.dynamics.dissipation.optical_decay_operators">
+<span class="sig-prename descclassname"><span class="pre">sim.dynamics.dissipation.</span></span><span class="sig-name descname"><span class="pre">optical_decay_operators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/dissipation.html#optical_decay_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.dissipation.optical_decay_operators" title="Link to this definition">¶</a></dt>
+<dd><p>Create optical decay (spontaneous emission) operators.</p>
+<p>Models transitions from excited to ground state with
+photon emission. Spin-conserving transitions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Spontaneous emission rate in Hz (~1/12 ns ≈ 8×10⁷ Hz)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of 9 Lindblad operators (one per <a href="#id7"><span class="problematic" id="id8">|</span></a>e,ms,mI⟩ → <a href="#id9"><span class="problematic" id="id10">|</span></a>g,ms,mI⟩)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<dl class="simple">
+<dt>Each spin state decays independently:</dt><dd><p>L_{ms,mI} = √γ · <a href="#id11"><span class="problematic" id="id12">|g,ms,mI⟩⟨e,ms,mI|</span></a></p>
+</dd>
+<dt>The total emission rate from the excited state is:</dt><dd><p>Γ = 9γ (summed over all channels)</p>
+</dd>
+</dl>
+<p>For NV: τ_rad ≈ 12 ns → γ ≈ 8×10⁷ Hz</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ops</span> <span class="o">=</span> <span class="n">optical_decay_operators</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">8e7</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">ops</span><span class="p">)</span>
+<span class="go">9</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.dynamics.dissipation.nuclear_relaxation_operators">
+<span class="sig-prename descclassname"><span class="pre">sim.dynamics.dissipation.</span></span><span class="sig-name descname"><span class="pre">nuclear_relaxation_operators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ground'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/dissipation.html#nuclear_relaxation_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.dissipation.nuclear_relaxation_operators" title="Link to this definition">¶</a></dt>
+<dd><p>Create nuclear spin T1 relaxation operators.</p>
+<p>Models incoherent transitions of the N14 nuclear spin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Nuclear relaxation rate in Hz (typically ~100 Hz)</p></li>
+<li><p><strong>manifold</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Which manifold: “ground”, “excited”, or “both”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of 18×18 Lindblad operators [L_+, <a href="#id21"><span class="problematic" id="id22">L_</span></a>-]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Nuclear T1 is typically very long (~seconds) but can be
+accelerated by certain processes.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sim.dynamics.dissipation.intersystem_crossing_operators">
+<span class="sig-prename descclassname"><span class="pre">sim.dynamics.dissipation.</span></span><span class="sig-name descname"><span class="pre">intersystem_crossing_operators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma_isc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_singlet</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sim/dynamics/dissipation.html#intersystem_crossing_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sim.dynamics.dissipation.intersystem_crossing_operators" title="Link to this definition">¶</a></dt>
+<dd><p>Create intersystem crossing (ISC) operators.</p>
+<p>Models the non-radiative decay pathway through singlet states
+that enables optical spin polarization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gamma_isc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – ISC rate from excited state (spin-dependent)</p></li>
+<li><p><strong>gamma_singlet</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Decay rate from singlet back to ground state</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lindblad operators for ISC process</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This is a simplified model. The full ISC involves:
+- Decay from ³E (ms=±1) to singlet states
+- Decay from singlet to ³A₂ (preferentially ms=0)</p>
+<p>This is what enables optical spin polarization.</p>
+</dd></dl>
+
+<section id="t1-relaxation">
+<h3>T₁ Relaxation<a class="headerlink" href="#t1-relaxation" title="Link to this heading">¶</a></h3>
+<p>Spin-lattice relaxation toward thermal equilibrium:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">solver</span><span class="o">.</span><span class="n">add_t1_relaxation</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">manifold</span><span class="o">=</span><span class="s2">&quot;ground&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gamma</span></code>: Relaxation rate 1/T₁ in Hz</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">manifold</span></code>: “ground”, “excited”, or “both”</p></li>
+</ul>
+</section>
+<section id="t2-dephasing">
+<h3>T₂* Dephasing<a class="headerlink" href="#t2-dephasing" title="Link to this heading">¶</a></h3>
+<p>Pure dephasing destroying coherences:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">solver</span><span class="o">.</span><span class="n">add_t2_dephasing</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">1e6</span><span class="p">,</span> <span class="n">manifold</span><span class="o">=</span><span class="s2">&quot;ground&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="optical-decay">
+<h3>Optical Decay<a class="headerlink" href="#optical-decay" title="Link to this heading">¶</a></h3>
+<p>Spontaneous emission from excited state:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">solver</span><span class="o">.</span><span class="n">add_optical_decay</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">8e7</span><span class="p">)</span>  <span class="c1"># τ ≈ 12 ns</span>
+</pre></div>
+</div>
+</section>
+<section id="custom-dissipators">
+<h3>Custom Dissipators<a class="headerlink" href="#custom-dissipators" title="Link to this heading">¶</a></h3>
+<p>Add any Lindblad operator:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Create 18×18 Lindblad operator</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+<span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>  <span class="c1"># |g,+1,+1⟩ ← |e,+1,+1⟩</span>
+
+<span class="n">solver</span><span class="o">.</span><span class="n">add_dissipator</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="solver-options">
+<h2>Solver Options<a class="headerlink" href="#solver-options" title="Link to this heading">¶</a></h2>
+<section id="integration-methods">
+<h3>Integration Methods<a class="headerlink" href="#integration-methods" title="Link to this heading">¶</a></h3>
+<p>Available methods (via scipy.integrate.solve_ivp):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;RK45&quot;</span></code>: Default, 4th-order Runge-Kutta (adaptive)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;RK23&quot;</span></code>: 2nd-order Runge-Kutta</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;DOP853&quot;</span></code>: 8th-order Dormand-Prince</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Radau&quot;</span></code>: Implicit Runge-Kutta (for stiff problems)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;BDF&quot;</span></code>: Backward differentiation (for stiff problems)</p></li>
+</ul>
+</section>
+<section id="tolerances">
+<h3>Tolerances<a class="headerlink" href="#tolerances" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span>
+    <span class="n">rho0</span><span class="p">,</span>
+    <span class="n">t_span</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">),</span>
+    <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span>   <span class="c1"># Relative tolerance</span>
+    <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span>   <span class="c1"># Absolute tolerance</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>For faster but less accurate simulations, increase tolerances.</p>
+</section>
+</section>
+<section id="time-dependent-hamiltonians">
+<h2>Time-Dependent Hamiltonians<a class="headerlink" href="#time-dependent-hamiltonians" title="Link to this heading">¶</a></h2>
+<p>The solver handles time-dependent Hamiltonians automatically:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sim.hamiltonian.terms</span> <span class="kn">import</span> <span class="n">MicrowaveDrive</span>
+
+<span class="c1"># Pulsed microwave</span>
+<span class="k">def</span> <span class="nf">pulse</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mf">50e-9</span><span class="p">:</span>  <span class="c1"># 50 ns π-pulse</span>
+        <span class="k">return</span> <span class="mi">10</span>  <span class="c1"># 10 MHz Rabi</span>
+    <span class="k">return</span> <span class="mi">0</span>
+
+<span class="n">H</span> <span class="o">=</span> <span class="n">HamiltonianBuilder</span><span class="p">()</span>
+<span class="n">H</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ZFS</span><span class="p">(</span><span class="n">D</span><span class="o">=</span><span class="mf">2.87</span><span class="p">))</span>
+<span class="n">H</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MicrowaveDrive</span><span class="p">(</span><span class="n">omega</span><span class="o">=</span><span class="n">pulse</span><span class="p">))</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">LindbladSolver</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+<span class="c1"># The Hamiltonian is rebuilt at each integration step</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="states.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">States Module</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="hamiltonian.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Hamiltonian Module</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024-2025, Leon Kaiser, MSQC Goethe University Frankfurt
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Dynamics Module</a><ul>
+<li><a class="reference internal" href="#module-sim.dynamics.lindblad">Lindblad Solver</a><ul>
+<li><a class="reference internal" href="#vectorization">Vectorization</a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.EvolutionResult"><code class="docutils literal notranslate"><span class="pre">EvolutionResult</span></code></a><ul>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.EvolutionResult.times"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.times</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.EvolutionResult.rho_t"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.rho_t</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.EvolutionResult.success"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.success</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.EvolutionResult.expectation"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.expectation()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.EvolutionResult.population"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.population()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.EvolutionResult.final_state"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.final_state()</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.times</span></code></a></li>
+<li><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.rho_t</span></code></a></li>
+<li><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.success</span></code></a></li>
+<li><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.expectation()</span></code></a></li>
+<li><a class="reference internal" href="#id4"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.population()</span></code></a></li>
+<li><a class="reference internal" href="#id5"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.final_state()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.EvolutionResult.purity"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.purity()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.EvolutionResult.__init__"><code class="docutils literal notranslate"><span class="pre">EvolutionResult.__init__()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.LindbladSolver"><code class="docutils literal notranslate"><span class="pre">LindbladSolver</span></code></a><ul>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.LindbladSolver.hamiltonian"><code class="docutils literal notranslate"><span class="pre">LindbladSolver.hamiltonian</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.LindbladSolver.dissipators"><code class="docutils literal notranslate"><span class="pre">LindbladSolver.dissipators</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.LindbladSolver.DIM"><code class="docutils literal notranslate"><span class="pre">LindbladSolver.DIM</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.LindbladSolver.__init__"><code class="docutils literal notranslate"><span class="pre">LindbladSolver.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#id6"><code class="docutils literal notranslate"><span class="pre">LindbladSolver.dissipators</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.LindbladSolver.add_dissipator"><code class="docutils literal notranslate"><span class="pre">LindbladSolver.add_dissipator()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.LindbladSolver.add_t1_relaxation"><code class="docutils literal notranslate"><span class="pre">LindbladSolver.add_t1_relaxation()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.LindbladSolver.add_t2_dephasing"><code class="docutils literal notranslate"><span class="pre">LindbladSolver.add_t2_dephasing()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.LindbladSolver.add_optical_decay"><code class="docutils literal notranslate"><span class="pre">LindbladSolver.add_optical_decay()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.LindbladSolver.clear_dissipators"><code class="docutils literal notranslate"><span class="pre">LindbladSolver.clear_dissipators()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.LindbladSolver.evolve"><code class="docutils literal notranslate"><span class="pre">LindbladSolver.evolve()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.lindblad.LindbladSolver.steady_state"><code class="docutils literal notranslate"><span class="pre">LindbladSolver.steady_state()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li><a class="reference internal" href="#evolution-result">Evolution Result</a></li>
+<li><a class="reference internal" href="#steady-state">Steady State</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sim.dynamics.dissipation">Dissipation Operators</a><ul>
+<li><a class="reference internal" href="#lindblad-form">Lindblad Form</a></li>
+<li><a class="reference internal" href="#time-scales-for-nv-centers">Time Scales for NV Centers</a></li>
+<li><a class="reference internal" href="#sim.dynamics.dissipation.t1_operators"><code class="docutils literal notranslate"><span class="pre">t1_operators()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.dissipation.t2_dephasing_operator"><code class="docutils literal notranslate"><span class="pre">t2_dephasing_operator()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.dissipation.optical_decay_operators"><code class="docutils literal notranslate"><span class="pre">optical_decay_operators()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.dissipation.nuclear_relaxation_operators"><code class="docutils literal notranslate"><span class="pre">nuclear_relaxation_operators()</span></code></a></li>
+<li><a class="reference internal" href="#sim.dynamics.dissipation.intersystem_crossing_operators"><code class="docutils literal notranslate"><span class="pre">intersystem_crossing_operators()</span></code></a></li>
+<li><a class="reference internal" href="#t1-relaxation">T₁ Relaxation</a></li>
+<li><a class="reference internal" href="#t2-dephasing">T₂* Dephasing</a></li>
+<li><a class="reference internal" href="#optical-decay">Optical Decay</a></li>
+<li><a class="reference internal" href="#custom-dissipators">Custom Dissipators</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#solver-options">Solver Options</a><ul>
+<li><a class="reference internal" href="#integration-methods">Integration Methods</a></li>
+<li><a class="reference internal" href="#tolerances">Tolerances</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#time-dependent-hamiltonians">Time-Dependent Hamiltonians</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

@@ -1,0 +1,1371 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
+
+    <!-- Generated with Sphinx 7.3.7 and Furo 2025.12.19 --><title>Index - QUSIM Documentation</title>
+<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=acfd86a5" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=a1178322" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2962FF;
+  --color-brand-content: #2962FF;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #82B1FF;
+  --color-brand-content: #82B1FF;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #82B1FF;
+  --color-brand-content: #82B1FF;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">QUSIM Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <span class="sidebar-brand-text">QUSIM Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Theory &amp; Physics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="theory/nv_center.html">The Nitrogen-Vacancy Center</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/hamiltonian.html">Hamiltonian Terms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/lindblad.html">Open Quantum System Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/measurement.html">Measurement and Readout</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/odmr.html">ODMR Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/pulsed.html">Pulsed Experiments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/core.html">Core Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/hamiltonian.html">Hamiltonian Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/dynamics.html">Dynamics Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/states.html">States Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/pulses.html">Pulses Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/interfaces.html">Interfaces Module</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          
+<section class="genindex-section">
+  <h1 id="index">Index</h1>
+  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#J"><strong>J</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#W"><strong>W</strong></a> | <a href="#X"><strong>X</strong></a> | <a href="#Z"><strong>Z</strong></a></div>
+</section>
+<section id="_" class="genindex-section">
+  <h2>_</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#sim.core.nuclear_operators.SpinHalfOps.__init__">__init__() (sim.core.nuclear_operators.SpinHalfOps method)</a>
+
+        <ul>
+          <li><a href="api/core.html#sim.core.operators.Spin1Ops.__init__">(sim.core.operators.Spin1Ops method)</a>
+</li>
+          <li><a href="api/dynamics.html#sim.dynamics.lindblad.EvolutionResult.__init__">(sim.dynamics.lindblad.EvolutionResult method)</a>
+</li>
+          <li><a href="api/dynamics.html#sim.dynamics.lindblad.LindbladSolver.__init__">(sim.dynamics.lindblad.LindbladSolver method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder.__init__">(sim.hamiltonian.builder.HamiltonianBuilder method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_c13.HyperfineC13.__init__">(sim.hamiltonian.terms.hyperfine_c13.HyperfineC13 method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_n14.HyperfineN14.__init__">(sim.hamiltonian.terms.hyperfine_n14.HyperfineN14 method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.jahn_teller.JahnTeller.__init__">(sim.hamiltonian.terms.jahn_teller.JahnTeller method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.mw_drive.MicrowaveDrive.__init__">(sim.hamiltonian.terms.mw_drive.MicrowaveDrive method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.optical.OpticalCoupling.__init__">(sim.hamiltonian.terms.optical.OpticalCoupling method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.stark.Stark.__init__">(sim.hamiltonian.terms.stark.Stark method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.strain.Strain.__init__">(sim.hamiltonian.terms.strain.Strain method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zeeman.Zeeman.__init__">(sim.hamiltonian.terms.zeeman.Zeeman method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zfs.ZFS.__init__">(sim.hamiltonian.terms.zfs.ZFS method)</a>
+</li>
+          <li><a href="api/interfaces.html#sim.interfaces.awg.AWGInterface.__init__">(sim.interfaces.awg.AWGInterface method)</a>
+</li>
+          <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.__init__">(sim.interfaces.laser.LaserInterface method)</a>
+</li>
+          <li><a href="api/interfaces.html#sim.interfaces.laser.LaserPulse.__init__">(sim.interfaces.laser.LaserPulse method)</a>
+</li>
+          <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.__init__">(sim.interfaces.photon_counter.PhotonCounter method)</a>
+</li>
+          <li><a href="api/pulses.html#sim.pulses.basic.Pulse.__init__">(sim.pulses.basic.Pulse method)</a>
+</li>
+          <li><a href="api/pulses.html#sim.pulses.sequences.PulseSequence.__init__">(sim.pulses.sequences.PulseSequence method)</a>
+</li>
+          <li><a href="api/states.html#sim.states.density_matrix.DensityMatrix.__init__">(sim.states.density_matrix.DensityMatrix method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="A" class="genindex-section">
+  <h2>A</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_c13.HyperfineC13.A_iso">A_iso (sim.hamiltonian.terms.hyperfine_c13.HyperfineC13 attribute)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_n14.HyperfineN14.A_parallel">A_parallel (sim.hamiltonian.terms.hyperfine_n14.HyperfineN14 attribute)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.A_PARALLEL_N14">A_PARALLEL_N14 (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_n14.HyperfineN14.A_perp">A_perp (sim.hamiltonian.terms.hyperfine_n14.HyperfineN14 attribute)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.A_PERP_N14">A_PERP_N14 (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_c13.HyperfineC13.A_tensor">A_tensor (sim.hamiltonian.terms.hyperfine_c13.HyperfineC13 attribute)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_c13.HyperfineC13.A_zz_khz">A_zz_khz() (sim.hamiltonian.terms.hyperfine_c13.HyperfineC13 method)</a>
+</li>
+        <li><a href="api/hamiltonian.html#id0">add() (sim.hamiltonian.builder.HamiltonianBuilder method)</a>, <a href="api/hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder.add">[1]</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.add_cw">add_cw() (sim.interfaces.laser.LaserInterface method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.awg.AWGInterface.add_delay">add_delay() (sim.interfaces.awg.AWGInterface method)</a>
+
+        <ul>
+          <li><a href="api/pulses.html#sim.pulses.sequences.PulseSequence.add_delay">(sim.pulses.sequences.PulseSequence method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/dynamics.html#sim.dynamics.lindblad.LindbladSolver.add_dissipator">add_dissipator() (sim.dynamics.lindblad.LindbladSolver method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/dynamics.html#sim.dynamics.lindblad.LindbladSolver.add_optical_decay">add_optical_decay() (sim.dynamics.lindblad.LindbladSolver method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.awg.AWGInterface.add_pulse">add_pulse() (sim.interfaces.awg.AWGInterface method)</a>
+
+        <ul>
+          <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.add_pulse">(sim.interfaces.laser.LaserInterface method)</a>
+</li>
+          <li><a href="api/pulses.html#sim.pulses.sequences.PulseSequence.add_pulse">(sim.pulses.sequences.PulseSequence method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/dynamics.html#sim.dynamics.lindblad.LindbladSolver.add_t1_relaxation">add_t1_relaxation() (sim.dynamics.lindblad.LindbladSolver method)</a>
+</li>
+        <li><a href="api/dynamics.html#sim.dynamics.lindblad.LindbladSolver.add_t2_dephasing">add_t2_dephasing() (sim.dynamics.lindblad.LindbladSolver method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.afterpulsing_delay">afterpulsing_delay (sim.interfaces.photon_counter.PhotonCounter attribute)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.afterpulsing_prob">afterpulsing_prob (sim.interfaces.photon_counter.PhotonCounter attribute)</a>
+</li>
+        <li><a href="api/pulses.html#id5">amplitude (sim.pulses.basic.Pulse attribute)</a>, <a href="api/pulses.html#sim.pulses.basic.Pulse.amplitude">[1]</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.ANGSTROM">ANGSTROM (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.basic.arbitrary_rotation">arbitrary_rotation() (in module sim.pulses.basic)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.awg.AWGInterface">AWGInterface (class in sim.interfaces.awg)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.basic.Pulse.axis_label">axis_label() (sim.pulses.basic.Pulse method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="B" class="genindex-section">
+  <h2>B</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zeeman.Zeeman.B">B (sim.hamiltonian.terms.zeeman.Zeeman attribute)</a>
+</li>
+        <li><a href="api/states.html#sim.states.initial_states.bell_state_electron_nuclear">bell_state_electron_nuclear() (in module sim.states.initial_states)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.shapes.blackman">blackman() (in module sim.pulses.shapes)</a>
+</li>
+        <li><a href="api/hamiltonian.html#id2">build() (sim.hamiltonian.builder.HamiltonianBuilder method)</a>, <a href="api/hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder.build">[1]</a>
+
+        <ul>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_c13.HyperfineC13.build">(sim.hamiltonian.terms.hyperfine_c13.HyperfineC13 method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_n14.HyperfineN14.build">(sim.hamiltonian.terms.hyperfine_n14.HyperfineN14 method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.jahn_teller.JahnTeller.build">(sim.hamiltonian.terms.jahn_teller.JahnTeller method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.mw_drive.MicrowaveDrive.build">(sim.hamiltonian.terms.mw_drive.MicrowaveDrive method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.optical.OpticalCoupling.build">(sim.hamiltonian.terms.optical.OpticalCoupling method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.stark.Stark.build">(sim.hamiltonian.terms.stark.Stark method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.strain.Strain.build">(sim.hamiltonian.terms.strain.Strain method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zeeman.Zeeman.build">(sim.hamiltonian.terms.zeeman.Zeeman method)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zfs.ZFS.build">(sim.hamiltonian.terms.zfs.ZFS method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#sim.core.nuclear_operators.build_spin_spin_coupling">build_spin_spin_coupling() (in module sim.core.nuclear_operators)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="C" class="genindex-section">
+  <h2>C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.calculate_g2">calculate_g2() (sim.interfaces.photon_counter.PhotonCounter method)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder.clear">clear() (sim.hamiltonian.builder.HamiltonianBuilder method)</a>
+
+        <ul>
+          <li><a href="api/interfaces.html#sim.interfaces.awg.AWGInterface.clear">(sim.interfaces.awg.AWGInterface method)</a>
+</li>
+          <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.clear">(sim.interfaces.laser.LaserInterface method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/dynamics.html#sim.dynamics.lindblad.LindbladSolver.clear_dissipators">clear_dissipators() (sim.dynamics.lindblad.LindbladSolver method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pulses.html#sim.pulses.basic.composite_pi_pulse">composite_pi_pulse() (in module sim.pulses.basic)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.shapes.cosine">cosine() (in module sim.pulses.shapes)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.count">count() (sim.interfaces.photon_counter.PhotonCounter method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.count_rate">count_rate() (sim.interfaces.photon_counter.PhotonCounter method)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.sequences.cpmg_sequence">cpmg_sequence() (in module sim.pulses.sequences)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zfs.ZFS.D">D (sim.hamiltonian.terms.zfs.ZFS attribute)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.D_ES">D_ES (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.D_GS">D_GS (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.stark.Stark.d_par">d_par (sim.hamiltonian.terms.stark.Stark attribute)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.stark.Stark.d_perp">d_perp (sim.hamiltonian.terms.stark.Stark attribute)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.dark_count_rate">dark_count_rate (sim.interfaces.photon_counter.PhotonCounter attribute)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.dead_time">dead_time (sim.interfaces.photon_counter.PhotonCounter attribute)</a>
+</li>
+        <li><a href="api/pulses.html#id11">delays (sim.pulses.sequences.PulseSequence attribute)</a>, <a href="api/pulses.html#sim.pulses.sequences.PulseSequence.delays">[1]</a>
+</li>
+        <li><a href="api/states.html#sim.states.density_matrix.DensityMatrix">DensityMatrix (class in sim.states.density_matrix)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.detection_times">detection_times (sim.interfaces.photon_counter.PhotonCounter attribute)</a>
+
+        <ul>
+          <li><a href="api/interfaces.html#id4">(sim.interfaces.photon_counter.PhotonCounter property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.mw_drive.MicrowaveDrive.detuning">detuning (sim.hamiltonian.terms.mw_drive.MicrowaveDrive attribute)</a>
+
+        <ul>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.optical.OpticalCoupling.detuning">(sim.hamiltonian.terms.optical.OpticalCoupling attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/dynamics.html#sim.dynamics.lindblad.LindbladSolver.DIM">DIM (sim.dynamics.lindblad.LindbladSolver attribute)</a>
+
+        <ul>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder.DIM">(sim.hamiltonian.builder.HamiltonianBuilder attribute)</a>
+</li>
+          <li><a href="api/states.html#id0">(sim.states.density_matrix.DensityMatrix attribute)</a>, <a href="api/states.html#sim.states.density_matrix.DensityMatrix.DIM">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/core.html#sim.core.nuclear_operators.dipolar_tensor">dipolar_tensor() (in module sim.core.nuclear_operators)</a>
+</li>
+        <li><a href="api/dynamics.html#sim.dynamics.lindblad.LindbladSolver.dissipators">dissipators (sim.dynamics.lindblad.LindbladSolver attribute)</a>
+
+        <ul>
+          <li><a href="api/dynamics.html#id6">(sim.dynamics.lindblad.LindbladSolver property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_c13.HyperfineC13.distance_nm">distance_nm() (sim.hamiltonian.terms.hyperfine_c13.HyperfineC13 method)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.shapes.drag">drag() (in module sim.pulses.shapes)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.awg.AWGInterface.dt">dt (sim.interfaces.awg.AWGInterface attribute)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.awg.AWGInterface.duration">duration (sim.interfaces.awg.AWGInterface attribute)</a>
+
+        <ul>
+          <li><a href="api/interfaces.html#sim.interfaces.laser.LaserPulse.duration">(sim.interfaces.laser.LaserPulse attribute)</a>
+</li>
+          <li><a href="api/pulses.html#id6">(sim.pulses.basic.Pulse attribute)</a>, <a href="api/pulses.html#sim.pulses.basic.Pulse.duration">[1]</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="E" class="genindex-section">
+  <h2>E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zfs.ZFS.E">E (sim.hamiltonian.terms.zfs.ZFS attribute)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.E_CHARGE">E_CHARGE (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.stark.Stark.E_field">E_field (sim.hamiltonian.terms.stark.Stark attribute)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.efficiency">efficiency (sim.interfaces.photon_counter.PhotonCounter attribute)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder.eigenstates">eigenstates() (sim.hamiltonian.builder.HamiltonianBuilder method)</a>
+</li>
+        <li><a href="api/hamiltonian.html#id3">eigenvalues() (sim.hamiltonian.builder.HamiltonianBuilder method)</a>, <a href="api/hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder.eigenvalues">[1]</a>
+</li>
+        <li><a href="api/hamiltonian.html#id4">eigenvalues_ghz() (sim.hamiltonian.builder.HamiltonianBuilder method)</a>, <a href="api/hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder.eigenvalues_ghz">[1]</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder.eigenvalues_mhz">eigenvalues_mhz() (sim.hamiltonian.builder.HamiltonianBuilder method)</a>
+</li>
+        <li><a href="api/states.html#sim.states.density_matrix.DensityMatrix.entropy">entropy() (sim.states.density_matrix.DensityMatrix method)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.strain.Strain.epsilon">epsilon (sim.hamiltonian.terms.strain.Strain attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/dynamics.html#sim.dynamics.lindblad.EvolutionResult">EvolutionResult (class in sim.dynamics.lindblad)</a>
+</li>
+        <li><a href="api/dynamics.html#sim.dynamics.lindblad.LindbladSolver.evolve">evolve() (sim.dynamics.lindblad.LindbladSolver method)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.strain.Strain.Ex">Ex (sim.hamiltonian.terms.strain.Strain attribute)</a>
+</li>
+        <li><a href="api/states.html#sim.states.initial_states.excited_state">excited_state() (in module sim.states.initial_states)</a>
+</li>
+        <li><a href="api/dynamics.html#id3">expectation() (sim.dynamics.lindblad.EvolutionResult method)</a>, <a href="api/dynamics.html#sim.dynamics.lindblad.EvolutionResult.expectation">[1]</a>
+
+        <ul>
+          <li><a href="api/states.html#sim.states.density_matrix.DensityMatrix.expectation">(sim.states.density_matrix.DensityMatrix method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/core.html#sim.core.nuclear_operators.extend_9x9_to_18x18">extend_9x9_to_18x18() (in module sim.core.nuclear_operators)</a>
+</li>
+        <li><a href="api/core.html#sim.core.nuclear_operators.extend_9x9_to_18x18_manifold">extend_9x9_to_18x18_manifold() (in module sim.core.nuclear_operators)</a>
+</li>
+        <li><a href="api/core.html#sim.core.operators.extend_electron_only">extend_electron_only() (in module sim.core.operators)</a>
+</li>
+        <li><a href="api/core.html#sim.core.operators.extend_to_18x18">extend_to_18x18() (in module sim.core.operators)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.strain.Strain.Ey">Ey (sim.hamiltonian.terms.strain.Strain attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.fano_factor">fano_factor() (sim.interfaces.photon_counter.PhotonCounter method)</a>
+</li>
+        <li><a href="api/states.html#sim.states.density_matrix.DensityMatrix.fidelity">fidelity() (sim.states.density_matrix.DensityMatrix method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/dynamics.html#id5">final_state() (sim.dynamics.lindblad.EvolutionResult method)</a>, <a href="api/dynamics.html#sim.dynamics.lindblad.EvolutionResult.final_state">[1]</a>
+</li>
+        <li><a href="api/states.html#sim.states.density_matrix.DensityMatrix.from_pure_state">from_pure_state() (sim.states.density_matrix.DensityMatrix class method)</a>
+</li>
+        <li><a href="api/states.html#sim.states.density_matrix.DensityMatrix.from_thermal">from_thermal() (sim.states.density_matrix.DensityMatrix class method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="G" class="genindex-section">
+  <h2>G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zeeman.Zeeman.g">g (sim.hamiltonian.terms.zeeman.Zeeman attribute)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.G_C13">G_C13 (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.G_E">G_E (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.G_N14">G_N14 (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.GAMMA_C13">GAMMA_C13 (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.GAMMA_E">GAMMA_E (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.GAMMA_N14">GAMMA_N14 (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.GAUSS">GAUSS (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.shapes.gaussian">gaussian() (in module sim.pulses.shapes)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/interfaces.html#sim.interfaces.awg.AWGInterface.get_detuning">get_detuning() (sim.interfaces.awg.AWGInterface method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.awg.AWGInterface.get_omega">get_omega() (sim.interfaces.awg.AWGInterface method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.awg.AWGInterface.get_phase">get_phase() (sim.interfaces.awg.AWGInterface method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.get_power">get_power() (sim.interfaces.laser.LaserInterface method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.get_rabi">get_rabi() (sim.interfaces.laser.LaserInterface method)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.GHZ">GHZ (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.ghz_to_rads">ghz_to_rads() (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/states.html#sim.states.initial_states.ground_state">ground_state() (in module sim.states.initial_states)</a>
+</li>
+        <li><a href="api/states.html#sim.states.initial_states.ground_state_vector">ground_state_vector() (in module sim.states.initial_states)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#sim.core.constants.H_PLANCK">H_PLANCK (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/dynamics.html#sim.dynamics.lindblad.LindbladSolver.hamiltonian">hamiltonian (sim.dynamics.lindblad.LindbladSolver attribute)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder">HamiltonianBuilder (class in sim.hamiltonian.builder)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.HBAR">HBAR (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.shapes.hermite">hermite() (in module sim.pulses.shapes)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.histogram">histogram() (sim.interfaces.photon_counter.PhotonCounter method)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.jahn_teller.JahnTeller.huang_rhys_factor">huang_rhys_factor() (sim.hamiltonian.terms.jahn_teller.JahnTeller method)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_n14.HyperfineN14.hyperfine_tensor">hyperfine_tensor() (sim.hamiltonian.terms.hyperfine_n14.HyperfineN14 method)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_c13.HyperfineC13">HyperfineC13 (class in sim.hamiltonian.terms.hyperfine_c13)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_n14.HyperfineN14">HyperfineN14 (class in sim.hamiltonian.terms.hyperfine_n14)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.HZ">HZ (in module sim.core.constants)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#id99">I (sim.core.nuclear_operators.SpinHalfOps attribute)</a>, <a href="api/core.html#sim.core.nuclear_operators.SpinHalfOps.I">[1]</a>
+
+        <ul>
+          <li><a href="api/core.html#id51">(sim.core.operators.Spin1Ops attribute)</a>, <a href="api/core.html#sim.core.operators.Spin1Ops.I">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/core.html#id98">Im (sim.core.nuclear_operators.SpinHalfOps attribute)</a>, <a href="api/core.html#sim.core.nuclear_operators.SpinHalfOps.Im">[1]</a>
+</li>
+        <li><a href="api/dynamics.html#sim.dynamics.dissipation.intersystem_crossing_operators">intersystem_crossing_operators() (in module sim.dynamics.dissipation)</a>
+</li>
+        <li><a href="api/core.html#id97">Ip (sim.core.nuclear_operators.SpinHalfOps attribute)</a>, <a href="api/core.html#sim.core.nuclear_operators.SpinHalfOps.Ip">[1]</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.is_on">is_on() (sim.interfaces.laser.LaserInterface method)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder.is_time_dependent">is_time_dependent (sim.hamiltonian.builder.HamiltonianBuilder property)</a>
+
+        <ul>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_c13.HyperfineC13.is_time_dependent">(sim.hamiltonian.terms.hyperfine_c13.HyperfineC13 property)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_n14.HyperfineN14.is_time_dependent">(sim.hamiltonian.terms.hyperfine_n14.HyperfineN14 property)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.jahn_teller.JahnTeller.is_time_dependent">(sim.hamiltonian.terms.jahn_teller.JahnTeller property)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.mw_drive.MicrowaveDrive.is_time_dependent">(sim.hamiltonian.terms.mw_drive.MicrowaveDrive property)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.optical.OpticalCoupling.is_time_dependent">(sim.hamiltonian.terms.optical.OpticalCoupling property)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.stark.Stark.is_time_dependent">(sim.hamiltonian.terms.stark.Stark property)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.strain.Strain.is_time_dependent">(sim.hamiltonian.terms.strain.Strain attribute)</a>
+</li>
+          <li><a href="api/hamiltonian.html#id35">(sim.hamiltonian.terms.strain.Strain property)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zeeman.Zeeman.is_time_dependent">(sim.hamiltonian.terms.zeeman.Zeeman property)</a>
+</li>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zfs.ZFS.is_time_dependent">(sim.hamiltonian.terms.zfs.ZFS property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/states.html#sim.states.density_matrix.DensityMatrix.is_valid">is_valid() (sim.states.density_matrix.DensityMatrix method)</a>
+</li>
+        <li><a href="api/core.html#id94">Ix (sim.core.nuclear_operators.SpinHalfOps attribute)</a>, <a href="api/core.html#sim.core.nuclear_operators.SpinHalfOps.Ix">[1]</a>
+</li>
+        <li><a href="api/core.html#id95">Iy (sim.core.nuclear_operators.SpinHalfOps attribute)</a>, <a href="api/core.html#sim.core.nuclear_operators.SpinHalfOps.Iy">[1]</a>
+</li>
+        <li><a href="api/core.html#id96">Iz (sim.core.nuclear_operators.SpinHalfOps attribute)</a>, <a href="api/core.html#sim.core.nuclear_operators.SpinHalfOps.Iz">[1]</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="J" class="genindex-section">
+  <h2>J</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.jahn_teller.JahnTeller">JahnTeller (class in sim.hamiltonian.terms.jahn_teller)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="K" class="genindex-section">
+  <h2>K</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#sim.core.constants.KB">KB (in module sim.core.constants)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#sim.core.constants.KHZ">KHZ (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/pulses.html#id8">kwargs (sim.pulses.basic.Pulse attribute)</a>, <a href="api/pulses.html#sim.pulses.basic.Pulse.kwargs">[1]</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zeeman.Zeeman.larmor_frequency_mhz">larmor_frequency_mhz() (sim.hamiltonian.terms.zeeman.Zeeman method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface">LaserInterface (class in sim.interfaces.laser)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserPulse">LaserPulse (class in sim.interfaces.laser)</a>
+</li>
+        <li><a href="api/dynamics.html#sim.dynamics.lindblad.LindbladSolver">LindbladSolver (class in sim.dynamics.lindblad)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.linewidth">linewidth (sim.interfaces.laser.LaserInterface attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="M" class="genindex-section">
+  <h2>M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.mw_drive.MicrowaveDrive.manifold">manifold (sim.hamiltonian.terms.mw_drive.MicrowaveDrive attribute)</a>
+</li>
+        <li><a href="api/states.html#sim.states.initial_states.maximally_mixed">maximally_mixed() (in module sim.states.initial_states)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.MHZ">MHZ (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.mhz_to_rads">mhz_to_rads() (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.mw_drive.MicrowaveDrive">MicrowaveDrive (class in sim.hamiltonian.terms.mw_drive)</a>
+</li>
+        <li>
+    module
+
+        <ul>
+          <li><a href="api/core.html#module-sim.core.constants">sim.core.constants</a>
+</li>
+          <li><a href="api/core.html#module-sim.core.nuclear_operators">sim.core.nuclear_operators</a>
+</li>
+          <li><a href="api/core.html#module-sim.core.operators">sim.core.operators</a>
+</li>
+          <li><a href="api/dynamics.html#module-sim.dynamics.dissipation">sim.dynamics.dissipation</a>
+</li>
+          <li><a href="api/dynamics.html#module-sim.dynamics.lindblad">sim.dynamics.lindblad</a>
+</li>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.builder">sim.hamiltonian.builder</a>
+</li>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.hyperfine_c13">sim.hamiltonian.terms.hyperfine_c13</a>
+</li>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.hyperfine_n14">sim.hamiltonian.terms.hyperfine_n14</a>
+</li>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.jahn_teller">sim.hamiltonian.terms.jahn_teller</a>
+</li>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.mw_drive">sim.hamiltonian.terms.mw_drive</a>
+</li>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.optical">sim.hamiltonian.terms.optical</a>
+</li>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.stark">sim.hamiltonian.terms.stark</a>
+</li>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.strain">sim.hamiltonian.terms.strain</a>
+</li>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.zeeman">sim.hamiltonian.terms.zeeman</a>
+</li>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.zfs">sim.hamiltonian.terms.zfs</a>
+</li>
+          <li><a href="api/interfaces.html#module-sim.interfaces.awg">sim.interfaces.awg</a>
+</li>
+          <li><a href="api/interfaces.html#module-sim.interfaces.laser">sim.interfaces.laser</a>
+</li>
+          <li><a href="api/interfaces.html#module-sim.interfaces.photon_counter">sim.interfaces.photon_counter</a>
+</li>
+          <li><a href="api/pulses.html#module-sim.pulses.basic">sim.pulses.basic</a>
+</li>
+          <li><a href="api/pulses.html#module-sim.pulses.sequences">sim.pulses.sequences</a>
+</li>
+          <li><a href="api/pulses.html#module-sim.pulses.shapes">sim.pulses.shapes</a>
+</li>
+          <li><a href="api/states.html#module-sim.states.density_matrix">sim.states.density_matrix</a>
+</li>
+          <li><a href="api/states.html#module-sim.states.initial_states">sim.states.initial_states</a>
+</li>
+          <li><a href="api/states.html#module-sim.states.projectors">sim.states.projectors</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/states.html#sim.states.initial_states.ms0_superposition">ms0_superposition() (in module sim.states.initial_states)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.MT">MT (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.mt_to_tesla">mt_to_tesla() (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.MU_B">MU_B (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.MU_N">MU_N (in module sim.core.constants)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="N" class="genindex-section">
+  <h2>N</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#sim.core.constants.NM">NM (in module sim.core.constants)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/states.html#sim.states.projectors.nuclear_operator_18x18">nuclear_operator_18x18() (in module sim.states.projectors)</a>
+</li>
+        <li><a href="api/dynamics.html#sim.dynamics.dissipation.nuclear_relaxation_operators">nuclear_relaxation_operators() (in module sim.dynamics.dissipation)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="O" class="genindex-section">
+  <h2>O</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.mw_drive.MicrowaveDrive.omega">omega (sim.hamiltonian.terms.mw_drive.MicrowaveDrive attribute)</a>
+
+        <ul>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.optical.OpticalCoupling.omega">(sim.hamiltonian.terms.optical.OpticalCoupling attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/dynamics.html#sim.dynamics.dissipation.optical_decay_operators">optical_decay_operators() (in module sim.dynamics.dissipation)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.optical.OpticalCoupling">OpticalCoupling (class in sim.hamiltonian.terms.optical)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="P" class="genindex-section">
+  <h2>P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#sim.core.constants.P_N14">P_N14 (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_n14.HyperfineN14.P_quad">P_quad (sim.hamiltonian.terms.hyperfine_n14.HyperfineN14 attribute)</a>
+</li>
+        <li><a href="api/states.html#sim.states.density_matrix.DensityMatrix.partial_trace">partial_trace() (sim.states.density_matrix.DensityMatrix method)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.mw_drive.MicrowaveDrive.phase">phase (sim.hamiltonian.terms.mw_drive.MicrowaveDrive attribute)</a>
+
+        <ul>
+          <li><a href="api/pulses.html#id7">(sim.pulses.basic.Pulse attribute)</a>, <a href="api/pulses.html#sim.pulses.basic.Pulse.phase">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter">PhotonCounter (class in sim.interfaces.photon_counter)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.basic.pi_half_pulse">pi_half_pulse() (in module sim.pulses.basic)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.basic.pi_pulse">pi_pulse() (in module sim.pulses.basic)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.mw_drive.MicrowaveDrive.pi_time">pi_time() (sim.hamiltonian.terms.mw_drive.MicrowaveDrive method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.awg.AWGInterface.plot">plot() (sim.interfaces.awg.AWGInterface method)</a>
+</li>
+        <li><a href="api/dynamics.html#id4">population() (sim.dynamics.lindblad.EvolutionResult method)</a>, <a href="api/dynamics.html#sim.dynamics.lindblad.EvolutionResult.population">[1]</a>
+
+        <ul>
+          <li><a href="api/states.html#sim.states.density_matrix.DensityMatrix.population">(sim.states.density_matrix.DensityMatrix method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/states.html#sim.states.projectors.population_dict">population_dict() (in module sim.states.projectors)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserPulse.power">power (sim.interfaces.laser.LaserPulse attribute)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.power_to_rabi">power_to_rabi (sim.interfaces.laser.LaserInterface attribute)</a>
+</li>
+        <li><a href="api/states.html#sim.states.projectors.projector_excited">projector_excited() (in module sim.states.projectors)</a>
+</li>
+        <li><a href="api/states.html#sim.states.projectors.projector_ground">projector_ground() (in module sim.states.projectors)</a>
+</li>
+        <li><a href="api/states.html#sim.states.projectors.projector_mI">projector_mI() (in module sim.states.projectors)</a>
+</li>
+        <li><a href="api/states.html#sim.states.projectors.projector_ms">projector_ms() (in module sim.states.projectors)</a>
+</li>
+        <li><a href="api/states.html#sim.states.projectors.projector_state">projector_state() (in module sim.states.projectors)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.basic.Pulse">Pulse (class in sim.pulses.basic)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.pulses">pulses (sim.interfaces.laser.LaserInterface attribute)</a>
+
+        <ul>
+          <li><a href="api/interfaces.html#id2">(sim.interfaces.laser.LaserInterface property)</a>
+</li>
+          <li><a href="api/pulses.html#id10">(sim.pulses.sequences.PulseSequence attribute)</a>, <a href="api/pulses.html#sim.pulses.sequences.PulseSequence.pulses">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/pulses.html#sim.pulses.sequences.PulseSequence">PulseSequence (class in sim.pulses.sequences)</a>
+</li>
+        <li><a href="api/dynamics.html#sim.dynamics.lindblad.EvolutionResult.purity">purity() (sim.dynamics.lindblad.EvolutionResult method)</a>
+
+        <ul>
+          <li><a href="api/states.html#sim.states.density_matrix.DensityMatrix.purity">(sim.states.density_matrix.DensityMatrix method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_c13.HyperfineC13.r_vec">r_vec (sim.hamiltonian.terms.hyperfine_c13.HyperfineC13 attribute)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.optical.OpticalCoupling.rabi_period">rabi_period() (sim.hamiltonian.terms.optical.OpticalCoupling method)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.sequences.rabi_sequence">rabi_sequence() (in module sim.pulses.sequences)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.rads_to_ghz">rads_to_ghz() (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/core.html#sim.core.constants.rads_to_mhz">rads_to_mhz() (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.sequences.ramsey_sequence">ramsey_sequence() (in module sim.pulses.sequences)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pulses.html#sim.pulses.shapes.rectangular">rectangular() (in module sim.pulses.shapes)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.reset">reset() (sim.interfaces.photon_counter.PhotonCounter method)</a>
+</li>
+        <li><a href="api/states.html#sim.states.density_matrix.DensityMatrix.rho">rho (sim.states.density_matrix.DensityMatrix attribute)</a>
+
+        <ul>
+          <li><a href="api/states.html#id49">(sim.states.density_matrix.DensityMatrix property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/dynamics.html#id1">rho_t (sim.dynamics.lindblad.EvolutionResult attribute)</a>, <a href="api/dynamics.html#sim.dynamics.lindblad.EvolutionResult.rho_t">[1]</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.basic.Pulse.rotation_angle">rotation_angle() (sim.pulses.basic.Pulse method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/interfaces.html#id0">sample_rate (sim.interfaces.awg.AWGInterface attribute)</a>, <a href="api/interfaces.html#sim.interfaces.awg.AWGInterface.sample_rate">[1]</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.schedule_initialization">schedule_initialization() (sim.interfaces.laser.LaserInterface method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.schedule_readout">schedule_readout() (sim.interfaces.laser.LaserInterface method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserPulse.shape">shape (sim.interfaces.laser.LaserPulse attribute)</a>
+
+        <ul>
+          <li><a href="api/pulses.html#id0">(sim.pulses.basic.Pulse attribute)</a>, <a href="api/pulses.html#sim.pulses.basic.Pulse.shape">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.stark.Stark.shift_khz">shift_khz() (sim.hamiltonian.terms.stark.Stark method)</a>
+</li>
+        <li>
+    sim.core.constants
+
+        <ul>
+          <li><a href="api/core.html#module-sim.core.constants">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.core.nuclear_operators
+
+        <ul>
+          <li><a href="api/core.html#module-sim.core.nuclear_operators">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.core.operators
+
+        <ul>
+          <li><a href="api/core.html#module-sim.core.operators">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.dynamics.dissipation
+
+        <ul>
+          <li><a href="api/dynamics.html#module-sim.dynamics.dissipation">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.dynamics.lindblad
+
+        <ul>
+          <li><a href="api/dynamics.html#module-sim.dynamics.lindblad">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.hamiltonian.builder
+
+        <ul>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.builder">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.hamiltonian.terms.hyperfine_c13
+
+        <ul>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.hyperfine_c13">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.hamiltonian.terms.hyperfine_n14
+
+        <ul>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.hyperfine_n14">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.hamiltonian.terms.jahn_teller
+
+        <ul>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.jahn_teller">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.hamiltonian.terms.mw_drive
+
+        <ul>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.mw_drive">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.hamiltonian.terms.optical
+
+        <ul>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.optical">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.hamiltonian.terms.stark
+
+        <ul>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.stark">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.hamiltonian.terms.strain
+
+        <ul>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.strain">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.hamiltonian.terms.zeeman
+
+        <ul>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.zeeman">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.hamiltonian.terms.zfs
+
+        <ul>
+          <li><a href="api/hamiltonian.html#module-sim.hamiltonian.terms.zfs">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.interfaces.awg
+
+        <ul>
+          <li><a href="api/interfaces.html#module-sim.interfaces.awg">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    sim.interfaces.laser
+
+        <ul>
+          <li><a href="api/interfaces.html#module-sim.interfaces.laser">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.interfaces.photon_counter
+
+        <ul>
+          <li><a href="api/interfaces.html#module-sim.interfaces.photon_counter">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.pulses.basic
+
+        <ul>
+          <li><a href="api/pulses.html#module-sim.pulses.basic">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.pulses.sequences
+
+        <ul>
+          <li><a href="api/pulses.html#module-sim.pulses.sequences">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.pulses.shapes
+
+        <ul>
+          <li><a href="api/pulses.html#module-sim.pulses.shapes">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.states.density_matrix
+
+        <ul>
+          <li><a href="api/states.html#module-sim.states.density_matrix">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.states.initial_states
+
+        <ul>
+          <li><a href="api/states.html#module-sim.states.initial_states">module</a>
+</li>
+        </ul></li>
+        <li>
+    sim.states.projectors
+
+        <ul>
+          <li><a href="api/states.html#module-sim.states.projectors">module</a>
+</li>
+        </ul></li>
+        <li><a href="api/pulses.html#sim.pulses.shapes.sinc_pulse">sinc_pulse() (in module sim.pulses.shapes)</a>
+</li>
+        <li><a href="api/core.html#id50">Sm (sim.core.operators.Spin1Ops attribute)</a>, <a href="api/core.html#sim.core.operators.Spin1Ops.Sm">[1]</a>
+</li>
+        <li><a href="api/core.html#id49">Sp (sim.core.operators.Spin1Ops attribute)</a>, <a href="api/core.html#sim.core.operators.Spin1Ops.Sp">[1]</a>
+</li>
+        <li><a href="api/core.html#sim.core.operators.spin1_operators">spin1_operators() (in module sim.core.operators)</a>
+</li>
+        <li><a href="api/core.html#sim.core.operators.Spin1Ops">Spin1Ops (class in sim.core.operators)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.optical.OpticalCoupling.spin_conserving">spin_conserving (sim.hamiltonian.terms.optical.OpticalCoupling attribute)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.sequences.spin_echo_sequence">spin_echo_sequence() (in module sim.pulses.sequences)</a>
+</li>
+        <li><a href="api/core.html#sim.core.nuclear_operators.spin_half_operators">spin_half_operators() (in module sim.core.nuclear_operators)</a>
+</li>
+        <li><a href="api/states.html#sim.states.projectors.spin_operator_18x18">spin_operator_18x18() (in module sim.states.projectors)</a>
+</li>
+        <li><a href="api/core.html#sim.core.nuclear_operators.SpinHalfOps">SpinHalfOps (class in sim.core.nuclear_operators)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.hyperfine_n14.HyperfineN14.splitting_mhz">splitting_mhz() (sim.hamiltonian.terms.hyperfine_n14.HyperfineN14 method)</a>
+
+        <ul>
+          <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zeeman.Zeeman.splitting_mhz">(sim.hamiltonian.terms.zeeman.Zeeman method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.stark.Stark">Stark (class in sim.hamiltonian.terms.stark)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserPulse.start">start (sim.interfaces.laser.LaserPulse attribute)</a>
+</li>
+        <li><a href="api/states.html#sim.states.initial_states.state_index">state_index() (in module sim.states.initial_states)</a>
+</li>
+        <li><a href="api/dynamics.html#sim.dynamics.lindblad.LindbladSolver.steady_state">steady_state() (sim.dynamics.lindblad.LindbladSolver method)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.strain.Strain">Strain (class in sim.hamiltonian.terms.strain)</a>
+</li>
+        <li><a href="api/dynamics.html#id2">success (sim.dynamics.lindblad.EvolutionResult attribute)</a>, <a href="api/dynamics.html#sim.dynamics.lindblad.EvolutionResult.success">[1]</a>
+</li>
+        <li><a href="api/states.html#sim.states.initial_states.superposition">superposition() (in module sim.states.initial_states)</a>
+</li>
+        <li><a href="api/core.html#id0">Sx (sim.core.operators.Spin1Ops attribute)</a>, <a href="api/core.html#sim.core.operators.Spin1Ops.Sx">[1]</a>
+</li>
+        <li><a href="api/core.html#id47">Sy (sim.core.operators.Spin1Ops attribute)</a>, <a href="api/core.html#sim.core.operators.Spin1Ops.Sy">[1]</a>
+</li>
+        <li><a href="api/core.html#id48">Sz (sim.core.operators.Spin1Ops attribute)</a>, <a href="api/core.html#sim.core.operators.Spin1Ops.Sz">[1]</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/dynamics.html#sim.dynamics.dissipation.t1_operators">t1_operators() (in module sim.dynamics.dissipation)</a>
+</li>
+        <li><a href="api/dynamics.html#sim.dynamics.dissipation.t2_dephasing_operator">t2_dephasing_operator() (in module sim.dynamics.dissipation)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.shapes.tanh_edges">tanh_edges() (in module sim.pulses.shapes)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.jahn_teller.JahnTeller.temperature">temperature (sim.hamiltonian.terms.jahn_teller.JahnTeller attribute)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.builder.HamiltonianBuilder.terms">terms (sim.hamiltonian.builder.HamiltonianBuilder attribute)</a>
+
+        <ul>
+          <li><a href="api/hamiltonian.html#id1">(sim.hamiltonian.builder.HamiltonianBuilder property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/states.html#sim.states.initial_states.thermal_state">thermal_state() (in module sim.states.initial_states)</a>
+</li>
+        <li><a href="api/dynamics.html#id0">times (sim.dynamics.lindblad.EvolutionResult attribute)</a>, <a href="api/dynamics.html#sim.dynamics.lindblad.EvolutionResult.times">[1]</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.timing_jitter">timing_jitter (sim.interfaces.photon_counter.PhotonCounter attribute)</a>
+</li>
+        <li><a href="api/pulses.html#sim.pulses.sequences.PulseSequence.to_awg">to_awg() (sim.pulses.sequences.PulseSequence method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.awg.AWGInterface.to_mw_drive">to_mw_drive() (sim.interfaces.awg.AWGInterface method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.to_optical_coupling">to_optical_coupling() (sim.interfaces.laser.LaserInterface method)</a>
+</li>
+        <li><a href="api/interfaces.html#sim.interfaces.photon_counter.PhotonCounter.total_counts">total_counts (sim.interfaces.photon_counter.PhotonCounter attribute)</a>
+
+        <ul>
+          <li><a href="api/interfaces.html#id3">(sim.interfaces.photon_counter.PhotonCounter property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pulses.html#sim.pulses.sequences.PulseSequence.total_duration">total_duration() (sim.pulses.sequences.PulseSequence method)</a>
+</li>
+        <li><a href="api/states.html#sim.states.density_matrix.DensityMatrix.trace">trace() (sim.states.density_matrix.DensityMatrix method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="U" class="genindex-section">
+  <h2>U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#sim.core.constants.UM">UM (in module sim.core.constants)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#sim.core.constants.UT">UT (in module sim.core.constants)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="W" class="genindex-section">
+  <h2>W</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/interfaces.html#id1">wavelength (sim.interfaces.laser.LaserInterface attribute)</a>, <a href="api/interfaces.html#sim.interfaces.laser.LaserInterface.wavelength">[1]</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="X" class="genindex-section">
+  <h2>X</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pulses.html#sim.pulses.sequences.xy4_sequence">xy4_sequence() (in module sim.pulses.sequences)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pulses.html#sim.pulses.sequences.xy8_sequence">xy8_sequence() (in module sim.pulses.sequences)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Z" class="genindex-section">
+  <h2>Z</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zeeman.Zeeman">Zeeman (class in sim.hamiltonian.terms.zeeman)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#sim.core.constants.zeeman_splitting_mhz">zeeman_splitting_mhz() (in module sim.core.constants)</a>
+</li>
+        <li><a href="api/hamiltonian.html#sim.hamiltonian.terms.zfs.ZFS">ZFS (class in sim.hamiltonian.terms.zfs)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024-2025, Leon Kaiser, MSQC Goethe University Frankfurt
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

@@ -1,0 +1,70 @@
+/* QUSIM Documentation Custom Styles */
+
+/* Math equations */
+.math {
+    font-size: 1.1em;
+}
+
+/* Code blocks */
+.highlight {
+    border-radius: 6px;
+}
+
+/* Headings */
+h1, h2, h3 {
+    font-weight: 600;
+}
+
+/* Tables */
+table.docutils {
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+table.docutils td, table.docutils th {
+    padding: 8px 12px;
+    border: 1px solid var(--color-background-border);
+}
+
+/* Admonitions */
+.admonition {
+    border-radius: 6px;
+    padding: 12px 16px;
+}
+
+/* API documentation */
+.sig-name {
+    font-weight: 600;
+}
+
+.sig-param {
+    font-style: italic;
+}
+
+/* Physics notation */
+.math-notation {
+    font-family: 'STIX Two Math', 'Latin Modern Math', serif;
+}
+
+/* Better inline code */
+code.literal {
+    background: var(--color-inline-code-background);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+/* Navigation sidebar */
+.sidebar-brand-text {
+    font-weight: 700;
+}
+
+/* Version badge in header */
+.version-badge {
+    background: var(--color-brand-primary);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    margin-left: 8px;
+}
