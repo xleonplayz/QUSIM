@@ -1,19 +1,16 @@
 <p align="center">
-  <img src="image.png" alt="QUSIM Banner" width="100%">
+  <img src="docs/lostfound/image.png" alt="QUSIM Banner" width="100%">
 </p>
 
 <p align="center">
-  <a href="https://github.com/LeonKaiser/QUSIM/actions/workflows/tests.yml">
-    <img src="https://github.com/LeonKaiser/QUSIM/actions/workflows/tests.yml/badge.svg" alt="Tests">
+  <a href="https://github.com/xleonplayz/QUSIM/actions/workflows/docs.yml">
+    <img src="https://github.com/xleonplayz/QUSIM/actions/workflows/docs.yml/badge.svg" alt="Docs Build">
   </a>
-  <a href="https://github.com/LeonKaiser/QUSIM/releases">
+  <a href="https://github.com/xleonplayz/QUSIM/releases">
     <img src="https://img.shields.io/badge/version-0.1.0-blue" alt="Version">
   </a>
-  <a href="https://qusim.readthedocs.io">
-    <img src="https://img.shields.io/badge/docs-readthedocs-green" alt="Documentation">
-  </a>
-  <a href="docs/QUSIM_Documentation.pdf">
-    <img src="https://img.shields.io/badge/PDF-Download-red" alt="PDF Documentation">
+  <a href="https://xleonplayz.github.io/QUSIM/">
+    <img src="https://img.shields.io/badge/docs-GitHub%20Pages-green" alt="Documentation">
   </a>
 </p>
 
@@ -56,12 +53,12 @@ result = solver.evolve(rho0, t_span=(0, 1e-6), n_steps=100)
 
 ## Documentation
 
-Full documentation available at [qusim.readthedocs.io](https://qusim.readthedocs.io) or download the [PDF](docs/QUSIM_Documentation.pdf).
+Full documentation available at [xleonplayz.github.io/QUSIM](https://xleonplayz.github.io/QUSIM/).
 
 ## Installation
 
 ```bash
-git clone https://github.com/LeonKaiser/QUSIM.git
+git clone https://github.com/xleonplayz/QUSIM.git
 cd QUSIM
 pip install -e .
 ```
@@ -97,8 +94,9 @@ QUSIM/
 
 <p align="center">
   <sub>
-    Developed at the <a href="https://msqc.cgi-host6.rz.uni-frankfurt.de/">Magnetometry and Spin Quantum Computation Group (MSQC)</a><br>
-    Goethe University Frankfurt, Germany
+    Developed at <a href="https://www.uni-frankfurt.de/">Modular Supercomputing and Quantum Computing (MSQC)</a><br>
+    Faculty 12, Computer Science and Mathematics<br>
+    Goethe University Frankfurt, Campus Bockenheim
   </sub>
 </p>
 
